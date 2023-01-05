@@ -2,7 +2,7 @@
 - name: Create
   hosts: localhost
   connection: local
-  gather_facts: false
+  gather_facts: true
   no_log: "{{ molecule_no_log }}"
   tasks:
 
