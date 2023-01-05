@@ -65,7 +65,7 @@
     update_cache: true
   become: true
 
-- name: Get packages needed for azure
+- name: Get packages needed for Github
   ansible.builtin.apt:
     pkg:
       - gh
