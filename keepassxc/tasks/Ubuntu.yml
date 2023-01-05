@@ -3,3 +3,8 @@
   ansible.builtin.apt_repository:
     repo: ppa:phoerious/keepassxc
   become: true
+
+- name: Update repositories cache and install "keepassxc" package
+  ansible.builtin.apt:
+    name: keepassxc
+    update_cache: yes

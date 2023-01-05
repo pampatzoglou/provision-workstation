@@ -11,3 +11,8 @@
     state: present
     filename: /etc/apt/sources.list.d/syncthing.list
   become: true
+
+- name: Update repositories cache and install "syncthing" package
+  ansible.builtin.apt:
+    name: syncthing
+    update_cache: yes
