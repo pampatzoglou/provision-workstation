@@ -2,3 +2,7 @@
 # vars file for loki-cli
 loki_cli:
   version: 2.7.1
+  sha:
+    amd64:
+      linux: 5b1033be27f8bb77cb4f5a836558b3f0719a989cd9add7c848800e4b2f59b394
+      darwin: 174c3ee54e1a7f5a4bff86727edef2519f64164941b4a2b36392398adffa11bb

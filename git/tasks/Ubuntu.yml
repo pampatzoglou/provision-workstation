@@ -10,3 +10,26 @@
     pkg:
       - git
   become: true
+
+- name: Setup global gitIgnore
+  ansible.builtin.blockinfile:
+    path: /home/{{ user }}/.gitignore
+    create: true
+    group: '{{ user }}'
+    owner: '{{ user }}'
+    mode: a+x
+    block: |
+      Thumbs.db
+      .DS_Store
+      .vscode
+      .idea
+      .env
+      *.env
+
+- name: Setting Up Git
+  ansible.builtin.command: "{{ item }}"
+  with_items:
+    - git config --global user.name "{{ user }}"
+    - git config --global core.excludesfile /home/{{ user }}/.gitignore
+    - git config --global --add safe.directory /github/workspace
+  changed_when: false

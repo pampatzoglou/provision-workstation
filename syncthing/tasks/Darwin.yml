@@ -1,0 +1,6 @@
+---
+- name: Install syncthing
+  community.general.homebrew:
+    name: syncthing
+    state: present
+    update_homebrew: true

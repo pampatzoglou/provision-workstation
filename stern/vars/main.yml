@@ -3,5 +3,6 @@
 stern:
   version: 1.22.0
   sha:
-    linux_amd64: 6eff028d104b53c8a53c3af752a52292ddb2024b469ce5ab05aee2f0954bde72
-    darwin_amd64: 6eff028d104b53c8a53c3af752a52292ddb2024b469ce5ab05aee2f0954bde72
+    amd64:
+      linux: 6eff028d104b53c8a53c3af752a52292ddb2024b469ce5ab05aee2f0954bde72
+      darwin: 3e2d06ef35866b155aa9349d1b337aed114e56d49d7fc8245143d6180115ffef
