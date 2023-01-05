@@ -25,6 +25,8 @@ jobs:
     - name: Lint code.
       run: |
         yamllint .
+    - name: Run ansible-lint
+      uses: ansible/ansible-lint-action@main
 
   molecule:
     timeout-minutes: 5
