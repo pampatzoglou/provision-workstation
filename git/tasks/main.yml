@@ -33,4 +33,5 @@
   with_items:
     - git config --global user.name "{{ user }}"
     - git config --global core.excludesfile /home/{{ user }}/.gitignore
+    - git config --global --add safe.directory /github/workspace
   changed_when: false
