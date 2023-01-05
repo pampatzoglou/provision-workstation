@@ -1,0 +1,17 @@
+---
+- name: Allow wireguard
+  ansible.builtin.ufw:
+    rule: allow
+    port: 51820
+    proto: udp
+  become: true
+
+- name: Install wireguard
+  ansible.builtin.apt:
+    update_cache: true
+    force_apt_get: true
+    cache_valid_time: 3600
+    pkg:
+      - wireguard
+      - openresolv
+  become: true

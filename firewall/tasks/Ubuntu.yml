@@ -1,0 +1,28 @@
+---
+- name: Set logging
+  ansible.builtin.ufw:
+    logging: 'on'
+  become: true
+
+- name: Allow all access from RFC1918 networks to this host
+  ansible.builtin.ufw:
+    rule: allow
+    src: '{{ item }}'
+  loop:
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+  become: true
+
+- name: Allow ssh
+  ansible.builtin.ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
+  become: true
+
+- name: Block everything and enable UFW
+  ansible.builtin.ufw:
+    state: enabled
+    policy: deny
+  become: true

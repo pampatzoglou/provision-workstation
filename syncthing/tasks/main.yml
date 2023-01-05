@@ -1,0 +1,14 @@
+---
+# tasks file for syncthing
+- name: Ubuntu
+  ansible.builtin.include_tasks: Ubuntu.yml
+  when: (ansible_facts['os_family'] == "Debian") and
+        (ansible_facts['distribution'] == "Ubuntu")
+  tags:
+    - unbound
+
+- name: Darwin
+  ansible.builtin.include_tasks: Darwin.yml
+  when: ansible_facts['os_family'] == "Darwin"
+  tags:
+    - unbounds

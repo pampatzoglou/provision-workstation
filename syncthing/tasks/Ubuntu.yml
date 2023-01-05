@@ -1,0 +1,18 @@
+---
+- name: Import Syncthing public key
+  ansible.builtin.apt_key:
+    url: https://syncthing.net/release-key.txt
+    state: present
+  become: true
+
+- name: Import Syncthing repo
+  ansible.builtin.apt_repository:
+    repo: deb https://apt.syncthing.net/ syncthing release
+    state: present
+    filename: /etc/apt/sources.list.d/syncthing.list
+  become: true
+
+- name: Update repositories cache and install "syncthing" package
+  ansible.builtin.apt:
+    name: syncthing
+    update_cache: true
