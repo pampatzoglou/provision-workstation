@@ -5,3 +5,25 @@
     name: git
     state: present
     update_homebrew: true
+
+- name: Setup global gitIgnore
+  ansible.builtin.blockinfile:
+    path: /Users/{{ user }}/.gitignore
+    create: true
+    owner: '{{ user }}'
+    mode: a+x
+    block: |
+      Thumbs.db
+      .DS_Store
+      .vscode
+      .idea
+      .env
+      *.env
+
+- name: Setting Up Git
+  ansible.builtin.command: "{{ item }}"
+  with_items:
+    - git config --global user.name "{{ user }}"
+    - git config --global core.excludesfile /Users/{{ user }}/.gitignore
+    - git config --global --add safe.directory /github/workspace
+  changed_when: false

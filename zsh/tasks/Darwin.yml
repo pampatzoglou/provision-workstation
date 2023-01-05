@@ -3,29 +3,28 @@
 - name: Installing Oh-My-Zsh for {{ user }}
   ansible.builtin.git:
     repo: https://github.com/ohmyzsh/ohmyzsh.git
-    dest: /home/{{ user }}/.oh-my-zsh
+    dest: /Users/{{ user }}/.oh-my-zsh
     clone: true
     update: true
 
 - name: Install zsh-kubectl for {{ user }}
   ansible.builtin.git:
     repo: https://github.com/superbrothers/zsh-kubectl-prompt.git
-    dest: /home/{{ user }}/.zsh-kubectl-prompt
+    dest: /Users/{{ user }}/.zsh-kubectl-prompt
     clone: true
     update: true
 
 - name: Install zsh-autosuggestions for {{ user }}
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-autosuggestions.git
-    dest: /home/{{ user }}/.zsh-autosuggestions
+    dest: /Users/{{ user }}/.zsh-autosuggestions
     clone: true
     update: true
 
 - name: Setup .zshrc for {{ user }}
   ansible.builtin.blockinfile:
-    path: /home/{{ user }}/.zshrc
+    path: /Users/{{ user }}/.zshrc
     create: true
-    group: '{{ user }}'
     owner: '{{ user }}'
     mode: a+x
     block: |

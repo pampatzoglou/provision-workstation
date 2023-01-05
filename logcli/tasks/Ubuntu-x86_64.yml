@@ -16,7 +16,7 @@
   ansible.builtin.get_url:
     url: https://github.com/grafana/loki/releases/download/v{{ loki_cli.version }}/logcli-linux-amd64.zip
     dest: '{{ temp_dir.path }}/logcli-linux-amd64.zip'
-    checksum: sha256:5b1033be27f8bb77cb4f5a836558b3f0719a989cd9add7c848800e4b2f59b394
+    checksum: sha256:{{ loki_cli.sha.amd64.linux }}
     mode: '0744'
   when: not loki_installed.stat.exists
 

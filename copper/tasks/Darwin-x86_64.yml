@@ -10,8 +10,7 @@
     url: https://github.com/cloud66-oss/copper/releases/download/{{ copper.version }}/darwin_amd64_{{ copper.version }}
     dest: /usr/local/bin/copper
     mode: 0775
-    checksum: 'sha256:{{ copper.sha.darwin_amd64 }}'
-    group: '{{ user }}'
+    checksum: 'sha256:{{ copper.sha.amd64.darwin }}'
     owner: '{{ user }}'
   become: true
   when: not copper_installed.stat.exists

@@ -16,7 +16,7 @@
   ansible.builtin.get_url:
     url: 'https://github.com/stern/stern/releases/download/v{{ stern.version }}/stern_{{ stern.version }}_linux_amd64.tar.gz'
     dest: '{{ temp_dir.path }}'
-    checksum: 'sha256:{{ stern.sha.linux_amd64 }}'
+    checksum: 'sha256:{{ stern.sha.amd64.linux }}'
     mode: '0744'
   when: not stern_installed.stat.exists
 
