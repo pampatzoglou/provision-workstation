@@ -15,4 +15,4 @@
 - name: Update repositories cache and install "syncthing" package
   ansible.builtin.apt:
     name: syncthing
-    update_cache: yes
+    update_cache: true

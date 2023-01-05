@@ -6,4 +6,3 @@
         (ansible_facts['distribution'] == "Ubuntu")
   tags:
     - unbound
-
