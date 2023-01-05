@@ -1,0 +1,5 @@
+---
+- name: Import keepassxc repo
+  ansible.builtin.apt_repository:
+    repo: ppa:phoerious/keepassxc
+  become: true

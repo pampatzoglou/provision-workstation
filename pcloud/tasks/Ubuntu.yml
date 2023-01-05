@@ -1,0 +1,10 @@
+---
+- name: Install pcloud
+  ansible.builtin.apt:
+    update_cache: true
+    force_apt_get: true
+    cache_valid_time: 3600
+    pkg:
+      - libfuse2
+      - pcloud
+  become: true

@@ -1,0 +1,43 @@
+---
+- name: Check if doctl is installed
+  stat:
+    path: /usr/local/bin/doctl
+  register: doctl_installed
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_dir
+  register: temp_dir
+  when: not doctl_installed.stat.exists
+
+- name: Download doctl (sha)
+  ansible.builtin.get_url:
+    url: 'https://github.com/digitalocean/doctl/releases/download/v{{ doctl.version }}/doctl-{{ doctl.version }}-linux-amd64.tar.gz'
+    dest: '{{ temp_dir.path }}'
+    checksum: sha256:e6766c662b9e2d0df729ba539c07dfa01c237eaffa0b4cbb1832b6cd55761ec9
+    mode: '0744'
+  when: not doctl_installed.stat.exists
+
+- name: Unarchive doctl
+  ansible.builtin.unarchive:
+    src: '{{ temp_dir.path }}/doctl-{{ doctl.version }}-linux-amd64.tar.gz'
+    dest: '{{ temp_dir.path }}'
+    remote_src: true
+  when: not doctl_installed.stat.exists
+
+- name: Install docli
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path }}/doctl'
+    dest: /usr/local/bin/doctl
+    owner: root
+    group: root
+    mode: a+x
+  become: true
+  when: not doctl_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined

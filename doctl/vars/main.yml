@@ -1,0 +1,7 @@
+---
+# vars file for doctl
+doctl:
+  version: 1.91.0
+  sha:
+    linux_amd64: 123sss
+    darwin_amd64: 123sss
