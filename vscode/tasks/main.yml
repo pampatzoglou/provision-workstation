@@ -7,7 +7,7 @@
   tags:
     - unbound
 
-#- name: Darwin
+# - name: Darwin
 #  ansible.builtin.include_tasks: Darwin.yml
 #  when: ansible_facts['os_family'] == "Darwin"
 #  tags:
