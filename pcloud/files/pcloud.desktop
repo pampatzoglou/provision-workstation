@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/local/bin/pcloud
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=pcloud
+Name=pcloud
+Comment[en_US]=
+Comment=

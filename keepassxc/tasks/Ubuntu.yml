@@ -8,3 +8,4 @@
   ansible.builtin.apt:
     name: keepassxc
     update_cache: true
+  become: true

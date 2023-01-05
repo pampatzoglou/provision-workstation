@@ -16,3 +16,4 @@
   ansible.builtin.apt:
     name: syncthing
     update_cache: true
+  become: true
