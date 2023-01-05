@@ -1,0 +1,4 @@
+---
+# vars file for kube-bench
+kube_bench:
+  version: 0.3.1

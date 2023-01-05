@@ -1,0 +1,43 @@
+---
+- name: Check if VScode is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/code
+  register: code_installed
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_dir
+  register: temp_dir
+  when: not code_installed.stat.exists
+
+- name: Download VScode with check (sha256)
+  ansible.builtin.get_url:
+    url: https://code.visualstudio.com/download/VSCode-darwin.zip
+    dest: '{{ temp_dir.path }}/linux-amd64.tar.gz'
+    checksum: sha256:f2e1a91663b631626ae255a46d1e422406a338336d106e899f9cb1cde7455090
+    mode: '0744'
+  when: not code_installed.stat.exists
+
+- name: Unarchive VScode
+  ansible.builtin.unarchive:
+    src: '{{ temp_dir.path }}/linux-amd64.tar.gz'
+    dest: '{{ temp_dir.path }}'
+    remote_src: true
+  when: not code_installed.stat.exists
+
+- name: Install VScode
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path }}/velero-v{{ velero.version }}-linux-amd64/velero'
+    dest: /usr/local/bin/velero
+    owner: root
+    group: root
+    mode: a+x
+  become: true
+  when: not code_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined

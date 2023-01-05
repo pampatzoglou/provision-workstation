@@ -1,0 +1,5 @@
+---
+# vars file for kubesquash
+kubesquash:
+  version: 0.5.18
+  sha: 071406a1eadcf78014c1b6c629c46e3145a1f150d40555a4be0410747160b82b

@@ -1,0 +1,17 @@
+---
+# tasks file for copper
+- name: Check if copper is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/copper
+  register: copper_installed
+
+- name: Download copper
+  ansible.builtin.get_url:
+    url: https://github.com/cloud66-oss/copper/releases/download/{{ copper.version }}/darwin_amd64_{{ copper.version }}
+    dest: /usr/local/bin/copper
+    mode: 0775
+    checksum: 'sha256:{{ copper.sha.darwin_amd64 }}'
+    group: '{{ user }}'
+    owner: '{{ user }}'
+  become: true
+  when: not copper_installed.stat.exists

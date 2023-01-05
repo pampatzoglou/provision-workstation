@@ -1,0 +1,82 @@
+---
+# tasks file for azure
+- name: Run the equivalent of "apt-get update" as a separate step
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+
+- name: Get packages needed for azure
+  ansible.builtin.apt:
+    pkg:
+      - ca-certificates
+      - curl
+      - apt-transport-https
+      - lsb-release
+      - gnupg
+      - unzip
+  become: true
+
+- name: Register lsb_release
+  ansible.builtin.command: lsb_release -sc
+  register: lsb_release
+  changed_when: false
+
+- name: Add the Azure CLI software repository
+  ansible.builtin.lineinfile:
+    path: /etc/apt/sources.list.d/azure-cli.list
+    line: deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ {{ lsb_release.stdout }} main
+    create: true
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+
+- name: Install azure packages
+  ansible.builtin.apt:
+    pkg:
+      - azure-cli
+    update_cache: true
+  become: true
+
+- name: Check if kubelogin is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/kubelogin
+  register: kubelogin_installed
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_dir
+  register: temp_dir
+  when: not kubelogin_installed.stat.exists
+
+- name: Download kubelogin (sha)
+  ansible.builtin.get_url:
+    url: https://github.com/Azure/kubelogin/releases/download/v0.0.14/kubelogin-linux-amd64.zip
+    dest: '{{ temp_dir.path }}'
+    checksum: sha256:db0ea8995465c93cd7b072e3e4bfe24c382c75a44283f1048678bf7a97f469cb
+    mode: '0744'
+  when: not kubelogin_installed.stat.exists
+
+- name: Unarchive kubelogin
+  ansible.builtin.unarchive:
+    src: '{{ temp_dir.path }}/kubelogin-linux-amd64.zip'
+    dest: '{{ temp_dir.path }}'
+    remote_src: true
+  when: not kubelogin_installed.stat.exists
+
+- name: Install kubelogin
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path }}/bin/linux_amd64/kubelogin'
+    dest: /usr/local/bin/kubelogin
+    owner: root
+    group: root
+    mode: a+x
+  become: true
+  when: not kubelogin_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined

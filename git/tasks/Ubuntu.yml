@@ -1,0 +1,12 @@
+---
+# tasks file for git
+- name: Run the equivalent of "apt-get update" as a separate step
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+
+- name: Get packages needed for git
+  ansible.builtin.apt:
+    pkg:
+      - git
+  become: true

@@ -1,0 +1,58 @@
+---
+# tasks file for zsh
+- name: Installing Oh-My-Zsh for {{ user }}
+  ansible.builtin.git:
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    dest: /home/{{ user }}/.oh-my-zsh
+    clone: true
+    update: true
+
+- name: Install zsh-kubectl for {{ user }}
+  ansible.builtin.git:
+    repo: https://github.com/superbrothers/zsh-kubectl-prompt.git
+    dest: /home/{{ user }}/.zsh-kubectl-prompt
+    clone: true
+    update: true
+
+- name: Install zsh-autosuggestions for {{ user }}
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions.git
+    dest: /home/{{ user }}/.zsh-autosuggestions
+    clone: true
+    update: true
+
+- name: Setup .zshrc for {{ user }}
+  ansible.builtin.blockinfile:
+    path: /home/{{ user }}/.zshrc
+    create: true
+    group: '{{ user }}'
+    owner: '{{ user }}'
+    mode: a+x
+    block: |
+      export ZSH=$HOME/.oh-my-zsh
+      export KUBE_EDITOR="code --wait"
+      export KUBECONFIG="$HOME/.kube/config"
+      export EDITOR=nano
+
+      ZSH_THEME="agnoster"
+
+      plugins=(git docker docker-compose github ipfs kubectl terraform ubuntu spotify go vscode)
+
+      source $ZSH/oh-my-zsh.sh
+      source <(kubectl completion zsh)
+      source <(velero completion zsh)
+
+      if [ -f $HOME/.env ]; then
+          set -a
+          source $HOME/.env
+          set +a
+      fi
+
+      if [ -f $HOME/.kubectl_aliases ]; then
+          source $HOME/.kubectl_aliases
+      fi
+
+      autoload -U colors; colors
+      source ~/.zsh-kubectl-prompt/kubectl.zsh
+      RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
+      curl rate.sx/dot/eur@10d

@@ -1,0 +1,96 @@
+---
+# tasks file for zsh
+- name: Run the equivalent of "apt-get update" as a separate step
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+
+- name: Get packages
+  ansible.builtin.apt:
+    pkg:
+      - curl
+      - zsh
+      - fonts-powerline
+      - jq
+  become: true
+
+- name: Check if yq is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/yq
+  register: yq_installed
+
+- name: Download yq
+  ansible.builtin.get_url:
+    url: https://github.com/mikefarah/yq/releases/v{{ yq.version }}/download/yq_linux_amd64
+    dest: /usr/local/bin/yq
+    checksum: sha256:{{ yq.sha }}
+    mode: a+x
+  become: true
+  when: not yq_installed.stat.exists
+
+- name: Check if zsh is installed
+  ansible.builtin.stat:
+    path: /usr/bin/zsh
+  register: zsh_installed
+
+- name: Set zsh as default shell for {{ user }}
+  ansible.builtin.command: chsh --shell /usr/bin/zsh {{ user }}
+  become: true
+  changed_when: false
+
+- name: Installing Oh-My-Zsh for {{ user }}
+  ansible.builtin.git:
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    dest: /home/{{ user }}/.oh-my-zsh
+    clone: true
+    update: true
+
+- name: Install zsh-kubectl for {{ user }}
+  ansible.builtin.git:
+    repo: https://github.com/superbrothers/zsh-kubectl-prompt.git
+    dest: /home/{{ user }}/.zsh-kubectl-prompt
+    clone: true
+    update: true
+
+- name: Install zsh-autosuggestions for {{ user }}
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions.git
+    dest: /home/{{ user }}/.zsh-autosuggestions
+    clone: true
+    update: true
+
+- name: Setup .zshrc for {{ user }}
+  ansible.builtin.blockinfile:
+    path: /home/{{ user }}/.zshrc
+    create: true
+    group: '{{ user }}'
+    owner: '{{ user }}'
+    mode: a+x
+    block: |
+      export ZSH=$HOME/.oh-my-zsh
+      export KUBE_EDITOR="code --wait"
+      export KUBECONFIG="$HOME/.kube/config"
+      export EDITOR=nano
+
+      ZSH_THEME="agnoster"
+
+      plugins=(git docker docker-compose github ipfs kubectl terraform ubuntu spotify go vscode)
+
+      source $ZSH/oh-my-zsh.sh
+      source <(kubectl completion zsh)
+      source <(velero completion zsh)
+
+      if [ -f $HOME/.env ]; then
+          set -a
+          source $HOME/.env
+          set +a
+      fi
+
+      if [ -f $HOME/.kubectl_aliases ]; then
+          source $HOME/.kubectl_aliases
+      fi
+
+      autoload -U colors; colors
+      source ~/.zsh-kubectl-prompt/kubectl.zsh
+      RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
+      curl rate.sx/dot/eur@10d

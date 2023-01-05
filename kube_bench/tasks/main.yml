@@ -1,0 +1,6 @@
+---
+# tasks file for kube-bench
+- name: Ubuntu
+  ansible.builtin.include_tasks: Ubuntu-x86_64.yml
+  when: (ansible_facts['os_family'] == "Ubuntu") and
+        (ansible_facts['architecture'] == "x86_64")

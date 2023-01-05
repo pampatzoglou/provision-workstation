@@ -1,0 +1,7 @@
+---
+# vars file for stern
+stern:
+  version: 1.22.0
+  sha:
+    linux_amd64: 6eff028d104b53c8a53c3af752a52292ddb2024b469ce5ab05aee2f0954bde72
+    darwin_amd64: 6eff028d104b53c8a53c3af752a52292ddb2024b469ce5ab05aee2f0954bde72

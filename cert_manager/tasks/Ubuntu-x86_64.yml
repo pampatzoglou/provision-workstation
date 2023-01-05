@@ -1,0 +1,44 @@
+---
+# tasks file for cert-manager
+- name: Check if cert_manager is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/cmctl
+  register: cert_manager_installed
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_dir
+  register: temp_dir
+  when: not cert_manager_installed.stat.exists
+
+- name: Download cert manager (sha)
+  ansible.builtin.get_url:
+    url: 'https://github.com/cert-manager/cert-manager/releases/download/v{{ cert_manager.version }}/kubectl-cert_manager-linux-amd64.tar.gz'
+    dest: '{{ temp_dir.path }}'
+    checksum: 'sha256:{{ cert_manager.sha }}'
+    mode: '0744'
+  when: not cert_manager_installed.stat.exists
+
+- name: Unarchive cert-manager
+  ansible.builtin.unarchive:
+    src: '{{ temp_dir.path }}/kubectl-cert_manager-linux-amd64.tar.gz'
+    dest: '{{ temp_dir.path }}'
+    remote_src: true
+  when: not cert_manager_installed.stat.exists
+
+- name: Install cert-manager
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path }}/kubectl-cert_manager'
+    dest: /usr/local/bin/cmctl
+    owner: root
+    group: root
+    mode: a+x
+  become: true
+  when: not cert_manager_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined

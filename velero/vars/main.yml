@@ -1,0 +1,4 @@
+---
+# vars file for velero
+velero:
+  version: 1.9.5

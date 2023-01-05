@@ -1,0 +1,7 @@
+---
+# tasks file for k6s
+- name: Install k6
+  community.general.homebrew:
+    name: k6
+    state: present
+    update_homebrew: true

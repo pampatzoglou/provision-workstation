@@ -1,0 +1,23 @@
+---
+# ansible-playbook --ask-become-pass -e user=$USER playbook.yaml
+- name: Setup workstation
+  hosts: localhost
+  gather_facts: true
+  roles:
+   - k6s
+   - vscode
+   - brave
+   - zsh
+   - git
+   - argo
+   - azure
+   - kubectl
+   - helm
+   - terraform
+   - velero
+   - cert_manager
+   - github
+   - kube_bench
+   - stern
+   - copper
+   - logcli

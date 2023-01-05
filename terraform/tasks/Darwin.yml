@@ -1,0 +1,12 @@
+---
+# tasks file for terraform
+- name: Tap a Homebrew terraform repository, state present
+  community.general.homebrew_tap:
+    name: hashicorp/tap
+    state: present
+
+- name: Install terraform
+  community.general.homebrew:
+    name: hashicorp/tap/terraform
+    state: present
+    update_homebrew: true

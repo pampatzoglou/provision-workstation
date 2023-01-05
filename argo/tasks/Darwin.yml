@@ -1,0 +1,7 @@
+---
+# tasks file for kubelogin
+- name: Install argocd
+  community.general.homebrew:
+    name: argocd
+    state: present
+    update_homebrew: true

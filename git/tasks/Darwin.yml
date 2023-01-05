@@ -1,0 +1,7 @@
+---
+# tasks file for git
+- name: Install git
+  community.general.homebrew:
+    name: git
+    state: present
+    update_homebrew: true

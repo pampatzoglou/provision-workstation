@@ -1,0 +1,17 @@
+---
+# tasks file for kubesquash
+- name: Check if kubesquash is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/kubesquash
+  register: kubesquash_installed
+
+- name: Download kubesquash
+  ansible.builtin.get_url:
+    url: https://github.com/solo-io/squash/releases/download/v{{ kubesquash.version }}/squashctl-linux
+    dest: /usr/local/bin/kubesquash
+    mode: 0775
+    checksum: 'sha256:{{ kubesquash.sha }}'
+    group: '{{ user }}'
+    owner: '{{ user }}'
+  become: true
+  when: not kubesquash_installed.stat.exists

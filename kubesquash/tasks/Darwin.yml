@@ -1,0 +1,13 @@
+---
+- name: Check if kubesquash is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/kubesquash
+  register: kubesquash_installed
+
+- name: Download helmfile (sha)
+  ansible.builtin.get_url:
+    url: 'https://github.com/solo-io/squash/releases/download/v0.5.18/squashctl-darwin'
+    dest: '{{ temp_dir.path }}'
+    checksum: 'sha256:123'
+    mode: '0744'
+  when: not kubesquash_installed.stat.exists

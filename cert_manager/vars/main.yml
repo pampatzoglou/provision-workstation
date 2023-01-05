@@ -1,0 +1,5 @@
+---
+# vars file for cert-manager
+cert_manager:
+  version: 1.11.0-alpha.2
+  sha: ae723dcdbb458cf12b6023cce29e0cd114ea44870625e42349407998609bf94b

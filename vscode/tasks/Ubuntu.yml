@@ -1,0 +1,41 @@
+---
+# tasks file for vscode
+- name: Run the equivalent of "apt-get update" as a separate step
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+
+- name: Get packages needed for vscode
+  ansible.builtin.apt:
+    pkg:
+      - wget
+      - gpg
+      - apt-transport-https
+  become: true
+
+- name: Add key
+  ansible.builtin.get_url:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    dest: /etc/apt/trusted.gpg.d/microsoft.asc
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+
+- name: Import VCode repo
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/microsoft.asc] https://packages.microsoft.com/repos/vscode stable main"
+    state: present
+    filename: /etc/apt/sources.list.d/vscode
+  become: true
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+
+- name: Install VCode
+  ansible.builtin.apt:
+    pkg:
+      - code
+  become: true

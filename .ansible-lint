@@ -1,0 +1,9 @@
+exclude_paths:
+  - .cache/ # implicit unless exclude_paths is defined in config
+  - .github/
+  - "**/molecule/default/*.yml"
+
+skip_list:
+  - latest[git]
+  - yaml[comments-indentation]  # Violations reported by yamllint.
+  - yaml[line-length]  # Violations reported by yamllint.

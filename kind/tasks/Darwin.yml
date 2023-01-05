@@ -1,0 +1,6 @@
+---
+- name: Install kind
+  community.general.homebrew:
+    name: kind
+    state: present
+    update_homebrew: true

@@ -1,0 +1,13 @@
+---
+# tasks file for azure
+- name: Install az
+  community.general.homebrew:
+    name: azure-cli
+    state: present
+    update_homebrew: true
+
+- name: Install kubelogin
+  community.general.homebrew:
+    name: kubelogin
+    state: present
+    update_homebrew: true

@@ -1,0 +1,4 @@
+---
+# vars file for loki-cli
+loki_cli:
+  version: 2.7.1

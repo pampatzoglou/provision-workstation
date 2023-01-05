@@ -1,0 +1,16 @@
+---
+# tasks file for kubectl
+
+- name: Check if kubectl is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/kubectl
+  register: kubectl_installed
+
+- name: Download and install kubectl
+  ansible.builtin.get_url:
+    url: https://dl.k8s.io/release/v{{ kubectl.version }}/bin/linux/amd64/kubectl
+    dest: /usr/local/bin/kubectl
+    checksum: 'sha256:{{ kubectl.sha }}'
+    mode: 0755
+  become: true
+  when: not kubectl_installed.stat.exists

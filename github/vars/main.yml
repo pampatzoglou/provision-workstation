@@ -1,0 +1,4 @@
+---
+# vars file for github-act
+act:
+  version: 0.2.35

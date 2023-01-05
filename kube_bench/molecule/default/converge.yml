@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: "Include pampatzoglou.kube_bench"
+      ansible.builtin.include_role:
+        name: "pampatzoglou.kube_bench"

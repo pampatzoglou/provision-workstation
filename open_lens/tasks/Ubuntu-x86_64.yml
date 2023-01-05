@@ -1,0 +1,13 @@
+---
+# tasks file for open-lens
+- name: Check if open-lens is installed
+  ansible.builtin.stat:
+    path: /usr/bin/open-lens
+  register: open_lens_installed
+
+- name: Install a open-lens.deb package from the internet.
+  ansible.builtin.apt:
+    deb: >-
+      https://github.com/MuhammedKalkan/OpenLens/releases/download/v{{ open_lens.version }}/OpenLens-{{ open_lens.version }}.amd64.deb
+  become: true
+  when: not open_lens_installed.stat.exists

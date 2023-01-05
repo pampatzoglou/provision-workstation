@@ -1,0 +1,5 @@
+---
+# vars file for kind
+kind:
+  version: 0.17.0
+  sha: a8c045856db33f839908b6acb90dc8ec397253ffdaef7baf058f5a542e009b9c

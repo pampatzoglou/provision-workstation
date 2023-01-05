@@ -1,0 +1,71 @@
+---
+# tasks file for helm
+- name: Check if helm is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/helm
+  register: helm_installed
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: build
+  when: not helm_installed.stat.exists
+  register: temp_helm
+
+- name: Download helm
+  ansible.builtin.get_url:
+    url: https://get.helm.sh/helm-v{{ helm.version }}-darwin-amd64.tar.gz
+    dest: "{{ temp_helm.path }}/helm-v{{ helm.version }}-darwin-amd64.tar.gz"
+    checksum: sha256:77a94ebd37eab4d14aceaf30a372348917830358430fcd7e09761eed69f08be5
+    mode: '0744'
+  when: not helm_installed.stat.exists
+
+- name: Print the gateway for each host when defined
+  ansible.builtin.debug:
+    msg: "{{ temp_helm.path }}"
+
+- name: Unarchive helm
+  ansible.builtin.unarchive:
+    src: "{{ temp_helm.path }}/helm-v{{ helm.version }}-darwin-amd64.tar.gz"
+    dest: "{{ temp_helm.path }}"
+    remote_src: true
+  when: not helm_installed.stat.exists
+
+# - name: Use the registered var and the file module to remove the temporary file
+#  ansible.builtin.file:
+#    path: "{{ temp.path }}"
+#    state: absent
+#  when: temp_helm.path is defined
+
+- name: Check if helmfile is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/helmfile
+  register: helmfile_installed
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: build
+  when: not helmfile_installed.stat.exists
+  register: temp_helmfile
+
+- name: Download helmfile
+  ansible.builtin.get_url:
+    url: https://get.helm.sh/helm-v{{ helm.version }}-darwin-amd64.tar.gz
+    dest: "{{ temp_helm.path }}/helm-v{{ helm.version }}-darwin-amd64.tar.gz"
+    checksum: sha256:77a94ebd37eab4d14aceaf30a372348917830358430fcd7e09761eed69f08be5
+    mode: '0744'
+  when: not helmfile_installed.stat.exists
+
+- name: Unarchive helmfile
+  ansible.builtin.unarchive:
+    src: "{{ temp_helmfile.path }}/helm-v{{ helm.version }}-darwin-amd64.tar.gz"
+    dest: "{{ temp_helmfile.path }}"
+    remote_src: true
+  when: not helmfile_installed.stat.exists
+
+# - name: Use the registered var and the file module to remove the temporary file
+#  ansible.builtin.file:
+#    path: "{{ helmfile.path }}"
+#    state: absent
+#  when: temp_helmfile.path is defined

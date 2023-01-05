@@ -1,0 +1,13 @@
+---
+# tasks file for kube-bench
+- name: Check if kube-bench is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/kube-bench
+  register: kube_bench_installed
+
+- name: Install a kube-bench.deb package from the internet.
+  ansible.builtin.apt:
+    deb: >-
+      https://github.com/aquasecurity/kube-bench/releases/download/v{{ kube_bench.version }}/kube-bench_{{ kube_bench.version }}_linux_amd64.deb
+  become: true
+  when: not kube_bench_installed.stat.exists

@@ -1,0 +1,7 @@
+---
+# tasks file for cert-manager
+- name: Install cert manager cli
+  community.general.homebrew:
+    name: cmctl
+    state: present
+    update_homebrew: true

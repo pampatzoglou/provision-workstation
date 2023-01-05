@@ -1,0 +1,36 @@
+---
+# tasks file for git
+- name: Ubuntu
+  ansible.builtin.include_tasks: Ubuntu.yml
+  when: (ansible_facts['os_family'] == "Debian") and
+        (ansible_facts['distribution'] == "Ubuntu")
+  tags:
+    - unbound
+
+- name: Darwin
+  ansible.builtin.include_tasks: Darwin.yml
+  when: ansible_facts['os_family'] == "Darwin"
+  tags:
+    - unbounds
+
+- name: Setup global gitIgnore
+  ansible.builtin.blockinfile:
+    path: /home/{{ user }}/.gitignore
+    create: true
+    group: '{{ user }}'
+    owner: '{{ user }}'
+    mode: a+x
+    block: |
+      Thumbs.db
+      .DS_Store
+      .vscode
+      .idea
+      .env
+      *.env
+
+- name: Setting Up Git
+  ansible.builtin.command: "{{ item }}"
+  with_items:
+    - git config --global user.name "{{ user }}"
+    - git config --global core.excludesfile /home/{{ user }}/.gitignore
+  changed_when: false

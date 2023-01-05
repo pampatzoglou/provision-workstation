@@ -1,0 +1,44 @@
+---
+# tasks file for terraform
+- name: Check if terraform is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/terraform
+  register: terraform_installed
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_terraform
+  register: temp_dir
+  when: not terraform_installed.stat.exists
+
+- name: Download terraform (sha)
+  ansible.builtin.get_url:
+    url: 'https://releases.hashicorp.com/terraform/{{ terraform.version }}/terraform_{{ terraform.version }}_linux_amd64.zip'
+    dest: '{{ temp_dir.path }}'
+    checksum: 'sha256:{{ terraform.sha }}'
+    mode: '0744'
+  when: not terraform_installed.stat.exists
+
+- name: Unarchive Terraform
+  ansible.builtin.unarchive:
+    src: https://releases.hashicorp.com/terraform/{{ terraform.version }}/terraform_{{ terraform.version }}_linux_amd64.zip
+    dest: '{{ temp_dir.path }}'
+    remote_src: true
+  when: not terraform_installed.stat.exists
+
+- name: Install Terraform
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path }}/terraform'
+    dest: /usr/local/bin/terraform
+    owner: root
+    group: root
+    mode: a+x
+  become: true
+  when: not terraform_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined

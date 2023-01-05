@@ -1,0 +1,26 @@
+---
+# tasks file for brave
+- name: Import Brave public key
+  ansible.builtin.apt_key:
+    url: https://brave-browser-apt-release.s3.brave.com/brave-core.asc
+    keyring: /etc/apt/trusted.gpg.d/brave-browser-release.gpg
+    state: present
+  become: true
+
+- name: Import Brave repo
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main
+    state: present
+    filename: /etc/apt/sources.list.d/brave-browser-release.list
+  become: true
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+
+- name: Get packages needed for vscode
+  ansible.builtin.apt:
+    pkg:
+      - brave-browser
+  become: true

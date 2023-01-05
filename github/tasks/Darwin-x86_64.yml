@@ -1,0 +1,47 @@
+---
+# tasks file for github-act
+- name: Install GH
+  community.general.homebrew:
+    name: gh
+    state: present
+    update_homebrew: true
+
+- name: Check if gh cli is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/gh
+  register: gh_installed
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_dir
+  register: temp_dir
+  when: not gh_installed.stat.exists
+
+- name: Download gh cli (sha)
+  ansible.builtin.get_url:
+    url: https://github.com/nektos/act/releases/download/v0.2.35/act_Darwin_x86_64.tar.gz
+    dest: '{{ temp_dir.path }}'
+    checksum: sha256:{{ gh.sha }}
+    mode: '0744'
+  when: not gh_installed.stat.exists
+
+# - name: Unarchive
+#  ansible.builtin.command: 'gunzip {{ temp_dir.path }}/argo-linux-amd64.gz'
+#  when: not gh_installed.stat.exists
+
+# - name: Install argo cli
+#  ansible.builtin.copy:
+#    src: '{{ temp_dir.path }}/argo-linux-amd64'
+#    dest: /usr/local/bin/argo
+#    owner: root
+#    group: root
+#    mode: a+x
+#  become: true
+#  when: not gh_installed.stat.exists
+
+# - name: Remove the temporary dir
+#  ansible.builtin.file:
+#    path: '{{ temp_dir.path }}'
+#    state: absent
+#  when: temp_dir.path is defined

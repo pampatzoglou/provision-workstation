@@ -1,0 +1,17 @@
+---
+# tasks file for kind
+- name: Check if kind is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/kind
+  register: kind_installed
+
+- name: Install kind
+  ansible.builtin.get_url:
+    url: https://github.com/kubernetes-sigs/kind/releases/download/v{{ kind.version }}/kind-linux-amd64
+    dest: /usr/local/bin/kind
+    mode: 0775
+    checksum: 'sha256:{{ kind.sha }}'
+    group: '{{ user }}'
+    owner: '{{ user }}'
+  become: true
+  when: not kind_installed.stat.exists

@@ -1,0 +1,4 @@
+---
+# vars file for open-lens
+open_lens:
+  version: 6.3.0

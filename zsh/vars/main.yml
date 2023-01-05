@@ -1,0 +1,6 @@
+---
+# vars file for zsh
+
+yq:
+  version: 4.30.6
+  sha: 2aabdd748d301fc2286ea9f73eb20477b4ce173fbf072e0102fff1fcbed05985

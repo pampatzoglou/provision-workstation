@@ -1,0 +1,72 @@
+---
+# tasks file for github-act
+- name: Check if ACT cli is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/act
+  register: act_installed
+
+- name: Create act directory
+  ansible.builtin.file:
+    path: /tmp/act
+    state: directory
+    owner: '{{ user }}'
+    group: '{{ user }}'
+    mode: '0644'
+  when: not act_installed.stat.exists
+
+- name: Download act cli
+  ansible.builtin.unarchive:
+    src: https://github.com/nektos/act/releases/download/v{{ act.version }}/act_Linux_x86_64.tar.gz
+    dest: /tmp/act
+    remote_src: true
+  when: not act_installed.stat.exists
+
+- name: Install act cli
+  ansible.builtin.copy:
+    src: /tmp/act/act
+    dest: /usr/local/bin/act
+    owner: root
+    group: root
+    mode: a+x
+  become: true
+  when: not act_installed.stat.exists
+
+- name: Clean leftovers
+  ansible.builtin.file:
+    path: '{{ item.path }}'
+    state: absent
+    owner: '{{ user }}'
+    group: '{{ user }}'
+    mode: '0644'
+  loop:
+    - {path: /tmp/act}
+
+- name: Add key for Github CLI software repository
+  ansible.builtin.get_url:
+    url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+    dest: /usr/share/keyrings/githubcli-archive-keyring.gpg
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+
+- name: Add the Github CLI software repository
+  ansible.builtin.lineinfile:
+    path: /etc/apt/sources.list.d/github-cli
+    line: "deb [arch=amd64 signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
+    create: true
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+
+- name: Get packages needed for azure
+  ansible.builtin.apt:
+    pkg:
+      - gh
+  become: true

@@ -1,0 +1,44 @@
+---
+# tasks file for loki-cli
+- name: Check if loki cli is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/logcli
+  register: loki_installed
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_dir
+  register: temp_dir
+  when: not loki_installed.stat.exists
+
+- name: Download logcli with check (sha256)
+  ansible.builtin.get_url:
+    url: https://github.com/grafana/loki/releases/download/v{{ loki_cli.version }}/logcli-linux-amd64.zip
+    dest: '{{ temp_dir.path }}/logcli-linux-amd64.zip'
+    checksum: sha256:5b1033be27f8bb77cb4f5a836558b3f0719a989cd9add7c848800e4b2f59b394
+    mode: '0744'
+  when: not loki_installed.stat.exists
+
+- name: Unarchive loki cli
+  ansible.builtin.unarchive:
+    src: '{{ temp_dir.path }}/logcli-linux-amd64.zip'
+    dest: '{{ temp_dir.path }}'
+    remote_src: true
+  when: not loki_installed.stat.exists
+
+- name: Install loki cli
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path }}/logcli-linux-amd64'
+    dest: /usr/local/bin/logcli
+    owner: root
+    group: root
+    mode: a+x
+  become: true
+  when: not loki_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined

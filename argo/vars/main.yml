@@ -1,0 +1,5 @@
+---
+# vars file for argo
+argo:
+  version: 3.4.4
+  sha: b5d9b07d4749d95213ecdb0c866fb6e8748b9b58e099a1e43a5e78c89673029e

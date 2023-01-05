@@ -1,0 +1,10 @@
+---
+# vars file for pampatzoglou/helm
+
+helm:
+  version: 3.10.3
+  sha: 950439759ece902157cf915b209b8d694e6f675eaab5099fb7894f30eeaee9a2
+
+helmfile:
+  version: 0.149.0
+  sha: 10645a3319c727bd2a9f663d2e2083966a4c79b9880131589d397050d80f5870
