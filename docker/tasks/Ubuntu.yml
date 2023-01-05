@@ -2,11 +2,11 @@
 - name: Uninstall old docker versions
   ansible.builtin.apt:
     name:
-    - docker
-    - docker-engine
-    - docker.io
-    - containerd
-    - runc
+      - docker
+      - docker-engine
+      - docker.io
+      - containerd
+      - runc
     state: absent
     purge: true
   become: true
@@ -29,8 +29,8 @@
     force_apt_get: yes
     cache_valid_time: 3600
     pkg:
-    - docker-ce
-    - docker-ce-cli
-    - containerd.io
-    - docker-compose
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose
   become: true

@@ -15,8 +15,8 @@
   ansible.builtin.get_url:
     url: 'https://github.com/digitalocean/doctl/releases/download/v{{ doctl.version }}/doctl-{{ doctl.version }}-linux-amd64.tar.gz'
     dest: '{{ temp_dir.path }}'
-    checksum: sha256:e6766c662b9e2d0df729ba539c07dfa01c237eaffa0b4cbb1832b6cd55761ec9
-    mode: '0744'
+    checksum: 'sha256:{{ doctl.sha.amd64.linux }}'
+    mode: a+x
   when: not doctl_installed.stat.exists
 
 - name: Unarchive doctl

@@ -3,5 +3,6 @@
 doctl:
   version: 1.91.0
   sha:
-    linux_amd64: 123sss
-    darwin_amd64: 123sss
+    amd64:
+      linux: e6766c662b9e2d0df729ba539c07dfa01c237eaffa0b4cbb1832b6cd55761ec9
+      darwin: 123sss

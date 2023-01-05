@@ -15,9 +15,9 @@
 
 - name: Install google-cloud-sdk
   ansible.builtin.apt:
-    update_cache: yes
-    force_apt_get: yes
+    update_cache: true
+    force_apt_get: true
     cache_valid_time: 3600
     pkg:
-    - google-cloud-sdk
+      - google-cloud-sdk
   become: true
