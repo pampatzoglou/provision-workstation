@@ -4,4 +4,29 @@
   hosts: localhost
   gather_facts: true
   roles:
+   - firewall
+   - docker
+   - zsh
+   - git
+   - argo
+   - aws
+   - azure
+   - doctl
+   # todo - gcp
+   - kubectl
+   - helm
+   - terraform
+   - velero
+   - cert_manager
+   - logcli
+   - k6s
+   - kind
+   - github
+   - kube_bench
+   - stern
+   - copper
+   - keepassxc
+   - syncthing
+   - wireguard
    - vscode
+   - brave
