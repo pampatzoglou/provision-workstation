@@ -34,7 +34,7 @@ ansible-playbook --ask-become-pass -e user=$USER playbook.yaml
   <li>git</li>
   <li>github</li>
   <li>helm</li>
-  <li>[k6s</li>
+  <li>k6s</li>
   <li>[keepassxc](https://keepassxc.org/)</li>
   <li>[kind](https://kind.sigs.k8s.io/)</li>
   <li>[kube_bench](https://github.com/aquasecurity/kube-bench)</li>
