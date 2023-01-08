@@ -66,6 +66,7 @@
       git secrets --pre_commit_hook -- "$@"
 
       trufflehog git file://. --since-commit HEAD --only-verified --fail
+      trufflehog filesystem --directory=. --fail
 
 - name: Setting Up global Git
   ansible.builtin.blockinfile:
