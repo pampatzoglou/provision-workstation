@@ -1,5 +1,10 @@
 ---
 # tasks file for terraform
+- name: Install checkov
+  ansible.builtin.pip:
+    name: checkov
+    executable: pip3
+
 - name: Ubuntu
   ansible.builtin.include_tasks: Ubuntu-x86_64.yml
   when: (ansible_facts['os_family'] == "Debian") and

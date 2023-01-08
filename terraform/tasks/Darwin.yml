@@ -10,3 +10,15 @@
     name: hashicorp/tap/terraform
     state: present
     update_homebrew: true
+
+- name: Install aquasecurity/tfsec
+  community.general.homebrew:
+    name: tfsec
+    state: present
+    update_homebrew: true
+
+- name: Install terraform-linters/tflint
+  community.general.homebrew:
+    name: tflint
+    state: present
+    update_homebrew: true
