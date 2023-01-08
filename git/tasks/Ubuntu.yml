@@ -13,7 +13,7 @@
 
 - name: Setup global gitIgnore
   ansible.builtin.blockinfile:
-    path: /home/{{ user }}/.gitignore
+    path: /home/{{ user }}/.gitconfig/.gitignore
     create: true
     group: '{{ user }}'
     owner: '{{ user }}'
@@ -26,10 +26,42 @@
       .env
       *.env
 
-- name: Setting Up Git
-  ansible.builtin.command: "{{ item }}"
-  with_items:
-    - git config --global user.name "{{ user }}"
-    - git config --global core.excludesfile /home/{{ user }}/.gitignore
-    - git config --global --add safe.directory /github/workspace
-  changed_when: false
+- name: Setup global git pre-commit hook
+  ansible.builtin.blockinfile:
+    path: /home/{{ user }}/.githooks/pre-commit
+    create: true
+    group: '{{ user }}'
+    owner: '{{ user }}'
+    mode: a+x
+    block: |
+      if git commit -v --dry-run | grep '!nocommit' >/dev/null 2>&1
+      then
+        echo "Trying to commit non-committable code."
+        echo "Remove the !nocommit string and try again."
+        exit 1
+      else
+        # Run local pre-commit hook if exists
+        if [ -e ./.git/hooks/pre-commit ]; then
+          ./.git/hooks/pre-commit "$@"
+        else
+          exit 0
+        fi
+      fi
+
+      gittyleaks
+
+- name: Setting Up global Git
+  ansible.builtin.blockinfile:
+    path: /home/{{ user }}/.gitconfig
+    create: true
+    group: '{{ user }}'
+    owner: '{{ user }}'
+    mode: a+x
+    block: |
+      [user]
+          name = {{ user }}
+      [core]
+          hooksPath = /home/{{ user }}/.githooks
+          excludesfile = /home/{{ user }}/.gitignore
+      [safe]
+        directory = /github/workspace
