@@ -6,6 +6,12 @@
     state: present
     update_homebrew: true
 
+- name: Install trufflehog
+  community.general.homebrew:
+    name: trufflehog
+    state: present
+    update_homebrew: true
+
 - name: Install git-secrets
   community.general.homebrew:
     name: git-secrets
@@ -33,6 +39,8 @@
     owner: '{{ user }}'
     mode: a+x
     block: |
+      #!/usr/bin/env bash
+
       if git commit -v --dry-run | grep '!nocommit' >/dev/null 2>&1
       then
         echo "Trying to commit non-committable code."
@@ -47,7 +55,22 @@
         fi
       fi
 
-      gittyleaks
+      if git rev-parse --verify HEAD >/dev/null 2>&1
+      then
+        against=HEAD
+      else
+        # Initial commit: diff against an empty tree object
+        against=$(git hash-object -t tree /dev/null)
+      fi
+
+      # Redirect output to stderr.
+      exec 1>&2
+
+      gittyleaks --no-banner --verbose
+
+      git secrets --pre_commit_hook -- "$@"
+
+      trufflehog git file://. --since-commit HEAD --only-verified --fail
 
 - name: Setting Up global Git
   ansible.builtin.blockinfile:
