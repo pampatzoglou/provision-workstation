@@ -1,0 +1,14 @@
+---
+- name: Check if telepresence is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/telepresence
+  register: telepresence_installed
+
+- name: Download telepresence
+  ansible.builtin.get_url:
+    url: 'https://app.getambassador.io/download/tel2/linux/amd64/latest/telepresence'
+    dest: /usr/local/bin/telepresence
+    owner: root
+    group: root
+    mode: a+x
+  when: not telepresence_installed.stat.exists

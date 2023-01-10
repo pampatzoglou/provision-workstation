@@ -42,3 +42,132 @@
     path: '{{ temp_dir.path }}'
     state: absent
   when: temp_dir.path is defined
+
+- name: Check if tfsec is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/tfsec
+  register: tfsec_installed
+
+- name: Create tfsec build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_terraform
+  register: temp_dir
+  when: not tfsec_installed.stat.exists
+
+- name: Download tfsec (sha)
+  ansible.builtin.get_url:
+    url: 'https://github.com/aquasecurity/tfsec/releases/download/v{{ tfsec.version }}/tfsec_{{ tfsec.version }}_linux_amd64.tar.gz'
+    dest: '{{ temp_dir.path }}'
+    checksum: 'sha256:{{ tfsec.sha }}'
+    mode: '0744'
+  when: not tfsec_installed.stat.exists
+
+- name: Unarchive tfsec
+  ansible.builtin.unarchive:
+    src: '{{ temp_dir.path }}/tfsec_{{ tfsec.version }}_linux_amd64.tar.gz'
+    dest: '{{ temp_dir.path }}'
+    remote_src: true
+  when: not tfsec_installed.stat.exists
+
+- name: Install tfsec
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path }}/tfsec'
+    dest: /usr/local/bin/tfsec
+    owner: root
+    group: root
+    mode: a+x
+  become: true
+  when: not tfsec_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined
+
+- name: Check if tflint is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/tflint
+  register: tflint_installed
+
+- name: Create tflint build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_terraform
+  register: temp_dir
+  when: not tflint_installed.stat.exists
+
+- name: Download tflint (sha)
+  ansible.builtin.get_url:
+    url: 'https://github.com/terraform-linters/tflint/releases/download/v{{ tflint.version }}/tflint_linux_amd64.zip'
+    dest: '{{ temp_dir.path }}'
+    checksum: 'sha256:{{ tflint.sha }}'
+    mode: '0744'
+  when: not tflint_installed.stat.exists
+
+- name: Unarchive tflint
+  ansible.builtin.unarchive:
+    src: '{{ temp_dir.path }}/tflint_linux_amd64.zip'
+    dest: '{{ temp_dir.path }}'
+    remote_src: true
+  when: not tflint_installed.stat.exists
+
+- name: Install tflint
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path }}/tflint'
+    dest: /usr/local/bin/tflint
+    owner: root
+    group: root
+    mode: a+x
+  become: true
+  when: not tflint_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined
+
+- name: Check if terrascan is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/terrascan
+  register: terrascan_installed
+
+- name: Create terrascan build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_terraform
+  register: temp_dir
+  when: not terrascan_installed.stat.exists
+
+- name: Download terrascan (sha)
+  ansible.builtin.get_url:
+    url: 'https://github.com/tenable/terrascan/releases/download/v{{ terrascan.version }}/terrascan_{{ terrascan.version }}_Linux_x86_64.tar.gz'
+    dest: '{{ temp_dir.path }}'
+    checksum: 'sha256:{{ terrascan.sha.linux }}'
+    mode: '0744'
+  when: not terrascan_installed.stat.exists
+
+- name: Unarchive terrascan
+  ansible.builtin.unarchive:
+    src: '{{ temp_dir.path }}/terrascan_{{ terrascan.version }}_Linux_x86_64.tar.gz'
+    dest: '{{ temp_dir.path }}'
+    remote_src: true
+  when: not terrascan_installed.stat.exists
+
+- name: Install tfsec
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path }}/terrascan'
+    dest: /usr/local/bin/terrascan
+    owner: root
+    group: root
+    mode: a+x
+  become: true
+  when: not terrascan_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined

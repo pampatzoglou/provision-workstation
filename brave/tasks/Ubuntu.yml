@@ -11,7 +11,7 @@
   ansible.builtin.apt_repository:
     repo: deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main
     state: present
-    filename: /etc/apt/sources.list.d/brave-browser-release.list
+    filename: /etc/apt/sources.list.d/brave-browser-release
   become: true
 
 - name: Run the equivalent of "apt-get update" as a separate step

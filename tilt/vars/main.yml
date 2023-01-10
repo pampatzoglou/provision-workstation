@@ -1,0 +1,10 @@
+---
+# vars file for tilt
+
+ctlptl:
+  version: 0.8.15
+  sha: 9bf19022b56a12bfbcd84da16aa0b4b0eea577e95ca04da91eaaedbd101199c5
+
+tilt:
+  version: 0.31.1
+  sha: 0f39b125ba89ed5d6bd37072ca1610068c6e8cc08a7f226a00e755ed7f57ff0e

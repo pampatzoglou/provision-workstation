@@ -1,0 +1,31 @@
+---
+- name: Print all available facts
+  ansible.builtin.debug:
+    var: ansible_facts.distribution_release
+
+- name: Import Teleport's PGP public key
+  ansible.builtin.get_url:
+    url: https://apt.releases.teleport.dev/gpg
+    dest: /etc/apt/trusted.gpg.d/teleport.asc
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+
+- name: Import Teleport repo
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/teleport.asc] https://apt.releases.teleport.dev/ubuntu {{ ansible_facts.distribution_release }} stable/v11"
+    state: present
+    filename: /etc/apt/sources.list.d/teleport
+  become: true
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+
+- name: Install teleport
+  ansible.builtin.apt:
+    pkg:
+      - teleport
+  become: true

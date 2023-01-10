@@ -1,0 +1,86 @@
+---
+- name: Check if ctlptl is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/ctlptl
+  register: ctlptl_installed
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_tilt
+  register: temp_dir
+  when: not ctlptl_installed.stat.exists
+
+- name: Download ctlptl (sha)
+  ansible.builtin.get_url:
+    url: 'https://github.com/tilt-dev/ctlptl/releases/download/v{{ ctlptl.version }}/ctlptl.{{ ctlptl.version }}.linux.x86_64.tar.gz'
+    dest: '{{ temp_dir.path }}'
+    checksum: 'sha256:{{ ctlptl.sha }}'
+    mode: '0744'
+  when: not ctlptl_installed.stat.exists
+
+- name: Unarchive ctlptl
+  ansible.builtin.unarchive:
+    src: '{{ temp_dir.path }}/ctlptl.{{ ctlptl.version }}.linux.x86_64.tar.gz'
+    dest: '{{ temp_dir.path }}'
+    remote_src: true
+  when: not ctlptl_installed.stat.exists
+
+- name: Install ctlptl
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path }}/ctlptl'
+    dest: /usr/local/bin/ctlptl
+    owner: root
+    group: root
+    mode: a+x
+  become: true
+  when: not ctlptl_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined
+
+- name: Check if tilt is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/tilt
+  register: tilt_installed
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_tilt
+  register: temp_dir
+  when: not tilt_installed.stat.exists
+
+- name: Download tilt (sha)
+  ansible.builtin.get_url:
+    url: https://github.com/tilt-dev/tilt/releases/download/v{{ tilt.version }}/tilt.{{ tilt.version }}.darwin.x86_64.tar.gz
+    dest: '{{ temp_dir.path }}'
+    checksum: sha256:{{ tilt.sha }}
+    mode: '0744'
+  when: not tilt_installed.stat.exists
+
+- name: Unarchive tilt
+  ansible.builtin.unarchive:
+    src: '{{ temp_dir.path }}/tilt.{{ tilt.version }}.darwin.x86_64.tar.gz'
+    dest: '{{ temp_dir.path }}'
+    remote_src: true
+  when: not tilt_installed.stat.exists
+
+- name: Install tilt
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path }}/tilt'
+    dest: /usr/local/bin/tilt
+    owner: root
+    group: root
+    mode: a+x
+  become: true
+  when: not tilt_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined

@@ -7,7 +7,7 @@
    #- firewall
    #- docker
    #- zsh
-   - git
+   #- git
    #- argo
    #- aws
    #- azure
@@ -15,7 +15,10 @@
    # todo - gcp
    #- kubectl
    #- helm
-   #- terraform
+   - terraform
+   #- tilt
+   #- teleport
+   #- telepresence
    #- velero
    #- cert_manager
    #- logcli
