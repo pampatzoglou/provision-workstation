@@ -10,3 +10,58 @@
     name: hashicorp/tap/terraform
     state: present
     update_homebrew: true
+
+- name: Install aquasecurity/tfsec
+  community.general.homebrew:
+    name: tfsec
+    state: present
+    update_homebrew: true
+
+- name: Install terraform-linters/tflint
+  community.general.homebrew:
+    name: tflint
+    state: present
+    update_homebrew: true
+
+- name: Check if terrascan is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/terrascan
+  register: terrascan_installed
+
+- name: Create terrascan build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_terraform
+  register: temp_dir
+  when: not terrascan_installed.stat.exists
+
+- name: Download terrascan (sha)
+  ansible.builtin.get_url:
+    url: 'https://github.com/tenable/terrascan/releases/download/v{{ terrascan.version }}/terrascan_{{ terrascan.version }}_Darwin_x86_64.tar.gz'
+    dest: '{{ temp_dir.path }}'
+    checksum: 'sha256:{{ terrascan.sha.darwin }}'
+    mode: '0744'
+  when: not terrascan_installed.stat.exists
+
+- name: Unarchive terrascan
+  ansible.builtin.unarchive:
+    src: '{{ temp_dir.path }}/terrascan_{{ terrascan.version }}_Linux_x86_64.tar.gz'
+    dest: '{{ temp_dir.path }}'
+    remote_src: true
+  when: not terrascan_installed.stat.exists
+
+- name: Install tfsec
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path }}/terrascan'
+    dest: /usr/local/bin/terrascan
+    owner: root
+    group: root
+    mode: a+x
+  become: true
+  when: not terrascan_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined

@@ -16,6 +16,9 @@
    - kubectl
    - helm
    - terraform
+   - tilt
+   - teleport
+   - telepresence
    - velero
    - cert_manager
    - logcli
@@ -30,3 +33,7 @@
    - wireguard
    - vscode
    - brave
+   # todo: kube-linter
+   # todo: open policy agent
+   # todo: kube-hunter
+   # todo: falco
