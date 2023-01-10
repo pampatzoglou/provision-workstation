@@ -11,9 +11,17 @@
       - git
   become: true
 
+- name: Create gitConfig directory (.git)
+  ansible.builtin.file:
+    path: /home/{{ user }}/.git
+    state: directory
+    group: '{{ user }}'
+    owner: '{{ user }}'
+    mode: '0755'
+
 - name: Setup global gitIgnore
   ansible.builtin.blockinfile:
-    path: /home/{{ user }}/.gitconfig/.gitignore
+    path: /home/{{ user }}/.git/.gitignore
     create: true
     group: '{{ user }}'
     owner: '{{ user }}'
@@ -28,7 +36,7 @@
 
 - name: Setup global git pre-commit hook
   ansible.builtin.blockinfile:
-    path: /home/{{ user }}/.githooks/pre-commit
+    path: /home/{{ user }}/.git/hooks/pre-commit
     create: true
     group: '{{ user }}'
     owner: '{{ user }}'
@@ -79,7 +87,7 @@
       [user]
           name = {{ user }}
       [core]
-          hooksPath = /home/{{ user }}/.githooks
-          excludesfile = /home/{{ user }}/.gitignore
+          hooksPath = /home/{{ user }}/.git/hooks
+          excludesfile = /home/{{ user }}/.git/gitignore
       [safe]
         directory = /github/workspace
