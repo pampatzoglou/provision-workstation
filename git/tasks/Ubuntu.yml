@@ -94,7 +94,7 @@
           email = you@example.com
       [core]
           hooksPath = /home/{{ user }}/.git/hooks
-          excludesfile = /home/{{ user }}/.git/gitignore
+          excludesfile = /home/{{ user }}/.git/.gitignore
       [safe]
         directory = /github/workspace
   when: not gitconfig_installed.stat.exists
