@@ -104,3 +104,53 @@
     msg: "You will need to edit: /home/{{ user }}/.gitconfig and setup your default git email"
     verbosity: 0
   when: not gitconfig_installed.stat.exists
+
+- name: Check if trufflehog is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/trufflehog
+  register: trufflehog_installed
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_trufflehog
+  register: temp_dir
+  when: not trufflehog_installed.stat.exists
+
+- name: Download trufflehog (sha)
+  ansible.builtin.get_url:
+    url: 'https://github.com/trufflesecurity/trufflehog/releases/download/v{{ trufflehog.version }}/trufflehog_{{ trufflehog.version }}_linux_amd64.tar.gz'
+    dest: '{{ temp_dir.path }}'
+    checksum: 'sha256:{{ trufflehog.sha }}'
+    mode: '0744'
+  when: not trufflehog_installed.stat.exists
+
+- name: Unarchive trufflehog
+  ansible.builtin.unarchive:
+    src: '{{ temp_dir.path }}/trufflehog_{{ trufflehog.version }}_linux_amd64.tar.gz'
+    dest: '{{ temp_dir.path }}'
+    remote_src: true
+  when: not trufflehog_installed.stat.exists
+
+- name: Install trufflehog
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path }}/trufflehog'
+    dest: /usr/local/bin/trufflehog
+    owner: root
+    group: root
+    mode: a+x
+  become: true
+  when: not trufflehog_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined
+
+- name: Install git-secrets
+  ansible.builtin.apt:
+    name: git-secrets
+    state: latest
+    update_cache: true
+  become: true

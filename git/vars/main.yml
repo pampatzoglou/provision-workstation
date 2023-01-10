@@ -1,2 +1,5 @@
 ---
 # vars file for git
+trufflehog:
+  version: 3.24.0
+  sha: 995233f841c158d3f7c954ed1541cd994c4faeb00833f2fc686bffb1c2f1d3e0
