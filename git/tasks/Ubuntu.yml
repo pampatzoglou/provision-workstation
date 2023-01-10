@@ -76,6 +76,11 @@
       trufflehog git file://. --since-commit HEAD --only-verified --fail
       trufflehog filesystem --directory=. --fail
 
+- name: Check if /home/{{ user }}/.gitconfig exists
+  ansible.builtin.stat:
+    path: /home/{{ user }}/.gitconfig
+  register: gitconfig_installed
+
 - name: Setting Up global Git
   ansible.builtin.blockinfile:
     path: /home/{{ user }}/.gitconfig
@@ -86,8 +91,16 @@
     block: |
       [user]
           name = {{ user }}
+          email = you@example.com
       [core]
           hooksPath = /home/{{ user }}/.git/hooks
           excludesfile = /home/{{ user }}/.git/gitignore
       [safe]
         directory = /github/workspace
+  when: not gitconfig_installed.stat.exists
+
+- name: Display config message
+  debug:
+    msg: "You will need to edit: /home/{{ user }}/.gitconfig and setup your default git email"
+    verbosity: 0
+  when: not gitconfig_installed.stat.exists
