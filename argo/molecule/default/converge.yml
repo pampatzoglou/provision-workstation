@@ -1,8 +1,9 @@
 ---
 - name: Converge
   hosts: all
-  gather_facts: true
+  vars:
+    remote_src: /tmp
   tasks:
-    - name: "Include pampatzoglou.argo"
-      ansible.builtin.include_role:
-        name: "pampatzoglou.argo"
+    - name: "Include argo"
+      include_role:
+        name: "argo"

@@ -4,15 +4,14 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: Ubuntu
-    image: ubuntu
+  - name: ubuntu
+    image: geerlingguy/docker-ubuntu2204-ansible
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /tmp:/tmp
     privileged: true
-  - name: Ubuntu-lts
-    image: ubuntu:22.04
-    privileged: true
+    pre_build_image: true
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
 verifier:
   name: ansible
