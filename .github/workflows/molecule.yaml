@@ -1,0 +1,28 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches:
+    - '**'
+  schedule:
+    - cron: "30 5 * * 0"
+
+jobs:
+  lint:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - uses: gofrolist/molecule-action@v2
+      with:
+        molecule_options: --debug --base-config molecule/_shared/base.yml
+        molecule_command: test
+        molecule_args: --scenario-name ${{ matrix.scenario }}
+        molecule_working_dir:
+          required: true
+          default: argo
+      env:
+        ANSIBLE_FORCE_COLOR: '1'
