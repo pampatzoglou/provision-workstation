@@ -1,11 +1,7 @@
 [![CI](https://github.com/pampatzoglou/provision-workstation/actions/workflows/ci.yaml/badge.svg)](https://github.com/pampatzoglou/provision-workstation/actions/workflows/ci.yaml)
-
 [![molecule-docker](https://badge.fury.io/py/molecule-docker.svg)](https://badge.fury.io/py/molecule-docker)
-
 [![tox](https://github.com/pampatzoglou/provision-workstation/actions/workflows/tox.yaml/badge.svg)](https://github.com/pampatzoglou/provision-workstation/actions/workflows/tox.yaml)
-
 [![Python Black Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
-
 [![LICENSE](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/pampatzoglou/provision-workstation/blob/main/LICENSE)
 
 # provision workstation
