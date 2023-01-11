@@ -1,19 +1,12 @@
-.. [![CI](https://github.com/pampatzoglou/provision-workstation/actions/workflows/ci.yaml/badge.svg)](https://github.com/pampatzoglou/provision-workstation/actions/workflows/ci.yaml)
+[![CI](https://github.com/pampatzoglou/provision-workstation/actions/workflows/ci.yaml/badge.svg)](https://github.com/pampatzoglou/provision-workstation/actions/workflows/ci.yaml)
 
-.. image:: <https://badge.fury.io/py/molecule-docker.svg>
-   :target: <https://badge.fury.io/py/molecule-docker>
-   :alt: PyPI Package
+[![molecule-docker](https://badge.fury.io/py/molecule-docker.svg)](https://badge.fury.io/py/molecule-docker)
 
-.. image:: <https://github.com/ansible-community/molecule-docker/workflows/tox/badge.svg>
-   :target: <https://github.com/ansible-community/molecule-docker/actions>
+[![tox](https://github.com/pampatzoglou/provision-workstation/actions/workflows/tox.yaml/badge.svg)](https://github.com/pampatzoglou/provision-workstation/actions/workflows/tox.yaml)
 
-.. image:: <https://img.shields.io/badge/code%20style-black-000000.svg>
-   :target: <https://github.com/python/black>
-   :alt: Python Black Code Style
+[![Python Black Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
 
-.. image:: <https://img.shields.io/badge/license-MIT-brightgreen.svg>
-   :target: LICENSE
-   :alt: Repository License
+[![LICENSE](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/pampatzoglou/provision-workstation/blob/main/LICENSE)
 
 # provision workstation
 
