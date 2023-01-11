@@ -20,6 +20,5 @@ jobs:
         with:
           molecule_command: test
           molecule_working_dir: argo
-            required: true
         env:
           ANSIBLE_FORCE_COLOR: '1'
