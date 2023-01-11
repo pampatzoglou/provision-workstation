@@ -19,7 +19,7 @@ jobs:
     name: ${{ matrix.name }}
     # ubuntu-latest is current older and we need last podman toolkit.
     # https://docs.github.com/en/actions/reference/virtual-environments-for-github-hosted-runners
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
@@ -53,24 +53,24 @@ jobs:
 
     steps:
       - name: Check out src from Git
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0 # needed by setuptools-scm
 
       - name: Enable caching of ~/.cache/pip
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.cache/pip
           key: ${{ matrix.name }}-${{ hashFiles('**/setup.cfg', 'tox.ini', '.github/workflows/tox.yml') }}
 
       - name: Enable caching of ~/.cache/pre-commit
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.cache/pre-commit
           key: ${{ matrix.name }}-${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: Enable caching for ansible tools
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.ansible/collections
