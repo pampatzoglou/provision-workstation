@@ -10,10 +10,10 @@ platforms:
   - name: Ubuntu-lts
     image: ubuntu:22.04
     privileged: true
-  #- name: macosx
-  #  box: yzgyyang/macOS-10.14
-  #  memory: 2048
-  #  cpus: 1
+  # - name: macosx
+  #   box: yzgyyang/macOS-10.14
+  #   memory: 2048
+  #   cpus: 1
 provisioner:
   name: ansible
   lint:
