@@ -1,3 +1,20 @@
+.. [![CI](https://github.com/pampatzoglou/provision-workstation/actions/workflows/ci.yaml/badge.svg)](https://github.com/pampatzoglou/provision-workstation/actions/workflows/ci.yaml)
+
+.. image:: <https://badge.fury.io/py/molecule-docker.svg>
+   :target: <https://badge.fury.io/py/molecule-docker>
+   :alt: PyPI Package
+
+.. image:: <https://github.com/ansible-community/molecule-docker/workflows/tox/badge.svg>
+   :target: <https://github.com/ansible-community/molecule-docker/actions>
+
+.. image:: <https://img.shields.io/badge/code%20style-black-000000.svg>
+   :target: <https://github.com/python/black>
+   :alt: Python Black Code Style
+
+.. image:: <https://img.shields.io/badge/license-MIT-brightgreen.svg>
+   :target: LICENSE
+   :alt: Repository License
+
 # provision workstation
 
 Playbook to install standard tools I use on my workstations (Ubuntu and Mac)
@@ -15,8 +32,6 @@ pip3 install -r requirements.txt
 ```
 ansible-playbook --ask-become-pass -e user=$USER playbook.yaml
 ```
-
-[![CI](https://github.com/pampatzoglou/provision-workstation/actions/workflows/ci.yaml/badge.svg)](https://github.com/pampatzoglou/provision-workstation/actions/workflows/ci.yaml)
 
 # Installs
 
