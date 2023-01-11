@@ -12,15 +12,14 @@ jobs:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
-    - name: Check out repository code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - uses: gofrolist/molecule-action@v2
-      with:
-        molecule_command: test
-        molecule_working_dir:
-          required: true
-          default: argo
-      env:
-        ANSIBLE_FORCE_COLOR: '1'
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: gofrolist/molecule-action@v2
+        with:
+          molecule_command: test
+          molecule_working_dir: argo
+            required: true
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
