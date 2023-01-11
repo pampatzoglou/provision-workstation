@@ -18,9 +18,7 @@ jobs:
         fetch-depth: 0
     - uses: gofrolist/molecule-action@v2
       with:
-        molecule_options: --debug --base-config molecule/_shared/base.yml
         molecule_command: test
-        molecule_args: --scenario-name ${{ matrix.scenario }}
         molecule_working_dir:
           required: true
           default: argo
