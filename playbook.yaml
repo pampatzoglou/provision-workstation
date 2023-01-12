@@ -4,6 +4,7 @@
   hosts: localhost
   gather_facts: true
   roles:
+   - argo
    - firewall
    - docker
    - zsh
@@ -33,6 +34,7 @@
    - wireguard
    - vscode
    - brave
+   - open_lens
    # todo: kube-linter
    # todo: open policy agent
    # todo: kube-hunter

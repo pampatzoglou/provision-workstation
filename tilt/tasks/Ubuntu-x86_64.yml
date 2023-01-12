@@ -33,6 +33,7 @@
     owner: root
     group: root
     mode: a+x
+    remote_src: true
   become: true
   when: not ctlptl_installed.stat.exists
 
@@ -76,6 +77,7 @@
     owner: root
     group: root
     mode: a+x
+    remote_src: true
   become: true
   when: not tilt_installed.stat.exists
 
