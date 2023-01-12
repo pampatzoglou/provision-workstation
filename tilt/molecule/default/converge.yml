@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    user: root
+  tasks:
+    - name: "Include tilt"
+      include_role:
+        name: "tilt"

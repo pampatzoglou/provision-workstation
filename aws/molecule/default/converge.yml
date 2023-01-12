@@ -2,6 +2,6 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: "Include argo"
+    - name: "Include aws"
       include_role:
-        name: "argo"
+        name: "aws"

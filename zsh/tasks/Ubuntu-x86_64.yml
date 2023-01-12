@@ -1,17 +1,14 @@
 ---
 # tasks file for zsh
-- name: Run the equivalent of "apt-get update" as a separate step
-  ansible.builtin.apt:
-    update_cache: true
-  become: true
-
-- name: Get packages
+- name: Update repositories cache and install packages
   ansible.builtin.apt:
     pkg:
       - curl
       - zsh
       - fonts-powerline
       - jq
+    update_cache: true
+    state: present
   become: true
 
 - name: Check if yq is installed
@@ -21,7 +18,7 @@
 
 - name: Download yq
   ansible.builtin.get_url:
-    url: https://github.com/mikefarah/yq/releases/v{{ yq.version }}/download/yq_linux_amd64
+    url: https://github.com/mikefarah/yq/releases/download/v{{ yq.version }}/yq_linux_amd64
     dest: /usr/local/bin/yq
     checksum: sha256:{{ yq.sha }}
     mode: a+x

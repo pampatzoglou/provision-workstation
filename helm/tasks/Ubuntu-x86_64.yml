@@ -8,8 +8,9 @@
 - name: Create temporary build directory
   ansible.builtin.tempfile:
     state: directory
-    suffix: temp_helm
+    suffix: temp_dir
   register: temp_dir
+  when: not helm_installed.stat.exists
 
 - name: Download helm (sha)
   ansible.builtin.get_url:

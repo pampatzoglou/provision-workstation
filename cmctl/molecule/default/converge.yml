@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include argo"
+      include_role:
+        name: "cmctl"

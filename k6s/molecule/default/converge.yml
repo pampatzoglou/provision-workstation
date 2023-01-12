@@ -1,8 +1,9 @@
 ---
 - name: Converge
   hosts: all
-  gather_facts: true
+  vars:
+    user: root
   tasks:
-    - name: "Include pampatzoglou.k6s"
-      ansible.builtin.include_role:
-        name: "pampatzoglou.k6s"
+    - name: "Include k6s"
+      include_role:
+        name: "k6s"

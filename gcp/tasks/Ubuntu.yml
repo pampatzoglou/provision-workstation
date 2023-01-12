@@ -1,14 +1,16 @@
 ---
-- name: Import the Google Cloud public key
-  ansible.builtin.apt_key:
+- name: Import Google Cloud public key
+  ansible.builtin.get_url:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    keyring: /usr/share/keyrings/cloud.google.gpg
-    state: present
+    dest: /etc/apt/trusted.gpg.d/google.gpg
+    owner: root
+    group: root
+    mode: '0644'
   become: true
 
 - name: Import Google Cloud repo
   ansible.builtin.apt_repository:
-    repo: deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main
+    repo: deb [signed-by=/etc/apt/trusted.gpg.d/google.gpg] https://packages.cloud.google.com/apt cloud-sdk main
     state: present
     filename: /etc/apt/sources.list.d/google-cloud-sdk
   become: true

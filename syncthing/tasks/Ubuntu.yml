@@ -1,13 +1,18 @@
 ---
-- name: Import Syncthing public key
-  ansible.builtin.apt_key:
+- name: Import Syncthing's PGP public key
+  ansible.builtin.get_url:
     url: https://syncthing.net/release-key.txt
-    state: present
+    dest: /etc/apt/trusted.gpg.d/syncthing.txt
+    owner: root
+    group: root
+    mode: '0644'
   become: true
 
 - name: Import Syncthing repo
   ansible.builtin.apt_repository:
-    repo: deb https://apt.syncthing.net/ syncthing release
+    repo: >
+      deb [signed-by=/etc/apt/trusted.gpg.d/syncthing.txt]
+      https://apt.syncthing.net/ syncthing release
     state: present
     filename: /etc/apt/sources.list.d/syncthing
   become: true

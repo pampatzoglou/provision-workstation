@@ -1,2 +1,5 @@
 ---
 # vars file for azure
+kubelogin:
+  version: 0.0.14
+  sha: db0ea8995465c93cd7b072e3e4bfe24c382c75a44283f1048678bf7a97f469cb

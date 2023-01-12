@@ -1,8 +1,9 @@
 ---
 - name: Converge
   hosts: all
-  gather_facts: true
+  vars:
+    user: root
   tasks:
-    - name: "Include pampatzoglou.kubectl"
-      ansible.builtin.include_role:
-        name: "pampatzoglou.kubectl"
+    - name: "Include kubectl"
+      include_role:
+        name: "kubectl"

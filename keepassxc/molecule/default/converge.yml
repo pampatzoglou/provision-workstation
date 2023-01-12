@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    user: root
+  tasks:
+    - name: "Include keepassxc"
+      include_role:
+        name: "keepassxc"

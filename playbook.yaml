@@ -21,7 +21,7 @@
    - teleport
    - telepresence
    - velero
-   - cert_manager
+   - cmctl
    - logcli
    - k6s
    - kind

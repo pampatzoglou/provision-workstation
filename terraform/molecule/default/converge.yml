@@ -1,8 +1,9 @@
 ---
 - name: Converge
   hosts: all
-  gather_facts: true
+  vars:
+    user: root
   tasks:
-    - name: "Include pampatzoglou.terraform"
-      ansible.builtin.include_role:
-        name: "pampatzoglou.terraform"
+    - name: "Include terraform"
+      include_role:
+        name: "terraform"
