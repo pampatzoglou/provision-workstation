@@ -11,6 +11,5 @@
     owner: root
     group: root
     mode: a+x
-    remote_src: true
   when: not telepresence_installed.stat.exists
   become: true

@@ -15,9 +15,9 @@
 - name: Download logcli with check (sha256)
   ansible.builtin.get_url:
     url: https://github.com/grafana/loki/releases/download/v{{ loki_cli.version }}/logcli-linux-amd64.zip
-    dest: '{{ temp_dir.path }}/logcli-linux-amd64.zip'
+    dest: '{{ temp_dir.path }}'
     checksum: sha256:{{ loki_cli.sha.amd64.linux }}
-    mode: '0744'
+    mode: '0777'
   when: not loki_installed.stat.exists
 
 - name: Unarchive loki cli
@@ -25,6 +25,7 @@
     src: '{{ temp_dir.path }}/logcli-linux-amd64.zip'
     dest: '{{ temp_dir.path }}'
     remote_src: true
+  become: true
   when: not loki_installed.stat.exists
 
 - name: Install loki cli

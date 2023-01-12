@@ -1,8 +1,9 @@
 ---
 - name: Converge
   hosts: all
-  gather_facts: true
+  vars:
+    user: root
   tasks:
-    - name: "Include pampatzoglou.kind"
-      ansible.builtin.include_role:
-        name: "pampatzoglou.kind"
+    - name: "Include kube_bench"
+      include_role:
+        name: "kube_bench"

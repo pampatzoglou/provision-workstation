@@ -1,8 +1,9 @@
 ---
 - name: Converge
   hosts: all
-  gather_facts: true
+  vars:
+    user: root
   tasks:
-    - name: "Include pampatzoglou.github_act"
-      ansible.builtin.include_role:
-        name: "pampatzoglou.github_act"
+    - name: "Include github.com tools"
+      include_role:
+        name: "github"
