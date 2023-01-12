@@ -5,7 +5,7 @@
     - name: Update repositories cache and install "gzip" package
       ansible.builtin.apt:
         pkg:
-        - gzip
-        update_cache: yes
+          - gzip
+        update_cache: true
         state: present
       become: true

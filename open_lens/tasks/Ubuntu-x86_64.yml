@@ -14,7 +14,9 @@
 
 - name: Download file with check (sha256)
   ansible.builtin.get_url:
-    url: 'https://github.com/MuhammedKalkan/OpenLens/releases/download/v{{ open_lens.version }}-alpha.2/OpenLens-{{ open_lens.version }}-alpha.2.amd64.deb'
+    url: >
+      'https://github.com/MuhammedKalkan/OpenLens/releases/download/
+      v{{ open_lens.version }}-alpha.2/OpenLens-{{ open_lens.version }}-alpha.2.amd64.deb'
     dest: '{{ temp_dir.path }}'
     checksum: 'sha256:{{ open_lens.sha }}'
 
@@ -23,3 +25,9 @@
     deb: '{{ temp_dir.path }}/OpenLens-{{ open_lens.version }}-alpha.2.amd64.deb'
   become: true
   when: not open_lens_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined

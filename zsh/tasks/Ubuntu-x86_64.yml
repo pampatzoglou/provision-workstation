@@ -80,7 +80,6 @@
       source <(kubectl completion zsh)
       source <(velero completion zsh)
       source <(helm completion zsh)
-      
 
       if [ -f $HOME/.env ]; then
           set -a

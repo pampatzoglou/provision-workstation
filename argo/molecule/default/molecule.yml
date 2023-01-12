@@ -12,7 +12,5 @@ platforms:
     pre_build_image: true
 provisioner:
   name: ansible
-  options:
-    vvv: True
 verifier:
   name: ansible

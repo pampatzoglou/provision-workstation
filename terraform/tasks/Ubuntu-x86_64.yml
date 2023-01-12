@@ -34,7 +34,7 @@
     owner: root
     group: root
     mode: a+x
-    remote_src: yes
+    remote_src: true
   become: true
   when: not terraform_installed.stat.exists
 
@@ -78,7 +78,7 @@
     owner: root
     group: root
     mode: a+x
-    remote_src: yes
+    remote_src: true
   become: true
   when: not tfsec_installed.stat.exists
 
@@ -122,7 +122,7 @@
     owner: root
     group: root
     mode: a+x
-    remote_src: yes
+    remote_src: true
   become: true
   when: not tflint_installed.stat.exists
 
