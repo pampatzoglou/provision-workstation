@@ -39,6 +39,7 @@
     dest: /usr/local/bin/stern
     owner: root
     mode: a+x
+    remote_src: yes
   become: true
   when: not stern_installed.stat.exists
 

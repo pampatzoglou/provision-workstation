@@ -2,10 +2,17 @@
 dependency:
   name: galaxy
 driver:
-  name: delegated
+  name: docker
 platforms:
-  - name: instance
+  - name: ubuntu
+    image: geerlingguy/docker-ubuntu2204-ansible
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
 provisioner:
   name: ansible
+  options:
+    vvv: True
 verifier:
   name: ansible

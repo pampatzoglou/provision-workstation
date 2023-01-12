@@ -2,12 +2,24 @@
 # tasks file for open-lens
 - name: Check if open-lens is installed
   ansible.builtin.stat:
-    path: /usr/bin/open-lens
+    path: /usr/bin/lens
   register: open_lens_installed
 
-- name: Install a open-lens.deb package from the internet.
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_dir
+  register: temp_dir
+  when: not open_lens_installed.stat.exists
+
+- name: Download file with check (sha256)
+  ansible.builtin.get_url:
+    url: 'https://github.com/MuhammedKalkan/OpenLens/releases/download/v{{ open_lens.version }}-alpha.2/OpenLens-{{ open_lens.version }}-alpha.2.amd64.deb'
+    dest: '{{ temp_dir.path }}'
+    checksum: 'sha256:{{ open_lens.sha }}'
+
+- name: Install a open-lens.deb package
   ansible.builtin.apt:
-    deb: >-
-      https://github.com/MuhammedKalkan/OpenLens/releases/download/v{{ open_lens.version }}/OpenLens-{{ open_lens.version }}.amd64.deb
+    deb: '{{ temp_dir.path }}/OpenLens-{{ open_lens.version }}-alpha.2.amd64.deb'
   become: true
   when: not open_lens_installed.stat.exists

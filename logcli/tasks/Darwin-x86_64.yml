@@ -33,6 +33,7 @@
     dest: /usr/local/bin/logcli
     owner: root
     mode: a+x
+    remote_src: yes
   become: true
   when: not loki_installed.stat.exists
 

@@ -55,7 +55,7 @@
 - name: Install zsh-autosuggestions for {{ user }}
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-autosuggestions.git
-    dest: /home/{{ user }}/.zsh-autosuggestions
+    dest: /home/{{ user }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions
     clone: true
     update: true
 
@@ -74,11 +74,13 @@
 
       ZSH_THEME="agnoster"
 
-      plugins=(git docker docker-compose github ipfs kubectl terraform ubuntu spotify go vscode)
+      plugins=(git docker docker-compose github kubectl terraform history ubuntu go vscode)
 
       source $ZSH/oh-my-zsh.sh
       source <(kubectl completion zsh)
       source <(velero completion zsh)
+      source <(helm completion zsh)
+      
 
       if [ -f $HOME/.env ]; then
           set -a
@@ -91,6 +93,7 @@
       fi
 
       autoload -U colors; colors
-      source ~/.zsh-kubectl-prompt/kubectl.zsh
+      source /home/{{ user }}/.zsh-kubectl-prompt/kubectl.zsh
       RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
+      curl wttr.in
       curl rate.sx/dot/eur@10d

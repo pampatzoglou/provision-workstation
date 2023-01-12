@@ -37,6 +37,7 @@
 #    owner: root
 #    group: root
 #    mode: a+x
+#    remote_src: yes
 #  become: true
 #  when: not gh_installed.stat.exists
 
