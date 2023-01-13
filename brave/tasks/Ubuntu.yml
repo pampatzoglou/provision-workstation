@@ -8,12 +8,10 @@
   become: true
 
 - name: Import Brave repo
-  ansible.builtin.copy:
-    dest: /etc/apt/sources.list.d/brave-browser-release
-    content: 'deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main'
-    owner: root
-    group: root
-    mode: '0644'
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main
+    state: present
+    filename: /etc/apt/sources.list.d/brave-browser-release
   become: true
 
 - name: Install Brave

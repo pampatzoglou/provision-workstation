@@ -54,12 +54,10 @@
   become: true
 
 - name: Add the Github CLI software repository
-  ansible.builtin.copy:
-    dest: /etc/apt/sources.list.d/github-cli
-    content: 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/githubcli.gpg] https://cli.github.com/packages stable main'
-    owner: root
-    group: root
-    mode: '0644'
+  ansible.builtin.apt_repository:
+    repo: 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/githubcli.gpg] https://cli.github.com/packages stable main'
+    state: present
+    filename: /etc/apt/sources.list.d/github-cli
   become: true
 
 - name: Get Github package
