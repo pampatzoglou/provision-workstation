@@ -18,60 +18,36 @@
     state: present
     update_homebrew: true
 
-- name: Setup global gitIgnore
-  ansible.builtin.blockinfile:
-    path: /Users/{{ user }}/.gitignore
-    create: true
+- name: Copy global gitIgnore
+  ansible.builtin.copy:
+    src: '{{ role_path }}/files/gitIgnore'
+    dest: '/Users/{{ user }}/.gitIgnore'
+    group: '{{ user }}'
     owner: '{{ user }}'
     mode: a+x
-    block: |
-      Thumbs.db
-      .DS_Store
-      .vscode
-      .idea
-      .env
-      *.env
 
-- name: Setup global git pre-commit hook
-  ansible.builtin.blockinfile:
-    path: /home/{{ user }}/.githooks/pre-commit
-    create: true
+- name: Create gitHooks directory (.gitHooks)
+  ansible.builtin.file:
+    path: '/Users/{{ user }}/.gitHooks'
+    state: directory
+    group: '{{ user }}'
+    owner: '{{ user }}'
+    mode: '0755'
+
+- name: Copy global gitHooks
+  ansible.builtin.copy:
+    src: '{{ item }}'
+    dest: '/Users/{{ user }}/.gitHooks'
+    group: '{{ user }}'
     owner: '{{ user }}'
     mode: a+x
-    block: |
-      #!/usr/bin/env bash
+  with_fileglob:
+    - '{{ role_path }}/files/hooks/*'
 
-      if git commit -v --dry-run | grep '!nocommit' >/dev/null 2>&1
-      then
-        echo "Trying to commit non-committable code."
-        echo "Remove the !nocommit string and try again."
-        exit 1
-      else
-        # Run local pre-commit hook if exists
-        if [ -e ./.git/hooks/pre-commit ]; then
-          ./.git/hooks/pre-commit "$@"
-        else
-          exit 0
-        fi
-      fi
-
-      if git rev-parse --verify HEAD >/dev/null 2>&1
-      then
-        against=HEAD
-      else
-        # Initial commit: diff against an empty tree object
-        against=$(git hash-object -t tree /dev/null)
-      fi
-
-      # Redirect output to stderr.
-      exec 1>&2
-
-      gittyleaks --no-banner --verbose
-
-      git secrets --pre_commit_hook -- "$@"
-
-      trufflehog git file://. --since-commit HEAD --only-verified --fail
-      trufflehog filesystem --directory=. --fail
+- name: Check if /home/{{ user }}/.gitconfig exists
+  ansible.builtin.stat:
+    path: /home/{{ user }}/.gitconfig
+  register: gitconfig_installed
 
 - name: Setting Up global Git
   ansible.builtin.blockinfile:
@@ -83,7 +59,7 @@
       [user]
           name = {{ user }}
       [core]
-          hooksPath = /Users/{{ user }}/.githooks
-          excludesfile = /Users/{{ user }}/.gitignore
+          hooksPath = /Users/{{ user }}/.gitHooks
+          excludesfile = /Users/{{ user }}/.gitIgnore
       [safe]
         directory = /github/workspace

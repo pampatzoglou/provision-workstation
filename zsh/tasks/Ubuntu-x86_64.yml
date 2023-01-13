@@ -5,6 +5,7 @@
     pkg:
       - curl
       - zsh
+      - zsh-syntax-highlighting
       - fonts-powerline
       - jq
     update_cache: true

@@ -1,1 +1,6 @@
 ---
+- name: Install cask with install options
+  community.general.homebrew_cask:
+    name: keepassxc
+    state: present
+    install_options: 'appdir=/Applications'
