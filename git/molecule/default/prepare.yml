@@ -1,0 +1,12 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: Ensure /home/root exists
+      ansible.builtin.file:
+        path: /home/root
+        state: directory
+        group: root
+        owner: root
+        mode: '0777'
+      become: true

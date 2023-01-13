@@ -21,7 +21,7 @@
 
 - name: Import VCode repo
   ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/microsoft.asc] https://packages.microsoft.com/repos/vscode stable main"
+    repo: 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/microsoft.asc] https://packages.microsoft.com/repos/vscode stable main'
     state: present
     filename: /etc/apt/sources.list.d/vscode
   become: true

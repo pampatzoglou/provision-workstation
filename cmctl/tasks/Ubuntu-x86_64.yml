@@ -12,7 +12,7 @@
   register: temp_dir
   when: not cert_manager_installed.stat.exists
 
-- name: Download cert manager (sha)
+- name: Download cert manager (sha256)
   ansible.builtin.get_url:
     url: 'https://github.com/cert-manager/cert-manager/releases/download/v{{ cert_manager.version }}/kubectl-cert_manager-linux-amd64.tar.gz'
     dest: '{{ temp_dir.path }}'

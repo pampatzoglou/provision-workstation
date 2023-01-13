@@ -12,7 +12,7 @@
   register: temp_dir
   when: not argo_installed.stat.exists
 
-- name: Download argo cli (sha)
+- name: Download argo cli (sha256)
   ansible.builtin.get_url:
     url: https://github.com/argoproj/argo-workflows/releases/download/v{{ argo.version }}/argo-linux-amd64.gz
     dest: '{{ temp_dir.path }}'

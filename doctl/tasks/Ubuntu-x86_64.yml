@@ -11,7 +11,7 @@
   register: temp_dir
   when: not doctl_installed.stat.exists
 
-- name: Download doctl (sha)
+- name: Download doctl (sha256)
   ansible.builtin.get_url:
     url: 'https://github.com/digitalocean/doctl/releases/download/v{{ doctl.version }}/doctl-{{ doctl.version }}-linux-amd64.tar.gz'
     dest: '{{ temp_dir.path }}'

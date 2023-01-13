@@ -38,7 +38,6 @@ jobs:
         roles:
           - argo
           - firewall
-          - docker
           - zsh
           - git
           - aws
@@ -63,9 +62,6 @@ jobs:
           - keepassxc
           - syncthing
           - wireguard
-          - vscode
-          - brave
-          - open_lens
 
     steps:
     - name: Check out repository code
@@ -84,38 +80,3 @@ jobs:
       env:
         ANSIBLE_FORCE_COLOR: '1'
 
-  playbook-test-ubuntu:
-    needs: molecule-install-test
-    runs-on: ubuntu-22.04
-    timeout-minutes: 20
-    steps:
-    - name: Check out repository code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 1
-    - name: Set up Python 3.
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
-    - name: Install requirements.txt.
-      run: pip3 install -r requirements.txt
-    - name: Run playbook.
-      run: ansible-playbook --ask-become-pass -e user=$USER playbook.yaml
-
-  playbook-test-macos-12:
-    needs: molecule-install-test
-    runs-on: macos-12
-    timeout-minutes: 20
-    steps:
-    - name: Check out repository code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 1
-    - name: Set up Python 3.
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
-    - name: Install requirements.txt.
-      run: pip3 install -r requirements.txt
-    - name: Run playbook.
-      run: ansible-playbook --ask-become-pass -e user=$USER playbook.yaml

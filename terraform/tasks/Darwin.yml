@@ -35,7 +35,7 @@
   register: temp_dir
   when: not terrascan_installed.stat.exists
 
-- name: Download terrascan (sha)
+- name: Download terrascan (sha256)
   ansible.builtin.get_url:
     url: 'https://github.com/tenable/terrascan/releases/download/v{{ terrascan.version }}/terrascan_{{ terrascan.version }}_Darwin_x86_64.tar.gz'
     dest: '{{ temp_dir.path }}'

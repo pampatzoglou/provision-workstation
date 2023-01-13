@@ -75,7 +75,7 @@
   register: temp_dir
   when: not trufflehog_installed.stat.exists
 
-- name: Download trufflehog (sha)
+- name: Download trufflehog (sha256)
   ansible.builtin.get_url:
     url: 'https://github.com/trufflesecurity/trufflehog/releases/download/v{{ trufflehog.version }}/trufflehog_{{ trufflehog.version }}_linux_amd64.tar.gz'
     dest: '{{ temp_dir.path }}'

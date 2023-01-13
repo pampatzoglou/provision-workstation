@@ -30,7 +30,7 @@
 
 - name: Add the Azure CLI software repository
   ansible.builtin.lineinfile:
-    path: /etc/apt/sources.list.d/azure-cli.list
+    path: /etc/apt/sources.list.d/azure-cli
     line: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/microsoft.asc] https://packages.microsoft.com/repos/azure-cli/ {{ lsb_release.stdout }} main
     create: true
     owner: root
@@ -57,7 +57,7 @@
   register: temp_dir
   when: not kubelogin_installed.stat.exists
 
-- name: Download kubelogin (sha)
+- name: Download kubelogin (sha256)
   ansible.builtin.get_url:
     url: 'https://github.com/Azure/kubelogin/releases/download/v{{ kubelogin.version }}/kubelogin-linux-amd64.zip'
     dest: '{{ temp_dir.path }}'

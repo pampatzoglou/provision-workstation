@@ -18,7 +18,7 @@
   register: temp_dir
   when: not stern_installed.stat.exists
 
-- name: Download stern (sha)
+- name: Download stern (sha256)
   ansible.builtin.get_url:
     url: 'https://github.com/stern/stern/releases/download/v{{ stern.version }}/stern_{{ stern.version }}_darwin_amd64.tar.gz'
     dest: '{{ temp_dir.path }}'

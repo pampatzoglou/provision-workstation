@@ -12,7 +12,7 @@
   register: temp_dir
   when: not terraform_installed.stat.exists
 
-- name: Download terraform (sha)
+- name: Download terraform (sha256)
   ansible.builtin.get_url:
     url: 'https://releases.hashicorp.com/terraform/{{ terraform.version }}/terraform_{{ terraform.version }}_linux_amd64.zip'
     dest: '{{ temp_dir.path }}'
@@ -56,7 +56,7 @@
   register: temp_dir
   when: not tfsec_installed.stat.exists
 
-- name: Download tfsec (sha)
+- name: Download tfsec (sha256)
   ansible.builtin.get_url:
     url: 'https://github.com/aquasecurity/tfsec/releases/download/v{{ tfsec.version }}/tfsec_{{ tfsec.version }}_linux_amd64.tar.gz'
     dest: '{{ temp_dir.path }}'
@@ -100,7 +100,7 @@
   register: temp_dir
   when: not tflint_installed.stat.exists
 
-- name: Download tflint (sha)
+- name: Download tflint (sha256)
   ansible.builtin.get_url:
     url: 'https://github.com/terraform-linters/tflint/releases/download/v{{ tflint.version }}/tflint_linux_amd64.zip'
     dest: '{{ temp_dir.path }}'
@@ -144,7 +144,7 @@
   register: temp_dir
   when: not terrascan_installed.stat.exists
 
-- name: Download terrascan (sha)
+- name: Download terrascan (sha256)
   ansible.builtin.get_url:
     url: 'https://github.com/tenable/terrascan/releases/download/v{{ terrascan.version }}/terrascan_{{ terrascan.version }}_Linux_x86_64.tar.gz'
     dest: '{{ temp_dir.path }}'

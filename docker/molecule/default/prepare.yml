@@ -2,10 +2,10 @@
 - name: Prepare
   hosts: all
   tasks:
-    - name: Update repositories cache and install "ufw" package
+    - name: Update repositories cache and install "gpg" package
       ansible.builtin.apt:
         pkg:
-          - ufw
+          - gpg
         update_cache: true
         state: present
       become: true

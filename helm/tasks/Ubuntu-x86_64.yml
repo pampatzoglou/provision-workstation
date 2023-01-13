@@ -12,7 +12,7 @@
   register: temp_dir
   when: not helm_installed.stat.exists
 
-- name: Download helm (sha)
+- name: Download helm (sha256)
   ansible.builtin.get_url:
     url: 'https://get.helm.sh/helm-v{{ helm.version }}-linux-amd64.tar.gz'
     dest: '{{ temp_dir.path }}'
@@ -47,7 +47,7 @@
     path: /usr/local/bin/helmfile
   register: helmfile_installed
 
-- name: Download helmfile (sha)
+- name: Download helmfile (sha256)
   ansible.builtin.get_url:
     url: 'https://github.com/helmfile/helmfile/releases/download/v{{ helmfile.version }}/helmfile_{{ helmfile.version }}_linux_amd64.tar.gz'
     dest: '{{ temp_dir.path }}'

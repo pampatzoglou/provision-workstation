@@ -18,7 +18,7 @@
   register: temp_dir
   when: not gh_installed.stat.exists
 
-- name: Download gh cli (sha)
+- name: Download gh cli (sha256)
   ansible.builtin.get_url:
     url: https://github.com/nektos/act/releases/download/v0.2.35/act_Darwin_x86_64.tar.gz
     dest: '{{ temp_dir.path }}'

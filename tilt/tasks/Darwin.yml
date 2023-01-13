@@ -11,7 +11,7 @@
   register: temp_dir
   when: not ctlptl_installed.stat.exists
 
-- name: Download ctlptl (sha)
+- name: Download ctlptl (sha256)
   ansible.builtin.get_url:
     url: 'https://github.com/tilt-dev/ctlptl/releases/download/v{{ ctlptl.version }}/ctlptl.{{ ctlptl.version }}.linux.x86_64.tar.gz'
     dest: '{{ temp_dir.path }}'
@@ -54,7 +54,7 @@
   register: temp_dir
   when: not tilt_installed.stat.exists
 
-- name: Download tilt (sha)
+- name: Download tilt (sha256)
   ansible.builtin.get_url:
     url: https://github.com/tilt-dev/tilt/releases/download/v{{ tilt.version }}/tilt.{{ tilt.version }}.darwin.x86_64.tar.gz
     dest: '{{ temp_dir.path }}'
