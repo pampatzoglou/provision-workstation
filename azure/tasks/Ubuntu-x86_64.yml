@@ -24,25 +24,21 @@
   ansible.builtin.tempfile:
     state: directory
     suffix: temp_dir
-    change_when: false
   register: temp_dir
 
 - name: Download Azure public key
   ansible.builtin.get_url:
     url: https://packages.microsoft.com/keys/microsoft.asc
     dest: '{{ temp_dir.path }}/microsoft.asc'
-    change_when: false
 
 - name: Save Azure official GPG key
   ansible.builtin.shell: 'cat {{ temp_dir.path }}/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.gpg'
   become: true
-  change_when: false
 
 - name: Remove the temporary dir
   ansible.builtin.file:
     path: '{{ temp_dir.path }}'
     state: absent
-    change_when: false
   when: temp_dir.path is defined
 
 - name: Add the Azure CLI software repository
