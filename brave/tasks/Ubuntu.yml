@@ -14,13 +14,10 @@
     filename: /etc/apt/sources.list.d/brave-browser-release
   become: true
 
-- name: Run the equivalent of "apt-get update" as a separate step
-  ansible.builtin.apt:
-    update_cache: true
-  become: true
-
-- name: Get packages needed for vscode
+- name: Install Brave
   ansible.builtin.apt:
     pkg:
       - brave-browser
+    update_cache: true
+    state: present
   become: true

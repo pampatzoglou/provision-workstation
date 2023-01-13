@@ -1,9 +1,10 @@
 ---
-# tasks file for k6s
 - name: Import k6s key
   ansible.builtin.apt_key:
-    keyserver: hkp://keyserver.ubuntu.com:80
     id: C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+    keyserver: keyserver.ubuntu.com
+    keyring: /etc/apt/trusted.gpg.d/k6s.gpg
+    state: present
   become: true
 
 - name: Import k6s repo
@@ -13,13 +14,10 @@
     filename: /etc/apt/sources.list.d/k6
   become: true
 
-- name: Run the equivalent of "apt-get update" as a separate step
-  ansible.builtin.apt:
-    update_cache: true
-  become: true
-
 - name: Install k6s
   ansible.builtin.apt:
     pkg:
       - k6
+    update_cache: true
+    state: present
   become: true

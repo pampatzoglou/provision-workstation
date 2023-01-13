@@ -18,13 +18,10 @@
     filename: /etc/apt/sources.list.d/teleport
   become: true
 
-- name: Run the equivalent of "apt-get update" as a separate step
-  ansible.builtin.apt:
-    update_cache: true
-  become: true
-
 - name: Install teleport
   ansible.builtin.apt:
     pkg:
       - teleport
+    update_cache: true
+    state: present
   become: true

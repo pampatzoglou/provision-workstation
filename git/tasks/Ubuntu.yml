@@ -1,80 +1,38 @@
 ---
 # tasks file for git
-- name: Run the equivalent of "apt-get update" as a separate step
-  ansible.builtin.apt:
-    update_cache: true
-  become: true
-
-- name: Get packages needed for git
+- name: Install git
   ansible.builtin.apt:
     pkg:
       - git
+    update_cache: true
+    state: present
   become: true
 
-- name: Create gitConfig directory (.git)
+- name: Copy global gitIgnore
+  ansible.builtin.copy:
+    src: '{{ role_path }}/files/gitIgnore'
+    dest: '/home/{{ user }}/.gitIgnore'
+    group: '{{ user }}'
+    owner: '{{ user }}'
+    mode: a+x
+
+- name: Create gitHooks directory (.gitHooks)
   ansible.builtin.file:
-    path: /home/{{ user }}/.git
+    path: '/home/{{ user }}/.gitHooks'
     state: directory
     group: '{{ user }}'
     owner: '{{ user }}'
     mode: '0755'
 
-- name: Setup global gitIgnore
-  ansible.builtin.blockinfile:
-    path: /home/{{ user }}/.git/.gitignore
-    create: true
+- name: Copy global gitHooks
+  ansible.builtin.copy:
+    src: '{{ item }}'
+    dest: '/home/{{ user }}/.gitHooks'
     group: '{{ user }}'
     owner: '{{ user }}'
     mode: a+x
-    block: |
-      Thumbs.db
-      .DS_Store
-      .vscode
-      .idea
-      .env
-      *.env
-
-- name: Setup global git pre-commit hook
-  ansible.builtin.blockinfile:
-    path: /home/{{ user }}/.git/hooks/pre-commit
-    create: true
-    group: '{{ user }}'
-    owner: '{{ user }}'
-    mode: a+x
-    block: |
-      #!/usr/bin/env bash
-
-      if git commit -v --dry-run | grep '!nocommit' >/dev/null 2>&1
-      then
-        echo "Trying to commit non-committable code."
-        echo "Remove the !nocommit string and try again."
-        exit 1
-      else
-        # Run local pre-commit hook if exists
-        if [ -e ./.git/hooks/pre-commit ]; then
-          ./.git/hooks/pre-commit "$@"
-        else
-          exit 0
-        fi
-      fi
-
-      if git rev-parse --verify HEAD >/dev/null 2>&1
-      then
-        against=HEAD
-      else
-        # Initial commit: diff against an empty tree object
-        against=$(git hash-object -t tree /dev/null)
-      fi
-
-      # Redirect output to stderr.
-      exec 1>&2
-
-      gittyleaks --no-banner --verbose
-
-      git secrets --pre_commit_hook -- "$@"
-
-      trufflehog git file://. --since-commit HEAD --only-verified --fail
-      trufflehog filesystem --directory=. --fail
+  with_fileglob:
+    - '{{ role_path }}/files/hooks/*'
 
 - name: Check if /home/{{ user }}/.gitconfig exists
   ansible.builtin.stat:
@@ -93,8 +51,8 @@
           name = {{ user }}
           email = you@example.com
       [core]
-          hooksPath = /home/{{ user }}/.git/hooks
-          excludesfile = /home/{{ user }}/.git/.gitignore
+          hooksPath = /home/{{ user }}/.gitHooks
+          excludesfile = /home/{{ user }}/.gitIgnore
       [safe]
         directory = /github/workspace
   when: not gitconfig_installed.stat.exists

@@ -9,11 +9,10 @@
    - docker
    - zsh
    - git
-   - argo
    - aws
    - azure
    - doctl
-   # todo - gcp
+   - gcp
    - kubectl
    - helm
    - terraform

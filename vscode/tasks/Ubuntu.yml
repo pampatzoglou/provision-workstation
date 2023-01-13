@@ -1,16 +1,13 @@
 ---
 # tasks file for vscode
-- name: Run the equivalent of "apt-get update" as a separate step
-  ansible.builtin.apt:
-    update_cache: true
-  become: true
-
-- name: Get packages needed for vscode
+- name: Install packages needed for vscode
   ansible.builtin.apt:
     pkg:
       - wget
       - gpg
       - apt-transport-https
+    update_cache: true
+    state: present
   become: true
 
 - name: Add key
@@ -29,13 +26,10 @@
     filename: /etc/apt/sources.list.d/vscode
   become: true
 
-- name: Run the equivalent of "apt-get update" as a separate step
-  ansible.builtin.apt:
-    update_cache: true
-  become: true
-
 - name: Install VCode
   ansible.builtin.apt:
     pkg:
       - code
+    update_cache: true
+    state: present
   become: true
