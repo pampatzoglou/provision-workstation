@@ -9,13 +9,15 @@
   become: true
 
 - name: Import Teleport repo
-  ansible.builtin.apt_repository:
-    repo: >
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/teleport
+    content: >
       deb [signed-by=/etc/apt/trusted.gpg.d/teleport.asc]
       https://apt.releases.teleport.dev/ubuntu {{ ansible_facts.distribution_release }}
       stable/v11
-    state: present
-    filename: /etc/apt/sources.list.d/teleport
+    owner: root
+    group: root
+    mode: '0644'
   become: true
 
 - name: Install teleport

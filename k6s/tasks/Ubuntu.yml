@@ -8,10 +8,12 @@
   become: true
 
 - name: Import k6s repo
-  ansible.builtin.apt_repository:
-    repo: deb https://dl.k6.io/deb stable main
-    state: present
-    filename: /etc/apt/sources.list.d/k6
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/k6
+    content: 'deb https://dl.k6.io/deb stable main'
+    owner: root
+    group: root
+    mode: '0644'
   become: true
 
 - name: Install k6s

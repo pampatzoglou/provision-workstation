@@ -9,12 +9,12 @@
   become: true
 
 - name: Import Syncthing repo
-  ansible.builtin.apt_repository:
-    repo: >
-      deb [signed-by=/etc/apt/trusted.gpg.d/syncthing.txt]
-      https://apt.syncthing.net/ syncthing release
-    state: present
-    filename: /etc/apt/sources.list.d/syncthing
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/syncthing
+    content: 'deb [signed-by=/etc/apt/trusted.gpg.d/syncthing.txt] https://apt.syncthing.net/ syncthing release'
+    owner: root
+    group: root
+    mode: '0644'
   become: true
 
 - name: Update repositories cache and install "syncthing" package

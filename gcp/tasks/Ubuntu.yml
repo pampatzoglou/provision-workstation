@@ -9,7 +9,7 @@
   become: true
 
 - name: Import Google Cloud repo
-  ansible.builtin.apt_repository:
+  ansible.builtin.copy:
     repo: deb [signed-by=/etc/apt/trusted.gpg.d/google.gpg] https://packages.cloud.google.com/apt cloud-sdk main
     state: present
     filename: /etc/apt/sources.list.d/google-cloud-sdk

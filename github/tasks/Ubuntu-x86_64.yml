@@ -54,10 +54,9 @@
   become: true
 
 - name: Add the Github CLI software repository
-  ansible.builtin.lineinfile:
-    path: /etc/apt/sources.list.d/github-cli
-    line: "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/githubcli.gpg] https://cli.github.com/packages stable main"
-    create: true
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/github-cli
+    content: 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/githubcli.gpg] https://cli.github.com/packages stable main'
     owner: root
     group: root
     mode: '0644'
