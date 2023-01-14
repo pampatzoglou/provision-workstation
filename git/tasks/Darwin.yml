@@ -22,7 +22,6 @@
   ansible.builtin.copy:
     src: '{{ role_path }}/files/gitIgnore'
     dest: '/Users/{{ user }}/.gitIgnore'
-    group: '{{ user }}'
     owner: '{{ user }}'
     mode: a+x
 
@@ -30,7 +29,6 @@
   ansible.builtin.file:
     path: '/Users/{{ user }}/.gitHooks'
     state: directory
-    group: '{{ user }}'
     owner: '{{ user }}'
     mode: '0755'
 
@@ -38,7 +36,6 @@
   ansible.builtin.copy:
     src: '{{ item }}'
     dest: '/Users/{{ user }}/.gitHooks'
-    group: '{{ user }}'
     owner: '{{ user }}'
     mode: a+x
   with_fileglob:
