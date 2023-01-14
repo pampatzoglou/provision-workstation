@@ -13,7 +13,15 @@
     update_homebrew: true
 
 - name: Install Azure VPN Client
-  community.general.mas:
-    id:
-      - 1553936137
-    state: latest
+  block:
+    - name: Install mas
+      community.general.homebrew:
+        name: mas
+        state: present
+        update_homebrew: true
+
+    - name: Install Azure VPN Client
+      community.general.mas:
+        id:
+          - 1553936137
+        state: latest
