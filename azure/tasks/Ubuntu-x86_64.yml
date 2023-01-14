@@ -20,20 +20,28 @@
   register: lsb_release
   changed_when: false
 
+- name: Check if Azure public key installed
+  ansible.builtin.stat:
+    path: /etc/apt/trusted.gpg.d/microsoft.gpg
+  register: microsoft_installed
+
 - name: Create temporary build directory
   ansible.builtin.tempfile:
     state: directory
     suffix: temp_dir
   register: temp_dir
+  when: not microsoft_installed.stat.exists
 
 - name: Download Azure public key
   ansible.builtin.get_url:
     url: https://packages.microsoft.com/keys/microsoft.asc
     dest: '{{ temp_dir.path }}/microsoft.asc'
+  when: not microsoft_installed.stat.exists
 
 - name: Save Azure official GPG key
   ansible.builtin.shell: 'cat {{ temp_dir.path }}/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.gpg'
   become: true
+  when: not microsoft_installed.stat.exists
 
 - name: Remove the temporary dir
   ansible.builtin.file:
