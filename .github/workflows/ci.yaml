@@ -74,7 +74,7 @@ jobs:
         python-version: '3.x'
     - name: Generate sha for role ${{ matrix.roles }}
       run: | 
-        echo "::set-output name=sha::$(find ${{ matrix.roles }} -type f -print0 | xargs -0 sha1sum | sha1sum | awk '{print $1;}')"
+        find ${{ matrix.roles }} -type f -print0 | xargs -0 sha1sum | sha1sum | awk '{print $1;}' > ${{ matrix.roles }}.sha
     - name: Cache roles sha
       id: cache-roles-sha
       uses: actions/cache@v3
@@ -88,4 +88,14 @@ jobs:
     #    molecule_working_dir: ${{ matrix.roles }}
     #  env:
     #    ANSIBLE_FORCE_COLOR: '1'
-
+    - name: Upload Artifact
+      if: github.ref == 'refs/heads/main'
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.roles }} role
+        path: ${{ matrix.roles }}
+        retention-days: 90
+    - name: Setup tmate session
+      if: ${{ failure() }}
+      uses: mxschmitt/action-tmate@v3
+      timeout-minutes: 10
