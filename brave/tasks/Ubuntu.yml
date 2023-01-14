@@ -9,7 +9,7 @@
 
 - name: Import Brave repo
   ansible.builtin.apt_repository:
-    repo: deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main
+    repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/brave-browser-release.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main
     state: present
     filename: /etc/apt/sources.list.d/brave-browser-release
   become: true
