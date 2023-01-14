@@ -22,6 +22,8 @@
     url: https://github.com/mikefarah/yq/releases/download/v{{ yq.version }}/yq_linux_amd64
     dest: /usr/local/bin/yq
     checksum: sha256:{{ yq.sha }}
+    owner: root
+    group: root
     mode: a+x
   become: true
   when: not yq_installed.stat.exists

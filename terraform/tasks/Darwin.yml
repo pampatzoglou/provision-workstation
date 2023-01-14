@@ -54,8 +54,7 @@
   ansible.builtin.copy:
     src: '{{ temp_dir.path }}/terrascan'
     dest: /usr/local/bin/terrascan
-    owner: root
-    group: root
+    owner: '{{ user }}'
     mode: a+x
     remote_src: true
   become: true

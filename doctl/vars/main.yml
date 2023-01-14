@@ -5,4 +5,4 @@ doctl:
   sha:
     amd64:
       linux: e6766c662b9e2d0df729ba539c07dfa01c237eaffa0b4cbb1832b6cd55761ec9
-      darwin: e6766c662b9e2d0df729ba539c07dfa01c237eaffa0b4cbb1832b6cd55761ec9
+      darwin: 9689049ebb8eb1acb67d7394e7ba3599bce586576355b9bc9bce6a6a211b9eb7

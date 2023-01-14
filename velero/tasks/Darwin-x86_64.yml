@@ -30,8 +30,7 @@
   ansible.builtin.copy:
     src: '{{ temp_dir.path }}/velero-v{{ velero.version }}-linux-amd64/velero'
     dest: /usr/local/bin/velero
-    owner: root
-    group: root
+    owner: '{{ user }}'
     mode: a+x
     remote_src: true
   become: true

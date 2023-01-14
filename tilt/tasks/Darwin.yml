@@ -30,8 +30,7 @@
   ansible.builtin.copy:
     src: '{{ temp_dir.path }}/ctlptl'
     dest: /usr/local/bin/ctlptl
-    owner: root
-    group: root
+    owner: '{{ user }}'
     mode: a+x
   become: true
   when: not ctlptl_installed.stat.exists
@@ -73,8 +72,7 @@
   ansible.builtin.copy:
     src: '{{ temp_dir.path }}/tilt'
     dest: /usr/local/bin/tilt
-    owner: root
-    group: root
+    owner: '{{ user }}'
     mode: a+x
     remote_src: true
   become: true

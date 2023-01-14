@@ -31,7 +31,7 @@
   ansible.builtin.copy:
     src: '{{ temp_dir.path }}/logcli-darwin-amd64'
     dest: /usr/local/bin/logcli
-    owner: root
+    owner: '{{ user }}'
     mode: a+x
     remote_src: true
   become: true

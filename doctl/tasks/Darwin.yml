@@ -15,7 +15,7 @@
   ansible.builtin.get_url:
     url: 'https://github.com/digitalocean/doctl/releases/download/v{{ doctl.version }}/doctl-{{ doctl.version }}-darwin-amd64.tar.gz'
     dest: '{{ temp_dir.path }}'
-    checksum: 'sha256:{{ doctl.sha.darwin.linux }}'
+    checksum: 'sha256:{{ doctl.sha.amd64.darwin }}'
     mode: a+x
   when: not doctl_installed.stat.exists
 
@@ -30,8 +30,7 @@
   ansible.builtin.copy:
     src: '{{ temp_dir.path }}/doctl'
     dest: /usr/local/bin/doctl
-    owner: root
-    group: root
+    owner: '{{ user }}'
     mode: a+x
     remote_src: true
   become: true

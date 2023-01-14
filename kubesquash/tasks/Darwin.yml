@@ -11,3 +11,5 @@
     checksum: 'sha256:123'
     mode: '0744'
   when: not kubesquash_installed.stat.exists
+
+  # todo: fix

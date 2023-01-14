@@ -34,8 +34,7 @@
 #  ansible.builtin.copy:
 #    src: '{{ temp_dir.path }}/argo-linux-amd64'
 #    dest: /usr/local/bin/argo
-#    owner: root
-#    group: root
+#    owner: '{{ user }}'
 #    mode: a+x
 #    remote_src: true
 #  become: true

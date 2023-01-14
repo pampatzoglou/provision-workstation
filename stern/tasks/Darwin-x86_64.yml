@@ -37,7 +37,7 @@
   ansible.builtin.copy:
     src: '{{ temp_dir.path }}/stern'
     dest: /usr/local/bin/stern
-    owner: root
+    owner: '{{ user }}'
     mode: a+x
     remote_src: true
   become: true

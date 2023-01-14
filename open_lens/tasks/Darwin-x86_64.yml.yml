@@ -12,3 +12,5 @@
     checksum: 'sha256:123'
     mode: '0744'
   when: not openlens_installed.stat.exists
+
+  # todo: install darwin
