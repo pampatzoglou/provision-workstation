@@ -75,6 +75,7 @@ jobs:
     - name: Generate sha for role ${{ matrix.roles }}
       run: | 
         find ${{ matrix.roles }} -type f -print0 | xargs -0 sha1sum | sha1sum | awk '{print $1;}' > ${{ matrix.roles }}.sha
+        cat ${{ matrix.roles }}.sha
     - name: Cache roles sha
       id: cache-roles-sha
       uses: actions/cache@v3
