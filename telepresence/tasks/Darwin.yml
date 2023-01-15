@@ -1,0 +1,7 @@
+---
+# tasks file for telepresence
+- name: Install telepresence.io
+  community.general.homebrew:
+    name: datawire/blackbird/telepresence
+    state: present
+    update_homebrew: true

@@ -15,9 +15,9 @@
    #- gcp
    #- kubectl
    #- helm
-   - terraform
-   - tilt
-   - teleport
+   #- terraform
+   #- tilt
+   #- teleport
    - telepresence
    - velero
    - cmctl
