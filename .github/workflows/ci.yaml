@@ -37,31 +37,42 @@ jobs:
       matrix:
         roles:
           - argo
-          - firewall
-          - zsh
-          - git
           - aws
           - azure
+          - brave
+          - cmctl
+          - copper
+          - display_link
+          - docker
           - doctl
+          # - falco
+          - firewall
           - gcp
-          - kubectl
+          - git
+          - github
           - helm
-          - terraform
-          - tilt
+          - k6s
+          - keepassxc
+          - kind
+          # - kube_bench
+          # - kube_hunter
+          # - kube_linter
+          - kubectl
+          # - kubesquash
+          - logcli
+          - open_lens
+          # - open_policy_agent
+          # - pcloud
+          - stern
+          - syncthing
           - teleport
           - telepresence
+          - terraform
+          - tilt
           - velero
-          - cmctl
-          - logcli
-          - k6s
-          - kind
-          - github
-          - kube_bench
-          - stern
-          - copper
-          - keepassxc
-          - syncthing
+          - vscode
           - wireguard
+          - zsh
 
     steps:
     - name: Check out repository code

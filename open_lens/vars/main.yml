@@ -1,5 +1,4 @@
 ---
 # vars file for open-lens
 open_lens:
-  version: 6.4.0
-  sha: 3f461ac30ca1415a1c1a4a970d877bc2c20f524a764aae9e9e8db0d2de5db7c1
+  version: 6.3.0

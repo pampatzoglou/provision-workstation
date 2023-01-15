@@ -4,38 +4,41 @@
   hosts: localhost
   gather_facts: true
   roles:
-   - firewall
-   - docker
-   - zsh
-   - git
-   - aws
-   - azure
-   - doctl
-   - gcp
-   - kubectl
-   - helm
-   - terraform
-   - tilt
-   - teleport
-   - telepresenc
-   - argo
-   - velero
-   - cmctl
-   - logcli
-   - k6s
-   - kind
-   - github
-   - kube_bench
-   - stern
-   - copper
-   - keepassxc
-   - syncthing
-   - wireguard
-   - vscode
-   - brave
-   - open_lens
-   # todo: kube-linter
-   # todo: open policy agent
-   # todo: kube-hunter
-   # todo: kubesquash
-   # todo: falco
+    - open_lens
+    - argo
+    - aws
+    - azure
+    - brave
+    - cmctl
+    - copper
+    - display_link
+    - docker
+    - doctl
+    # - falco
+    - firewall
+    - gcp
+    - git
+    - github
+    - helm
+    - k6s
+    - keepassxc
+    - kind
+    # - kube_bench
+    # - kube_hunter
+    # - kube_linter
+    - kubectl
+    # - kubesquash
+    - logcli
+    - open_lens
+    # - open_policy_agent
+    # - pcloud
+    - stern
+    - syncthing
+    - teleport
+    - telepresence
+    - terraform
+    - tilt
+    - velero
+    - vscode
+    - wireguard
+    - zsh
