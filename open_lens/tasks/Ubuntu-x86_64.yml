@@ -18,7 +18,7 @@
       'https://github.com/MuhammedKalkan/OpenLens/releases/download/v{{ open_lens.version }}/OpenLens-{{ open_lens.version }}.amd64.deb'
     dest: '{{ temp_dir.path }}'
     checksum: 'sha256:https://github.com/MuhammedKalkan/OpenLens/releases/download/v{{ open_lens.version }}/OpenLens-{{ open_lens.version }}.amd64.deb.sha256'
-    
+
 - name: Install a openLens.deb package
   ansible.builtin.apt:
     deb: '{{ temp_dir.path }}/OpenLens-{{ open_lens.version }}.amd64.deb'

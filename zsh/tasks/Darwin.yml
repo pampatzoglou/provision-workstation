@@ -1,5 +1,11 @@
 ---
 # tasks file for zsh
+- name: Install yamllint
+  community.general.homebrew:
+    name: yamllint
+    state: present
+    update_homebrew: true
+
 - name: Installing Oh-My-Zsh for {{ user }}
   ansible.builtin.git:
     repo: https://github.com/ohmyzsh/ohmyzsh.git
