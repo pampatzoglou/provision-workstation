@@ -4,7 +4,7 @@
     path: /usr/local/bin/kubesquash
   register: kubesquash_installed
 
-- name: Download helmfile (sha256)
+- name: Download squashctl (sha256)
   ansible.builtin.get_url:
     url: 'https://github.com/solo-io/squash/releases/download/v0.5.18/squashctl-darwin'
     dest: '{{ temp_dir.path }}'

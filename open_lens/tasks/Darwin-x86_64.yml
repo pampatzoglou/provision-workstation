@@ -1,0 +1,32 @@
+---
+# tasks file for open-lens
+- name: Check if open-lens is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/open-lens
+  register: openlens_installed
+
+- name: Install, configure, OpenLens
+  block:
+    - name: Create temporary build directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: temp_dir
+      register: temp_dir
+
+    - name: Download OpenLens (sha256)
+      ansible.builtin.get_url:
+        url: 'https://github.com/MuhammedKalkan/OpenLens/releases/download/v6.3.0/OpenLens-6.3.0.dmg'
+        dest: '{{ temp_dir.path }}/OpenLens.dmg'
+        checksum: sha256:2eb1848bb189041c4475054631a5b33a8ccd00c6eedbb74776b3dd1f54db7898
+        mode: '0777'
+
+    # TODO '{{ temp_dir.path }}/OpenLens.dmg'
+
+    #- name: Remove the temporary dir
+    #  ansible.builtin.file:
+    #    path: '{{ temp_dir.path }}'
+    #    state: absent
+    #  when: temp_dir.path is defined
+
+  when: not openlens_installed.stat.exists
+  become: true

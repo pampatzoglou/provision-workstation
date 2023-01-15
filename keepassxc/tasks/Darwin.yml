@@ -1,5 +1,5 @@
 ---
-- name: Install cask with install options
+- name: Install KeepassXC
   community.general.homebrew_cask:
     name: keepassxc
     state: present

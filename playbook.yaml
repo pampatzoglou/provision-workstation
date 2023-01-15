@@ -4,21 +4,21 @@
   hosts: localhost
   gather_facts: true
   roles:
-   #- argo
-   #- firewall
-   #- docker
-   #- zsh
-   #- git
-   #- aws
-   #- azure
-   #- doctl
-   #- gcp
-   #- kubectl
-   #- helm
-   #- terraform
-   #- tilt
-   #- teleport
-   - telepresence
+   - firewall
+   - docker
+   - zsh
+   - git
+   - aws
+   - azure
+   - doctl
+   - gcp
+   - kubectl
+   - helm
+   - terraform
+   - tilt
+   - teleport
+   - telepresenc
+   - argo
    - velero
    - cmctl
    - logcli
@@ -37,4 +37,5 @@
    # todo: kube-linter
    # todo: open policy agent
    # todo: kube-hunter
+   # todo: kubesquash
    # todo: falco
