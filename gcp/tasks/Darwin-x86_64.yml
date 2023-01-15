@@ -1,0 +1,58 @@
+- name: Check if gcp sdk is installed
+  ansible.builtin.stat:
+    path: /Users/{{ user }}/.local/share//google-cloud-sdk
+  register: gcp_installed
+
+- name: Install, configure, gcp
+  block:
+    - name: Create temporary build directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: temp_dir
+      register: temp_dir
+
+    - name: Download gcp sdk (sha256)
+      ansible.builtin.get_url:
+        url: https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-413.0.0-darwin-x86_64.tar.gz
+        dest: '{{ temp_dir.path }}'
+        checksum: sha256:b07c3a2dfc39058e3fb49f16d443e4b4eaeaae8ed64dc684ad388ffad0a05ca7
+        mode: '0777'
+
+    - name: Unarchive gcp
+      ansible.builtin.unarchive:
+        src: '{{ temp_dir.path }}/google-cloud-cli-413.0.0-darwin-x86_64.tar.gz'
+        dest: '{{ temp_dir.path }}'
+        remote_src: true
+
+    - name: Install gcp
+      ansible.builtin.copy:
+        src: '{{ temp_dir.path }}/google-cloud-sdk'
+        dest: '/Users/{{ user }}/.local/share'
+        owner: '{{ user }}'
+        mode: a+x
+        remote_src: true
+
+    - name: Remove the temporary dir
+      ansible.builtin.file:
+        path: '{{ temp_dir.path }}'
+        state: absent
+      when: temp_dir.path is defined
+
+    - name: Add to path message
+      ansible.builtin.debug:
+        msg: |
+          (Optional) Use the install script to add gcloud CLI tools to your PATH
+          '/Users/{{ user }}/.local/share//google-cloud-sdk/install.sh'
+
+    - name: To initialize the gcloud CLI message
+      ansible.builtin.debug:
+        msg: |
+          (Optional) To initialize the gcloud CLI, run
+          '/Users/{{ user }}/.local/share//google-cloud-sdk/bin/gcloud init'
+
+  when: not gcp_installed.stat.exists
+  become: true
+
+
+
+
