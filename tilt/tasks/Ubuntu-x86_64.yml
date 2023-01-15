@@ -59,7 +59,7 @@
   ansible.builtin.get_url:
     url: https://github.com/tilt-dev/tilt/releases/download/v{{ tilt.version }}/tilt.{{ tilt.version }}.linux.x86_64.tar.gz
     dest: '{{ temp_dir.path }}'
-    checksum: sha256:{{ tilt.sha }}
+    checksum: 'sha256:{{ tilt.sha.x86_64.linux }}'
     mode: '0744'
   when: not tilt_installed.stat.exists
 

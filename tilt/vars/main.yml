@@ -7,4 +7,7 @@ ctlptl:
 
 tilt:
   version: 0.31.1
-  sha: 0f39b125ba89ed5d6bd37072ca1610068c6e8cc08a7f226a00e755ed7f57ff0e
+  sha:
+    x86_64:
+      linux: 0f39b125ba89ed5d6bd37072ca1610068c6e8cc08a7f226a00e755ed7f57ff0e
+      mac: fca5ef5bb9086ff974a061bce1b484268ee72508a280cdb17e64a1c1d77b5901

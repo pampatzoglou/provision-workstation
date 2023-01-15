@@ -55,15 +55,15 @@
 
 - name: Download tilt (sha256)
   ansible.builtin.get_url:
-    url: https://github.com/tilt-dev/tilt/releases/download/v{{ tilt.version }}/tilt.{{ tilt.version }}.darwin.x86_64.tar.gz
+    url: 'https://github.com/tilt-dev/tilt/releases/download/v{{ tilt.version }}/tilt.{{ tilt.version }}.mac.x86_64.tar.gz'
     dest: '{{ temp_dir.path }}'
-    checksum: sha256:{{ tilt.sha }}
+    checksum: 'sha256:{{ tilt.sha.x86_64.mac }}'
     mode: '0744'
   when: not tilt_installed.stat.exists
 
 - name: Unarchive tilt
   ansible.builtin.unarchive:
-    src: '{{ temp_dir.path }}/tilt.{{ tilt.version }}.darwin.x86_64.tar.gz'
+    src: '{{ temp_dir.path }}/tilt.{{ tilt.version }}.mac.x86_64.tar.gz'
     dest: '{{ temp_dir.path }}'
     remote_src: true
   when: not tilt_installed.stat.exists
