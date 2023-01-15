@@ -45,12 +45,12 @@
 
 - name: Unarchive terrascan
   ansible.builtin.unarchive:
-    src: '{{ temp_dir.path }}/terrascan_{{ terrascan.version }}_Linux_x86_64.tar.gz'
+    src: '{{ temp_dir.path }}/terrascan_{{ terrascan.version }}_Darwin_x86_64.tar.gz'
     dest: '{{ temp_dir.path }}'
     remote_src: true
   when: not terrascan_installed.stat.exists
 
-- name: Install tfsec
+- name: Install terrascan
   ansible.builtin.copy:
     src: '{{ temp_dir.path }}/terrascan'
     dest: /usr/local/bin/terrascan

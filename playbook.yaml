@@ -4,17 +4,17 @@
   hosts: localhost
   gather_facts: true
   roles:
-   - argo
-   - firewall
-   - docker
-   - zsh
-   - git
-   - aws
-   - azure
-   - doctl
-   - gcp
-   - kubectl
-   - helm
+   #- argo
+   #- firewall
+   #- docker
+   #- zsh
+   #- git
+   #- aws
+   #- azure
+   #- doctl
+   #- gcp
+   #- kubectl
+   #- helm
    - terraform
    - tilt
    - teleport
