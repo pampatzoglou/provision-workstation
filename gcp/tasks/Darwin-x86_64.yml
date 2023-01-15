@@ -1,3 +1,4 @@
+---
 - name: Check if gcp sdk is installed
   ansible.builtin.stat:
     path: /Users/{{ user }}/.local/share//google-cloud-sdk
@@ -52,7 +53,3 @@
 
   when: not gcp_installed.stat.exists
   become: true
-
-
-
-

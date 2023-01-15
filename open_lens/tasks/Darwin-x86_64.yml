@@ -2,7 +2,7 @@
 # tasks file for open-lens
 - name: Check if open-lens is installed
   ansible.builtin.stat:
-    path: /usr/local/bin/open-lens
+    path: /Applications/OpenLens.app
   register: openlens_installed
 
 - name: Install, configure, OpenLens
@@ -15,18 +15,28 @@
 
     - name: Download OpenLens (sha256)
       ansible.builtin.get_url:
-        url: 'https://github.com/MuhammedKalkan/OpenLens/releases/download/v6.3.0/OpenLens-6.3.0.dmg'
+        url: 'https://github.com/MuhammedKalkan/OpenLens/releases/download/v{{ open_lens.version }}/OpenLens-{{ open_lens.version }}.dmg'
         dest: '{{ temp_dir.path }}/OpenLens.dmg'
-        checksum: sha256:2eb1848bb189041c4475054631a5b33a8ccd00c6eedbb74776b3dd1f54db7898
+        checksum: 'sha256:https://github.com/MuhammedKalkan/OpenLens/releases/download/v{{ open_lens.version }}/OpenLens-{{ open_lens.version }}.dmg.sha256'
         mode: '0777'
 
-    # TODO '{{ temp_dir.path }}/OpenLens.dmg'
+    - name: Mount OpenLens image
+      command: hdiutil attach "OpenLens.dmg" chdir={{ temp_dir.path }} -mountpoint "/Volumes/OpenLens"
 
-    #- name: Remove the temporary dir
-    #  ansible.builtin.file:
-    #    path: '{{ temp_dir.path }}'
-    #    state: absent
-    #  when: temp_dir.path is defined
+    - name: Changing installer source to /Volumes/OpenLens
+      set_fact: installer_source=/Volumes/OpenLens
+
+    - name: Copy {{installer_source}}/OpenLens.app to Applications directory
+      command: cp -R "{{installer_source}}/OpenLens.app" /Applications
+
+    - name: Unmount OpenLens image
+      command: hdiutil detach "/Volumes/OpenLens"
+
+    - name: Remove the temporary dir
+      ansible.builtin.file:
+        path: '{{ temp_dir.path }}'
+        state: absent
+      when: temp_dir.path is defined
 
   when: not openlens_installed.stat.exists
   become: true

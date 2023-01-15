@@ -1,0 +1,6 @@
+---
+- name: Install DisplayLink USB Graphics Software
+  community.general.homebrew_cask:
+    name: displaylink
+    state: present
+    install_options: 'appdir=/Applications'

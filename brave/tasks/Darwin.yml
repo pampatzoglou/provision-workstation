@@ -1,4 +1,45 @@
 ---
 # tasks file for brave
+- name: Check if brave is installed
+  ansible.builtin.stat:
+    path: '/Applications/Brave\ Browser.app'
+  register: brave_installed
 
-# todo: https://laptop-updates.brave.com/latest/osx/Brave-Browser.dmg
+- name: Install Brave browser
+  block:
+    - name: Create temporary build directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: temp_dir
+      register: temp_dir
+      
+
+    - name: Download Brave
+      ansible.builtin.get_url:
+        url: https://laptop-updates.brave.com/latest/osx/Brave-Browser.dmg
+        dest: '{{ temp_dir.path }}'
+        mode: '0777'
+
+    - name: Unarchive OpenLens to Applications
+      ansible.builtin.unarchive:
+        src: '{{ temp_dir.path }}/Brave-Browser.dmg'
+        dest: /Applications/
+        remote_src: true
+
+    - name: Mount OpenLens image
+      command: hdiutil attach "Brave-Browser.dmg" chdir={{ temp_dir.path }} -mountpoint "/Volumes/Brave"
+    - name: Changing installer source to /Volumes/Brave
+      set_fact: installer_source=/Volumes/Brave
+    - name: Copy {{installer_source}}/BraveBrowser.app to Applications directory
+      command: cp -R "{{installer_source}}/Brave Browser.app" /Applications
+    - name: Unmount OpenLens image
+      command: hdiutil detach "/Volumes/OpenLens"
+
+    - name: Remove the temporary dir
+      ansible.builtin.file:
+        path: '{{ temp_dir.path }}'
+        state: absent
+      when: temp_dir.path is defined
+
+  when: not brave_installed.stat.exists
+  become: true

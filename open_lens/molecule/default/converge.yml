@@ -1,8 +1,9 @@
 ---
 - name: Converge
   hosts: all
-  gather_facts: true
+  vars:
+    user: root
   tasks:
-    - name: "Include pampatzoglou.open_lens"
-      ansible.builtin.include_role:
-        name: "pampatzoglou.open_lens"
+    - name: "Include open lens"
+      include_role:
+        name: "open_lens"
