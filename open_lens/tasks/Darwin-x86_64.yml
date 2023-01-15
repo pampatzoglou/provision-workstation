@@ -20,18 +20,15 @@
         checksum: 'sha256:https://github.com/MuhammedKalkan/OpenLens/releases/download/v{{ open_lens.version }}/OpenLens-{{ open_lens.version }}.dmg.sha256'
         mode: '0777'
 
-    - name: Unarchive OpenLens to Applications
-      ansible.builtin.unarchive:
-        src: '{{ temp_dir.path }}/OpenLens.dmg'
-        dest: /Applications/
-        remote_src: true
-
     - name: Mount OpenLens image
       command: hdiutil attach "OpenLens.dmg" chdir={{ temp_dir.path }} -mountpoint "/Volumes/OpenLens"
+
     - name: Changing installer source to /Volumes/OpenLens
       set_fact: installer_source=/Volumes/OpenLens
+
     - name: Copy {{installer_source}}/OpenLens.app to Applications directory
       command: cp -R "{{installer_source}}/OpenLens.app" /Applications
+
     - name: Unmount OpenLens image
       command: hdiutil detach "/Volumes/OpenLens"
 
