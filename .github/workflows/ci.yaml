@@ -106,12 +106,12 @@ jobs:
         molecule_working_dir: ${{ matrix.roles }}
       env:
         ANSIBLE_FORCE_COLOR: '1'
-      continue-on-error: true
-    - name: Delete faulty cache
-      if: steps.molecule.outcome == 'failure'
-      run: |
-        echo "Block POST cache job"
-        exit 1 # Ensure job is red if fail
+  #    continue-on-error: true
+  #  - name: Delete faulty cache
+  #    if: steps.molecule.outcome == 'failure'
+  #    run: |
+  #      echo "Block POST cache job"
+  #      exit 1 # Ensure job is red if fail
 
     #- name: Setup tmate session
     #  if: ${{ failure() }}
