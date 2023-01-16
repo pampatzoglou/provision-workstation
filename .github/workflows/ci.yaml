@@ -57,6 +57,7 @@ jobs:
       with:
         name: ${{ matrix.roles }}.sha
         path: ${{ matrix.roles }}_working.sha
+      continue-on-error: true # Artifact may be missing or deleted
 
     - name: Check if sha changed for ${{ matrix.roles }} from working
       run: | 
