@@ -106,11 +106,8 @@ jobs:
         molecule_working_dir: ${{ matrix.roles }}
       env:
         ANSIBLE_FORCE_COLOR: '1'
-      continue-on-error: true
-    - name: Delete faulty cache # todo: Try and block POST cache job
-      if: steps.molecule.outcome == 'failure'
-      run: |
-        rm -f ${{ matrix.roles }}/${{ runner.os }}-*
+    # todo: Try and block POST cache job
+
     #- name: Setup tmate session
     #  if: ${{ failure() }}
     #  uses: mxschmitt/action-tmate@v3
