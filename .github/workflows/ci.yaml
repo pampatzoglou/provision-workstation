@@ -60,7 +60,7 @@ jobs:
         path: ${{ matrix.roles }}_working.sha
       continue-on-error: true # Artifact may be missing or deleted
 
-    - name: Check if sha changed for ${{ matrix.roles }} from working
+    - name: Check Working SHA
       run: |
         FILE=${{ matrix.roles }}_working.sha
         if test -f "$FILE"; then
@@ -69,12 +69,19 @@ jobs:
             VAR2=`cat ${{ matrix.roles }}.sha`
             if [ "$VAR1" = "$VAR2" ]; then
                 echo "Strings are equal."
+                exit 0
             else
                 echo "Strings are not equal."
+                exit 1
             fi
         else
           echo "working sha missing."
+          exit 1
         fi
+    - name: Test
+      if: steps.CheckWorkingSHA.outcome == 'failure'
+      run: |
+        echo "Run molecule test"
 
     #- name: Update working sha for role ${{ matrix.roles }}
     #  uses: actions/cache/save@v3
