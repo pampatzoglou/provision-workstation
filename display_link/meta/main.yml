@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Pantelis Ampatzoglou
-  description: Installation of display-link (USB)
+  description: Installation of USB displaylink
   role_name: display_link
   namespace: pampatzoglou
 
@@ -25,9 +25,9 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - all
-    - name: MacOSX
-      versions:
-        - all
+  #  - name: MacOSX
+  #    versions:
+  #      - all
 
   galaxy_tags: []
     # List tags for your role here, one per line. A tag is a keyword that describes
