@@ -33,7 +33,7 @@ jobs:
     needs: lint
     strategy:
       fail-fast: false
-      max-parallel: 8
+      max-parallel: 16
       matrix:
         roles:
           - argo
@@ -77,8 +77,6 @@ jobs:
     steps:
     - name: Check out repository code
       uses: actions/checkout@v3
-      with:
-        fetch-depth: 1
     - uses: actions/cache@v3
       id: cache
       with:
@@ -106,12 +104,6 @@ jobs:
         molecule_working_dir: ${{ matrix.roles }}
       env:
         ANSIBLE_FORCE_COLOR: '1'
-  #    continue-on-error: true
-  #  - name: Delete faulty cache
-  #    if: steps.molecule.outcome == 'failure'
-  #    run: |
-  #      echo "Block POST cache job"
-  #      exit 1 # Ensure job is red if fail
 
     #- name: Setup tmate session
     #  if: ${{ failure() }}
