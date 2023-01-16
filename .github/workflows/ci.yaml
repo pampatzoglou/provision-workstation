@@ -30,7 +30,7 @@ jobs:
 
   molecule-install-test:
     runs-on: ubuntu-latest
-    needs: lint
+    #needs: lint
     strategy:
       fail-fast: false
       max-parallel: 8
@@ -38,30 +38,6 @@ jobs:
         roles:
           - argo
           - firewall
-          - zsh
-          - git
-          - aws
-          - azure
-          - doctl
-          - gcp
-          - kubectl
-          - helm
-          - terraform
-          - tilt
-          - teleport
-          - telepresence
-          - velero
-          - cmctl
-          - logcli
-          - k6s
-          - kind
-          - github
-          - kube_bench
-          - stern
-          - copper
-          - keepassxc
-          - syncthing
-          - wireguard
 
     steps:
     - name: Check out repository code
@@ -77,9 +53,15 @@ jobs:
       run: | 
         find ${{ matrix.roles }} -type f -print0 | xargs -0 sha1sum | sha1sum | awk '{print $1;}' > ${{ matrix.roles }}.sha
         cat ${{ matrix.roles }}.sha
+    - uses: actions/cache/restore@v3
+      with:
+        path: ${{ matrix.roles }}_working.sha
+        key: ${{ matrix.roles }}
 
-    #- name: Check if sha changed for ${{ matrix.roles }} from working
-    #  run: | 
+    - name: Check if sha changed for ${{ matrix.roles }} from working
+      run: | 
+        cat ${{ matrix.roles }}_working.sha
+        cat ${{ matrix.roles }}.sha
 
     - name: Update working sha for role ${{ matrix.roles }}
       uses: actions/cache/save@v3
@@ -87,7 +69,7 @@ jobs:
         path: ${{ matrix.roles }}.sha
         key: ${{ matrix.roles }}
 
-        
+
     #- name: Cache roles sha
     #  id: cache-roles-sha
     #  uses: actions/cache@v3
