@@ -9,3 +9,10 @@
         update_cache: true
         state: present
       become: true
+
+    - name: Create /etc/docker directory if it does not exist
+      ansible.builtin.file:
+        path: /etc/docker
+        state: directory
+        mode: '0755'
+      become: true
