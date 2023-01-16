@@ -94,12 +94,16 @@ jobs:
       run: | 
         find ${{ matrix.roles }} -type f -print0 | xargs -0 sha1sum | sha1sum | awk '{print $1;}' > ${{ matrix.roles }}_working.sha
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+    - name: Cache role sha
+      id: cache-sha
+      uses: actions/cache@v3
+      env:
+        cache-name: cache-role-sha
       with:
-        name: ${{ matrix.roles }}_working.sha
         path: ${{ matrix.roles }}_working.sha
-        retention-days: 90
+        key: ${{ matrix.roles }}
+        restore-keys: |
+          ${{ matrix.roles }}-
 
     - name: Setup tmate session
       if: ${{ failure() }}
