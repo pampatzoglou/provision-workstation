@@ -12,7 +12,6 @@
         state: directory
         suffix: temp_dir
       register: temp_dir
-      
 
     - name: Download Brave
       ansible.builtin.get_url:
@@ -28,10 +27,13 @@
 
     - name: Mount OpenLens image
       command: hdiutil attach "Brave-Browser.dmg" chdir={{ temp_dir.path }} -mountpoint "/Volumes/Brave"
+
     - name: Changing installer source to /Volumes/Brave
       set_fact: installer_source=/Volumes/Brave
+
     - name: Copy {{installer_source}}/BraveBrowser.app to Applications directory
       command: cp -R "{{installer_source}}/Brave Browser.app" /Applications
+
     - name: Unmount OpenLens image
       command: hdiutil detach "/Volumes/OpenLens"
 
