@@ -48,64 +48,18 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.x'
-
-    - name: Generate current sha for role ${{ matrix.roles }}
-      run: | 
-        find ${{ matrix.roles }} -type f -print0 | xargs -0 sha1sum | sha1sum | awk '{print $1;}' > ${{ matrix.roles }}.sha
-        cat ${{ matrix.roles }}.sha
-
-    - uses: actions/download-artifact@v3
+    - uses: actions/cache@v3
+      id: cache
       with:
-        name: ${{ matrix.roles }}_working.sha
-        path: ${{ matrix.roles }}_working.sha
-      continue-on-error: true # Artifact may be missing or deleted
-
-    - name: Check Working SHA for ${{ matrix.roles }}
-      id: CheckWorkingSHA
-      run: |
-        FILE=${{ matrix.roles }}_working.sha
-        if test -f "$FILE"; then
-            echo "$FILE exists."
-            VAR1=`cat ${{ matrix.roles }}_working.sha`
-            VAR2=`cat ${{ matrix.roles }}.sha`
-            if [ "$VAR1" = "$VAR2" ]; then
-                echo "Strings are equal."
-                exit 0
-            else
-                echo "Strings are not equal."
-                exit 1
-            fi
-        else
-          echo "working sha missing."
-          exit 2
-        fi
-      continue-on-error: true # Artifact may be missing or deleted
-
+        path: ${{ matrix.roles }}
+        key: ${{ runner.os }}-${{ hashFiles(format('{0}', matrix.roles)) }}
+        restore-keys: |
+            ${{ runner.os }}-
     - uses: gofrolist/molecule-action@v2
-      if: steps.CheckWorkingSHA.outcome == 'failure'
+      if: steps.cache.outputs.cache-hit != 'true'
       timeout-minutes: 20
       with:
         molecule_command: test --destroy=never
         molecule_working_dir: ${{ matrix.roles }}
       env:
         ANSIBLE_FORCE_COLOR: '1'
-
-    - name: Generate working sha for role ${{ matrix.roles }}
-      run: | 
-        find ${{ matrix.roles }} -type f -print0 | xargs -0 sha1sum | sha1sum | awk '{print $1;}' > ${{ matrix.roles }}_working.sha
-
-    - name: Cache role sha
-      id: cache-sha
-      uses: actions/cache@v3
-      env:
-        cache-name: cache-role-sha
-      with:
-        path: ${{ matrix.roles }}_working.sha
-        key: ${{ matrix.roles }}
-        restore-keys: |
-          ${{ matrix.roles }}-
-
-    - name: Setup tmate session
-      if: ${{ failure() }}
-      uses: mxschmitt/action-tmate@v3
-      timeout-minutes: 4
