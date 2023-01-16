@@ -91,6 +91,10 @@ jobs:
       env:
         ANSIBLE_FORCE_COLOR: '1'
 
+    - name: Generate working sha for role ${{ matrix.roles }}
+      run: | 
+        find ${{ matrix.roles }} -type f -print0 | xargs -0 sha1sum | sha1sum | awk '{print $1;}' > ${{ matrix.roles }}_working.sha
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
