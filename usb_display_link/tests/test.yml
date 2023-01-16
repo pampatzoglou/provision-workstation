@@ -2,4 +2,4 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - display_link
+    - usb_display_link

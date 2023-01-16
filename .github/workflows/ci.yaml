@@ -33,7 +33,7 @@ jobs:
     needs: lint
     strategy:
       fail-fast: false
-      max-parallel: 8
+      max-parallel: 16
       matrix:
         roles:
           - argo
@@ -42,7 +42,6 @@ jobs:
           - brave
           - cmctl
           - copper
-          - display_link
           - docker
           - doctl
           # - falco
@@ -69,6 +68,7 @@ jobs:
           - telepresence
           - terraform
           - tilt
+          - usb_display_link
           - velero
           - vscode
           - wireguard
@@ -77,8 +77,6 @@ jobs:
     steps:
     - name: Check out repository code
       uses: actions/checkout@v3
-      with:
-        fetch-depth: 1
     - uses: actions/cache@v3
       id: cache
       with:
@@ -106,14 +104,3 @@ jobs:
         molecule_working_dir: ${{ matrix.roles }}
       env:
         ANSIBLE_FORCE_COLOR: '1'
-      continue-on-error: true
-    - name: Delete faulty cache # todo: Try and block POST cache job
-      if: steps.molecule.outcome == 'failure'
-      run: |
-        rm -f ${{ matrix.roles }}/${{ runner.os }}-*
-        exit 1 # Ensure job is red if fail
-
-    #- name: Setup tmate session
-    #  if: ${{ failure() }}
-    #  uses: mxschmitt/action-tmate@v3
-    #  timeout-minutes: 5

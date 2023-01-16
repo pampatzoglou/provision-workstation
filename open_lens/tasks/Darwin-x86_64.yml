@@ -17,7 +17,7 @@
       ansible.builtin.get_url:
         url: 'https://github.com/MuhammedKalkan/OpenLens/releases/download/v{{ open_lens.version }}/OpenLens-{{ open_lens.version }}.dmg'
         dest: '{{ temp_dir.path }}/OpenLens.dmg'
-        checksum: 'sha256:https://github.com/MuhammedKalkan/OpenLens/releases/download/v{{ open_lens.version }}/OpenLens-{{ open_lens.version }}.dmg.sha256'
+        checksum: 'sha256:{{ open_lens.sha.dmg }}'
         mode: '0777'
 
     - name: Mount OpenLens image

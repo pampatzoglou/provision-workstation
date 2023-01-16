@@ -2,7 +2,7 @@
 galaxy_info:
   author: Pantelis Ampatzoglou
   description: Installation of USB displaylink
-  role_name: display_link
+  role_name: usb_display_link
   namespace: pampatzoglou
 
   issue_tracker_url: https://github.com/pampatzoglou/provision-workstation/issues
@@ -28,6 +28,7 @@ galaxy_info:
   #  - name: MacOSX
   #    versions:
   #      - all
+
 
   galaxy_tags: []
     # List tags for your role here, one per line. A tag is a keyword that describes

@@ -14,10 +14,11 @@
 
 - name: Download openLens file with check (sha256)
   ansible.builtin.get_url:
-    url: >
-      'https://github.com/MuhammedKalkan/OpenLens/releases/download/v{{ open_lens.version }}/OpenLens-{{ open_lens.version }}.amd64.deb'
+    url: 'https://github.com/MuhammedKalkan/OpenLens/releases/download/v{{ open_lens.version }}/OpenLens-{{ open_lens.version }}.amd64.deb'
     dest: '{{ temp_dir.path }}'
-    checksum: 'sha256:https://github.com/MuhammedKalkan/OpenLens/releases/download/v{{ open_lens.version }}/OpenLens-{{ open_lens.version }}.amd64.deb.sha256'
+    checksum: 'sha256:{{ open_lens.sha.deb }}'
+    mode: '0777'
+  when: not open_lens_installed.stat.exists
 
 - name: Install a openLens.deb package
   ansible.builtin.apt:
