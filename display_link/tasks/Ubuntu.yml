@@ -19,13 +19,13 @@
     - name: Download displaylink (sha256)
       ansible.builtin.get_url:
         url: https://www.synaptics.com/sites/default/files/exe_files/2022-08/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu5.6.1-EXE.zip
-        dest: '{{ temp_dir.path }}/DisplayLink-Ubuntu.zip'
-        checksum: sha256:89279748a9e276073ddfff7e949f2b92e30dc19f29a34c40ffcd3356c6d730c2
+        dest: '{{ temp_dir.path }}'
+        checksum: 'sha256:89279748a9e276073ddfff7e949f2b92e30dc19f29a34c40ffcd3356c6d730c2'
         mode: '0777'
 
     - name: Unarchive displaylink
       ansible.builtin.unarchive:
-        src: '{{ temp_dir.path }}/DisplayLink-Ubuntu.zip'
+        src: '{{ temp_dir.path }}/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu5.6.1-EXE.zip'
         dest: '{{ temp_dir.path }}'
         mode: 'a+x'
         remote_src: true
@@ -39,5 +39,5 @@
         state: absent
       when: temp_dir.path is defined
 
-  # when: not gcp_installed.stat.exists
+  #when: not gcp_installed.stat.exists
   become: true

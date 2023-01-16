@@ -2,6 +2,6 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: "Include argo"
+    - name: "Include control manager cli"
       include_role:
         name: "cmctl"
