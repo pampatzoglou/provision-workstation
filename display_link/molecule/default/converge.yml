@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  environment:
+    SYSTEMINITDAEMON: systemd
+  tasks:
+    - name: "Include display USB link"
+      include_role:
+        name: "display_link"

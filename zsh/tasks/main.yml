@@ -1,5 +1,10 @@
 ---
-# tasks file for git
+# tasks file for zsh
+- name: Install robusta-cli
+  ansible.builtin.pip:
+    name: robusta-cli
+    executable: pip3
+
 - name: Ubuntu
   ansible.builtin.include_tasks: Ubuntu-x86_64.yml
   when: (ansible_facts['os_family'] == "Debian") and

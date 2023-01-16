@@ -111,6 +111,8 @@ jobs:
       if: steps.molecule.outcome == 'failure'
       run: |
         rm -f ${{ matrix.roles }}/${{ runner.os }}-*
+        exit 1 # Ensure job is red if fail
+
     #- name: Setup tmate session
     #  if: ${{ failure() }}
     #  uses: mxschmitt/action-tmate@v3

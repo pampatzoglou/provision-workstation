@@ -4,8 +4,6 @@
   hosts: localhost
   gather_facts: true
   roles:
-    - display_link
-    - open_lens
     - argo
     - aws
     - azure
