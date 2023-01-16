@@ -81,38 +81,23 @@ jobs:
         fi
       continue-on-error: true # Artifact may be missing or deleted
 
-    - name: Test
+    - uses: gofrolist/molecule-action@v2
+      id: molecule
       if: steps.CheckWorkingSHA.outcome == 'failure'
-      run: |
-        echo "Run molecule test"
+      timeout-minutes: 20
+      with:
+        molecule_command: test --destroy=never
+        molecule_working_dir: ${{ matrix.roles }}
+      env:
+        ANSIBLE_FORCE_COLOR: '1'
 
-    #- name: Update working sha for role ${{ matrix.roles }}
-    #  uses: actions/cache/save@v3
-    #  with:
-    #    path: ${{ matrix.roles }}.sha
-    #    key: ${{ matrix.roles }}
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.roles }} role
+        path: ${{ matrix.roles }}
+        retention-days: 90
 
-
-    #- name: Cache roles sha
-    #  id: cache-roles-sha
-    #  uses: actions/cache@v3
-    #  with:
-    #    path: roles-sha
-    #    key: ${{ matrix.roles }}-sha
-    #- uses: gofrolist/molecule-action@v2
-    #  timeout-minutes: 20
-    #  with:
-    #    molecule_command: test --destroy=never
-    #    molecule_working_dir: ${{ matrix.roles }}
-    #  env:
-    #    ANSIBLE_FORCE_COLOR: '1'
-    #- name: Upload Artifact
-    #  if: github.ref == 'refs/heads/main'
-    #  uses: actions/upload-artifact@v2
-    #  with:
-    #    name: ${{ matrix.roles }} role
-    #    path: ${{ matrix.roles }}
-    #    retention-days: 90
     #- name: Setup tmate session
     #  if: ${{ failure() }}
     #  uses: mxschmitt/action-tmate@v3
