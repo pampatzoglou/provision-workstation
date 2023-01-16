@@ -39,5 +39,5 @@
         state: absent
       when: temp_dir.path is defined
 
-  #when: not display_link_installed.stat.exists
+  # when: not display_link_installed.stat.exists
   become: true
