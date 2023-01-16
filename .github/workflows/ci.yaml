@@ -102,7 +102,7 @@ jobs:
         path: ${{ matrix.roles }}_working.sha
         retention-days: 90
 
-    #- name: Setup tmate session
-    #  if: ${{ failure() }}
-    #  uses: mxschmitt/action-tmate@v3
-    #  timeout-minutes: 10
+    - name: Setup tmate session
+      if: ${{ failure() }}
+      uses: mxschmitt/action-tmate@v3
+      timeout-minutes: 10
