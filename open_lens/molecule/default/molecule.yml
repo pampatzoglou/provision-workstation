@@ -15,12 +15,12 @@ provisioner:
 scenario:
   name: default
   test_sequence:
-    #- destroy
-    #- create
-    #- prepare
-    #- converge
-    # - idempotence
+    # - destroy
+    # - create
+    # - prepare
+    # - converge
+    #  - idempotence
     - lint
-    #- verify
+    # - verify
 verifier:
   name: ansible
