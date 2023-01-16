@@ -94,8 +94,8 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ matrix.roles }} role
-        path: ${{ matrix.roles }}
+        name: ${{ matrix.roles }}.sha
+        path: ${{ matrix.roles }}_working.sha
         retention-days: 90
 
     #- name: Setup tmate session
