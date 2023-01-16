@@ -42,7 +42,6 @@ jobs:
           - brave
           - cmctl
           - copper
-          - display_link
           - docker
           - doctl
           # - falco
@@ -69,6 +68,7 @@ jobs:
           - telepresence
           - terraform
           - tilt
+          - usb_display_link
           - velero
           - vscode
           - wireguard
@@ -104,8 +104,3 @@ jobs:
         molecule_working_dir: ${{ matrix.roles }}
       env:
         ANSIBLE_FORCE_COLOR: '1'
-
-    #- name: Setup tmate session
-    #  if: ${{ failure() }}
-    #  uses: mxschmitt/action-tmate@v3
-    #  timeout-minutes: 5
