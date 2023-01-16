@@ -87,13 +87,19 @@ jobs:
         restore-keys: |
             ${{ runner.os }}-
     - name: Set up Python 3.
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: |
+        (steps.cache.outputs.cache-hit != 'true') ||
+        (github.event_name == 'pull_request' && github.base_ref == 'main') ||
+        (github.event_name == 'push' && github.ref == 'refs/heads/main')
       uses: actions/setup-python@v4
       with:
         python-version: '3.x'
     - uses: gofrolist/molecule-action@v2
       id: molecule
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: |
+        (steps.cache.outputs.cache-hit != 'true') ||
+        (github.event_name == 'pull_request' && github.base_ref == 'main') ||
+        (github.event_name == 'push' && github.ref == 'refs/heads/main')
       timeout-minutes: 20
       with:
         molecule_command: test --destroy=never
@@ -101,7 +107,11 @@ jobs:
       env:
         ANSIBLE_FORCE_COLOR: '1'
       continue-on-error: true
-    - name: Delete faulty cache
+    - name: Delete faulty cache # todo: Try and block POST cache job
       if: steps.molecule.outcome == 'failure'
       run: |
         rm -f ${{ matrix.roles }}/${{ runner.os }}-*
+    #- name: Setup tmate session
+    #  if: ${{ failure() }}
+    #  uses: mxschmitt/action-tmate@v3
+    #  timeout-minutes: 5
