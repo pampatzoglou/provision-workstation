@@ -53,21 +53,21 @@ jobs:
       run: | 
         find ${{ matrix.roles }} -type f -print0 | xargs -0 sha1sum | sha1sum | awk '{print $1;}' > ${{ matrix.roles }}.sha
         cat ${{ matrix.roles }}.sha
-    - uses: actions/cache/restore@v3
+    - uses: actions/download-artifact@v3
       with:
+        name: ${{ matrix.roles }}.sha
         path: ${{ matrix.roles }}_working.sha
-        key: ${{ matrix.roles }}
 
     - name: Check if sha changed for ${{ matrix.roles }} from working
       run: | 
         cat ${{ matrix.roles }}_working.sha
         cat ${{ matrix.roles }}.sha
 
-    - name: Update working sha for role ${{ matrix.roles }}
-      uses: actions/cache/save@v3
-      with:
-        path: ${{ matrix.roles }}.sha
-        key: ${{ matrix.roles }}
+    #- name: Update working sha for role ${{ matrix.roles }}
+    #  uses: actions/cache/save@v3
+    #  with:
+    #    path: ${{ matrix.roles }}.sha
+    #    key: ${{ matrix.roles }}
 
 
     #- name: Cache roles sha
