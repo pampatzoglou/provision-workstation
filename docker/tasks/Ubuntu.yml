@@ -53,12 +53,6 @@
     state: present
   become: true
 
-# - name: Enable overlay2 driver
-#   ansible.builtin.copy:
-#     content: '{  \"storage-driver\": \"overlay2\" }'
-#     dest: /etc/docker/daemon.json
-#   become: true
-
 - name: Restart docker service
   ansible.builtin.group.systemd:
     state: restarted
