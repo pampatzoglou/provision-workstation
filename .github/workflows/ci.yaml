@@ -53,6 +53,7 @@ jobs:
       run: | 
         find ${{ matrix.roles }} -type f -print0 | xargs -0 sha1sum | sha1sum | awk '{print $1;}' > ${{ matrix.roles }}.sha
         cat ${{ matrix.roles }}.sha
+
     - uses: actions/download-artifact@v3
       with:
         name: ${{ matrix.roles }}.sha
@@ -60,8 +61,12 @@ jobs:
       continue-on-error: true # Artifact may be missing or deleted
 
     - name: Check if sha changed for ${{ matrix.roles }} from working
-      run: | 
-        cat ${{ matrix.roles }}_working.sha
+      run: |
+        FILE=${{ matrix.roles }}_working.sha
+        if test -f "$FILE"; then
+            echo "$FILE exists."
+            cat ${{ matrix.roles }}_working.sha
+        fi
         cat ${{ matrix.roles }}.sha
 
     #- name: Update working sha for role ${{ matrix.roles }}
@@ -91,7 +96,7 @@ jobs:
     #    name: ${{ matrix.roles }} role
     #    path: ${{ matrix.roles }}
     #    retention-days: 90
-    - name: Setup tmate session
-      if: ${{ failure() }}
-      uses: mxschmitt/action-tmate@v3
-      timeout-minutes: 10
+    #- name: Setup tmate session
+    #  if: ${{ failure() }}
+    #  uses: mxschmitt/action-tmate@v3
+    #  timeout-minutes: 10
