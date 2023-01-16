@@ -56,7 +56,7 @@ jobs:
 
     - uses: actions/download-artifact@v3
       with:
-        name: ${{ matrix.roles }}.sha
+        name: ${{ matrix.roles }}_working.sha
         path: ${{ matrix.roles }}_working.sha
       continue-on-error: true # Artifact may be missing or deleted
 
