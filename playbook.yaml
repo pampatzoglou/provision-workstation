@@ -5,41 +5,41 @@
   gather_facts: true
   roles:
     - display_link
-    - open_lens
-    - argo
-    - aws
-    - azure
-    - brave
-    - cmctl
-    - copper
-    - display_link
-    - docker
-    - doctl
+  #  - open_lens
+  #  - argo
+  #  - aws
+  #  - azure
+  #  - brave
+  #  - cmctl
+  #  - copper
+  #  - display_link
+  #  - docker
+  #  - doctl
     # - falco
-    - firewall
-    - gcp
-    - git
-    - github
-    - helm
-    - k6s
-    - keepassxc
-    - kind
+  #  - firewall
+  #  - gcp
+  #  - git
+  #  - github
+  #  - helm
+  #  - k6s
+  #  - keepassxc
+  #  - kind
     # - kube_bench
     # - kube_hunter
     # - kube_linter
-    - kubectl
+  #  - kubectl
     # - kubesquash
-    - logcli
-    - open_lens
+  #  - logcli
+  #  - open_lens
     # - open_policy_agent
     # - pcloud
-    - stern
-    - syncthing
-    - teleport
-    - telepresence
-    - terraform
-    - tilt
-    - velero
-    - vscode
-    - wireguard
-    - zsh
+  #  - stern
+  #  - syncthing
+  #  - teleport
+  #  - telepresence
+  #  - terraform
+  #  - tilt
+  #  - velero
+  #  - vscode
+  #  - wireguard
+  #  - zsh
