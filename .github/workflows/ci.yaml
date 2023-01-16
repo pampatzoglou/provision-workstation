@@ -60,7 +60,8 @@ jobs:
         path: ${{ matrix.roles }}_working.sha
       continue-on-error: true # Artifact may be missing or deleted
 
-    - name: Check Working SHA
+    - name: Check Working SHA for ${{ matrix.roles }}
+      id: CheckWorkingSHA
       run: |
         FILE=${{ matrix.roles }}_working.sha
         if test -f "$FILE"; then
@@ -76,8 +77,10 @@ jobs:
             fi
         else
           echo "working sha missing."
-          exit 1
+          exit 2
         fi
+      continue-on-error: true # Artifact may be missing or deleted
+
     - name: Test
       if: steps.CheckWorkingSHA.outcome == 'failure'
       run: |
