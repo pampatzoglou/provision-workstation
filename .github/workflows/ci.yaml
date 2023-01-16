@@ -65,9 +65,16 @@ jobs:
         FILE=${{ matrix.roles }}_working.sha
         if test -f "$FILE"; then
             echo "$FILE exists."
-            cat ${{ matrix.roles }}_working.sha
+            VAR1=`cat ${{ matrix.roles }}_working.sha`
+            VAR2=`cat ${{ matrix.roles }}.sha`
+            if [ "$VAR1" = "$VAR2" ]; then
+                echo "Strings are equal."
+            else
+                echo "Strings are not equal."
+            fi
+        else
+          echo "working sha missing."
         fi
-        cat ${{ matrix.roles }}.sha
 
     #- name: Update working sha for role ${{ matrix.roles }}
     #  uses: actions/cache/save@v3
