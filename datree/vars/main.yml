@@ -1,0 +1,8 @@
+---
+# vars file for datree
+datree:
+  version: 1.8.14
+  sha:
+    amd64:
+      darwin: 400b880cdaba5c33ee5915a950df18c6210086074b765a13239fe486e2cddbb5
+      linux: ad177bc3c7f5732eb33d819741dea44243315a712bb2d53ff6a6842a7683dff1

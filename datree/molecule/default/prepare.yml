@@ -1,0 +1,11 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: Update repositories cache and install "unzip" package
+      ansible.builtin.apt:
+        pkg:
+          - unzip
+        update_cache: true
+        state: present
+      become: true
