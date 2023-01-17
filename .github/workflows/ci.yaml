@@ -45,7 +45,6 @@ jobs:
           - copper
           - docker
           - doctl
-          # - falco
           - firewall
           - gcp
           - git
