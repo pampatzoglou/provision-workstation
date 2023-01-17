@@ -36,6 +36,7 @@ jobs:
       max-parallel: 16
       matrix:
         roles:
+          - kube_hunter
           - argo
           - aws
           - azure
@@ -53,7 +54,7 @@ jobs:
           - k6s
           - keepassxc
           - kind
-          # - kube_bench
+          - kube_bench
           # - kube_hunter
           # - kube_linter
           - kubectl

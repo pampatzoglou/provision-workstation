@@ -5,9 +5,29 @@
     path: /usr/local/bin/kube-bench
   register: kube_bench_installed
 
-- name: Install a kube-bench.deb package from the internet.
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_dir
+  register: temp_dir
+  when: not kube_bench_installed.stat.exists
+
+- name: Download kube-bench (sha256)
+  ansible.builtin.get_url:
+    url: 'https://github.com/aquasecurity/kube-bench/releases/download/v{{ kube_bench.version }}/kube-bench_{{ kube_bench.version }}_linux_amd64.deb'
+    dest: '{{ temp_dir.path }}'
+    checksum: 'sha256:{{ kube_bench.sha.amd64.linux }}'
+    mode: a+x
+  when: not kube_bench_installed.stat.exists
+
+- name: Install kube-bench 
   ansible.builtin.apt:
-    deb: >-
-      https://github.com/aquasecurity/kube-bench/releases/download/v{{ kube_bench.version }}/kube-bench_{{ kube_bench.version }}_linux_amd64.deb
+    deb: '{{ temp_dir.path }}/kube-bench_{{ kube_bench.version }}_linux_amd64.deb'
   become: true
   when: not kube_bench_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined
