@@ -55,7 +55,7 @@ jobs:
           - keepassxc
           - kind
           - kube_bench
-          # - kube_hunter
+          - kube_hunter
           # - kube_linter
           - kubectl
           # - kubesquash

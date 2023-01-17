@@ -20,7 +20,7 @@
     mode: a+x
   when: not kube_bench_installed.stat.exists
 
-- name: Install kube-bench 
+- name: Install kube-bench
   ansible.builtin.apt:
     deb: '{{ temp_dir.path }}/kube-bench_{{ kube_bench.version }}_linux_amd64.deb'
   become: true

@@ -1,2 +1,5 @@
 ---
 # vars file for kube_linter
+kube_linter:
+  version: 0.5.1
+  sha: 427a33c7de292f884bdb2c8911dec96c9d4fa7cc5fda4fa61bc5c3387bd4e1c3

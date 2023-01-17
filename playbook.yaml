@@ -4,6 +4,7 @@
   hosts: localhost
   gather_facts: true
   roles:
+    - kube_linter
 #    - argo
 #    - aws
 #    - azure

@@ -1,0 +1,6 @@
+---
+- name: Install kube-linter
+  community.general.homebrew:
+    name: kube-linter
+    state: present
+    update_homebrew: true

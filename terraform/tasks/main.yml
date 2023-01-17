@@ -4,6 +4,7 @@
   ansible.builtin.pip:
     name: checkov
     executable: pip3
+  become: true
 
 - name: Ubuntu
   ansible.builtin.include_tasks: Ubuntu-x86_64.yml

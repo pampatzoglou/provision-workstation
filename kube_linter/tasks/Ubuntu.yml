@@ -1,0 +1,36 @@
+- name: Check if kube-linter is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/kube-linter
+  register: kube_linter_installed
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_dir
+  register: temp_dir
+  when: not kube_linter_installed.stat.exists
+
+- name: Download kube-linter (sha256)
+  ansible.builtin.get_url:
+    url: 'https://github.com/stackrox/kube-linter/releases/download/{{ kube_linter.version }}/kube-linter-linux'
+    dest: '{{ temp_dir.path }}'
+    checksum: 'sha256:{{ kube_linter.sha }}'
+    mode: a+x
+  when: not kube_linter_installed.stat.exists
+
+- name: Install kube-linter
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path }}/kube-linter-linux'
+    dest: /usr/local/bin/kube-linter
+    owner: root
+    group: root
+    mode: a+x
+    remote_src: true
+  become: true
+  when: not kube_linter_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined
