@@ -36,7 +36,6 @@ jobs:
       max-parallel: 16
       matrix:
         roles:
-          - kube_hunter
           - argo
           - aws
           - azure
@@ -60,7 +59,7 @@ jobs:
           - kubesquash
           - logcli
           - open_lens
-          # - open_policy_agent
+          - open_policy_agent
           # - pcloud
           - stern
           - syncthing

@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    user: root
+  tasks:
+    - name: "Include open policy agent"
+      include_role:
+        name: "open_policy_agent"

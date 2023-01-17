@@ -27,7 +27,7 @@
     - kubesquash
     - logcli
     - open_lens
-    # todo:- open_policy_agent
+    - open_policy_agent
     # todo:- pcloud
     - stern
     - syncthing
