@@ -10,10 +10,9 @@
     - brave
     - cmctl
     - copper
-    - display_link
     - docker
     - doctl
-    # - falco
+    # todo: - falco
     - firewall
     - gcp
     - git
@@ -22,21 +21,22 @@
     - k6s
     - keepassxc
     - kind
-    # - kube_bench
-    # - kube_hunter
-    # - kube_linter
+    # todo:- kube_bench
+    # todo:- kube_hunter
+    # todo:- kube_linter
     - kubectl
-    # - kubesquash
+    # todo:- kubesquash
     - logcli
     - open_lens
-    # - open_policy_agent
-    # - pcloud
+    # todo:- open_policy_agent
+    # todo:- pcloud
     - stern
     - syncthing
     - teleport
     - telepresence
     - terraform
     - tilt
+    - usb_display_link
     - velero
     - vscode
     - wireguard
