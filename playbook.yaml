@@ -4,7 +4,6 @@
   hosts: localhost
   gather_facts: true
   roles:
-    - kube_linter
 #    - argo
 #    - aws
 #    - azure
@@ -22,11 +21,11 @@
 #    - k6s
 #    - keepassxc
 #    - kind
-    # todo:- kube_bench
-    # todo:- kube_hunter
-    # todo:- kube_linter
+    # - kube_bench
+    # - kube_hunter
+    # - kube_linter
 #    - kubectl
-    # todo:- kubesquash
+    #- kubesquash
 #    - logcli
 #    - open_lens
     # todo:- open_policy_agent

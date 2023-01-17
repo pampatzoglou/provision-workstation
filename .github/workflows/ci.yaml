@@ -56,9 +56,9 @@ jobs:
           - kind
           - kube_bench
           - kube_hunter
-          # - kube_linter
+          - kube_linter
           - kubectl
-          # - kubesquash
+          - kubesquash
           - logcli
           - open_lens
           # - open_policy_agent
