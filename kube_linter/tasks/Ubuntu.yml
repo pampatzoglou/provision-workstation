@@ -1,3 +1,4 @@
+---
 - name: Check if kube-linter is installed
   ansible.builtin.stat:
     path: /usr/local/bin/kube-linter
