@@ -4,6 +4,6 @@
   vars:
     user: root
   tasks:
-    - name: "Include kube_bench"
+    - name: "Include kind"
       include_role:
-        name: "kube_bench"
+        name: "kind"

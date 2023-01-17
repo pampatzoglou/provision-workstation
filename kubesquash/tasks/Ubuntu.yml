@@ -9,7 +9,7 @@
   ansible.builtin.get_url:
     url: https://github.com/solo-io/squash/releases/download/v{{ kubesquash.version }}/squashctl-linux
     dest: /usr/local/bin/kubesquash
-    mode: 0775
+    mode: 'a+x'
     checksum: 'sha256:{{ kubesquash.sha }}'
     group: '{{ user }}'
     owner: '{{ user }}'

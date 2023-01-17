@@ -1,2 +1,7 @@
 ---
 # tasks file for kube_hunter
+- name: Install kube-hunter
+  ansible.builtin.pip:
+    name: kube-hunter
+    executable: pip3
+  become: true

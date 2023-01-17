@@ -1,4 +1,7 @@
 ---
 # vars file for kube-bench
 kube_bench:
-  version: 0.3.1
+  version: 0.6.10
+  sha:
+    amd64:
+      linux: fb4dfe6aedbf8d10cb2dd2551182bcf8209547de093098a24971ac8186435628

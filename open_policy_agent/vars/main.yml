@@ -1,2 +1,8 @@
 ---
 # vars file for open_policy_agent
+opa:
+  version: 0.48.0
+  sha:
+    amd64:
+      linux: 77d72871bef0372a7523e0347a17176b5cd9beef8036d50cf126d8013f72d7a5
+      darwin: 1554312fe5376ed8c34aa6404b85a1d3722971e7d5b8950f1888e62821ab73e3

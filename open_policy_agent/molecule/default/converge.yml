@@ -4,6 +4,6 @@
   vars:
     user: root
   tasks:
-    - name: "Include kube bench"
+    - name: "Include open policy agent"
       include_role:
-        name: "kube_bench"
+        name: "open_policy_agent"
