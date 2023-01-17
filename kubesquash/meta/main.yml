@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Pantelis Ampatzoglou
-  description: Installation kube squash
+  description: Installation kubesquash
   namespace: pampatzoglou
 
   issue_tracker_url: https://github.com/pampatzoglou/provision-workstation/issues

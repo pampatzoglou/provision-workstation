@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include kube hunter"
+      include_role:
+        name: "kube_hunter"
