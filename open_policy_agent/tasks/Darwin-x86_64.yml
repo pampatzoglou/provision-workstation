@@ -23,8 +23,7 @@
   ansible.builtin.copy:
     src: '{{ temp_dir.path }}/opa_darwin_amd64'
     dest: /usr/local/bin/opa
-    owner: root
-    group: root
+    owner: '{{ user }}'
     mode: a+x
     remote_src: true
   become: true
