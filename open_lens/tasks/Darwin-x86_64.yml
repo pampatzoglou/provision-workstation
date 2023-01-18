@@ -18,7 +18,7 @@
         url: 'https://github.com/MuhammedKalkan/OpenLens/releases/download/v{{ open_lens.version }}/OpenLens-{{ open_lens.version }}.dmg'
         dest: '{{ temp_dir.path }}/OpenLens.dmg'
         checksum: 'sha256:{{ open_lens.sha.dmg }}'
-        mode: '0777'
+        mode: 'a+x'
 
     - name: Mount OpenLens image
       command: hdiutil attach "OpenLens.dmg" chdir={{ temp_dir.path }} -mountpoint "/Volumes/OpenLens"
