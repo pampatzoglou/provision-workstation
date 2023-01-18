@@ -29,5 +29,8 @@ gittyleaks --no-banner --verbose
 
 git secrets --pre_commit_hook -- "$@"
 
+git-secrets --scan --recursive
+
 trufflehog git file://. --since-commit HEAD --only-verified --fail
 trufflehog filesystem --directory=. --fail
+yamllint -f auto .
