@@ -30,8 +30,7 @@
   ansible.builtin.copy:
     src: '{{ temp_dir.path }}/datree'
     dest: /usr/local/bin/datree
-    owner: root
-    group: root
+    owner: '{{ user }}'
     mode: a+x
     remote_src: true
   become: true

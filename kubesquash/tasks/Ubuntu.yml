@@ -10,7 +10,7 @@
     url: https://github.com/solo-io/squash/releases/download/v{{ kubesquash.version }}/squashctl-linux
     dest: /usr/local/bin/kubesquash
     mode: 'a+x'
-    checksum: 'sha256:{{ kubesquash.sha }}'
+    checksum: 'sha256:{{ kubesquash.sha.amd64.linux }}'
     group: '{{ user }}'
     owner: '{{ user }}'
   become: true

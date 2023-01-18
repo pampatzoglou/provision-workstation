@@ -2,4 +2,7 @@
 # vars file for kubesquash
 kubesquash:
   version: 0.5.18
-  sha: 071406a1eadcf78014c1b6c629c46e3145a1f150d40555a4be0410747160b82b
+  sha:
+    amd64:
+      linux: 071406a1eadcf78014c1b6c629c46e3145a1f150d40555a4be0410747160b82b
+      dawrin: 5d2f33a406398d0c9b2430a9ce93ba34e4b3042c914cbdcf54603185d02a90f1
