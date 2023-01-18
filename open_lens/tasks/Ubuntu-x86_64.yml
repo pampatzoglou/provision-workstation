@@ -16,7 +16,7 @@
     url: 'https://github.com/MuhammedKalkan/OpenLens/releases/download/v{{ open_lens.version }}/OpenLens-{{ open_lens.version }}.amd64.deb'
     dest: '{{ temp_dir.path }}'
     checksum: 'sha256:{{ open_lens.sha.deb }}'
-    mode: '0777'
+    mode: 'a+x'
   when: not ansible_facts.packages['open-lens'] is defined
 
 - name: Install a openLens.deb package

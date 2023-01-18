@@ -1,7 +1,7 @@
 ---
 # vars file for open-lens
 open_lens:
-  version: 6.3.0
+  version: 6.2.5
   sha:
-    deb: e74ef6b266ccc4ba973a68c92b874f34833488b004e3f3424e2befac64205fb7
-    dmg: a058d639903982fe8e06b9a820dee3745756524010dcfe13c482920f6ac5debf
+    deb: 7661327e4180f4d2014c2aa77507ab78d57adb7628a09b0da2ab0018bb919c1d
+    dmg: e680ca5f0091663435696eff4da6666007d7bc8cb69078f56d1b7d7674cca296
