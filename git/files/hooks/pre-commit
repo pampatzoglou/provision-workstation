@@ -22,15 +22,11 @@ else
   against=$(git hash-object -t tree /dev/null)
 fi
 
-# Redirect output to stderr.
-exec 1>&2
-
 gittyleaks --no-banner --verbose
 
-git secrets --pre_commit_hook -- "$@"
+trufflehog git $(git config --get remote.origin.url) --no-update --since-commit HEAD --branch=$(git branch --show-current) --fail --concurrency=12
 
-git-secrets --scan --recursive
+#yamllint -f auto $(find . -type f -regex '.*ya?ml*')
 
-trufflehog git file://. --since-commit HEAD --only-verified --fail
-trufflehog filesystem --directory=. --fail
-yamllint -f auto .
+# Redirect output to stderr.
+exec 1>&2

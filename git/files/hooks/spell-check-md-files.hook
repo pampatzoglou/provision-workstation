@@ -11,7 +11,7 @@
 # To enable this hook, rename this file to "pre-commit".
 
 # Where are the markdown files located?
-SEARCH_DIR="content"
+SEARCH_DIR="."
 
 # Set some fancy colors to indicate errors and wrongly spelled words.
 RED='\033[0;31m'
