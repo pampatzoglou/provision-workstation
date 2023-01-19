@@ -6,57 +6,73 @@
     state: present
     update_homebrew: true
 
-- name: Install trufflehog
-  community.general.homebrew:
-    name: trufflehog
-    state: present
-    update_homebrew: true
-
 - name: Install git-secrets
   community.general.homebrew:
     name: git-secrets
     state: present
     update_homebrew: true
 
-- name: Copy global gitIgnore
-  ansible.builtin.copy:
-    src: '{{ role_path }}/files/gitIgnore'
-    dest: '/Users/{{ user }}/.gitIgnore'
-    owner: '{{ user }}'
-    mode: a+x
+- name: Install trufflehog
+  community.general.homebrew:
+    name: trufflehog
+    state: present
+    update_homebrew: true
 
-- name: Create gitHooks directory (.gitHooks)
-  ansible.builtin.file:
-    path: '/Users/{{ user }}/.gitHooks'
-    state: directory
-    owner: '{{ user }}'
-    mode: '0755'
+- name: Setup git config
+  block:
+    - name: Create git directory (.config/git)
+      ansible.builtin.file:
+        path: '/Users/{{ user }}/.config/git'
+        state: directory
+        owner: '{{ user }}'
+        mode: '0755'
 
-- name: Copy global gitHooks
-  ansible.builtin.copy:
-    src: '{{ item }}'
-    dest: '/Users/{{ user }}/.gitHooks'
-    owner: '{{ user }}'
-    mode: a+x
-  with_fileglob:
-    - '{{ role_path }}/files/hooks/*'
+    - name: Copy global gitIgnore
+      ansible.builtin.copy:
+        src: '{{ role_path }}/files/gitIgnore'
+        dest: '/Users/{{ user }}/.config/git/gitIgnore'
+        owner: '{{ user }}'
+        mode: 'a+x'
 
-- name: Check if /home/{{ user }}/.gitconfig exists
-  ansible.builtin.stat:
-    path: /home/{{ user }}/.gitconfig
-  register: gitconfig_installed
+    - name: Create gitHooks directory (.config/git/hooks)
+      ansible.builtin.file:
+        path: '/Users/{{ user }}/.config/git/hooks'
+        state: directory
+        owner: '{{ user }}'
+        mode: '0755'
 
-- name: Setting Up global Git
-  ansible.builtin.blockinfile:
-    path: /Users/{{ user }}/.gitconfig
-    create: true
-    owner: '{{ user }}'
-    mode: a+x
-    block: |
-      [user]
-          name = {{ user }}
-      [core]
-          hooksPath = /Users/{{ user }}/.gitHooks
-          excludesfile = /Users/{{ user }}/.gitIgnore
-      [safe]
-        directory = /github/workspace
+    - name: Copy global gitHooks
+      ansible.builtin.copy:
+        src: '{{ item }}'
+        dest: '/Users/{{ user }}/.config/git/hooks'
+        owner: '{{ user }}'
+        mode: 'a+x'
+      with_fileglob:
+        - '{{ role_path }}/files/hooks/*'
+
+    - name: Check if /Users/{{ user }}/.gitconfig exists
+      ansible.builtin.stat:
+        path: /Users/{{ user }}/.gitconfig
+      register: gitconfig_installed
+
+    - name: Setting Up global Git
+      ansible.builtin.blockinfile:
+        path: /Users/{{ user }}/.gitconfig
+        create: true
+        owner: '{{ user }}'
+        mode: 'a+x'
+        block: |
+          [user]
+              name = {{ user }}
+              email = you@example.com
+          [core]
+              hooksPath = /Users/{{ user }}/.config/git/hooks
+              excludesfile = /Users/{{ user }}/.config/git/gitIgnore
+          [safe]
+            directory = /github/workspace
+
+    - name: Display config message
+      debug:
+        msg: "You will need to edit: /Users/{{ user }}/.gitconfig and setup your default git email"
+        verbosity: 0
+      when: not gitconfig_installed.stat.exists

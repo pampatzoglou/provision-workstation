@@ -1,14 +1,10 @@
 ---
 # tasks file for git
-- name: Install gittyleaks for Python 3 user in git pre-commit
+- name: Install pre-commit and gittyleaks
   ansible.builtin.pip:
-    name: gittyleaks
-    executable: pip3
-  become: true
-
-- name: Install pre-commit
-  ansible.builtin.pip:
-    name: pre-commit
+    name:
+      - gittyleaks
+      - pre-commit
     executable: pip3
   become: true
 

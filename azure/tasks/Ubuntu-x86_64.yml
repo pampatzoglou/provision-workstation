@@ -96,7 +96,7 @@
     dest: /usr/local/bin/kubelogin
     owner: root
     group: root
-    mode: a+x
+    mode: 'a+x'
     remote_src: true
   become: true
   when: not kubelogin_installed.stat.exists

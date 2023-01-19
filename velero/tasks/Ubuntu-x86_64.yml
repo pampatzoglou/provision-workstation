@@ -33,7 +33,7 @@
     dest: /usr/local/bin/velero
     owner: root
     group: root
-    mode: a+x
+    mode: 'a+x'
     remote_src: true
   become: true
   when: not velero_installed.stat.exists

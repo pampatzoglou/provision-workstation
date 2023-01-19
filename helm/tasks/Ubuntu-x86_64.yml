@@ -33,7 +33,7 @@
     dest: /usr/local/bin/helm
     owner: root
     group: root
-    mode: a+x
+    mode: 'a+x'
     remote_src: true
   become: true
   when: not helm_installed.stat.exists
@@ -68,7 +68,7 @@
     dest: /usr/local/bin/helmfile
     owner: root
     group: root
-    mode: a+x
+    mode: 'a+x'
     remote_src: true
   become: true
   when: not helmfile_installed.stat.exists

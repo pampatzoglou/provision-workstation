@@ -31,7 +31,7 @@
     src: '{{ temp_dir.path }}/ctlptl'
     dest: /usr/local/bin/ctlptl
     owner: '{{ user }}'
-    mode: a+x
+    mode: 'a+x'
   become: true
   when: not ctlptl_installed.stat.exists
 
@@ -73,7 +73,7 @@
     src: '{{ temp_dir.path }}/tilt'
     dest: /usr/local/bin/tilt
     owner: '{{ user }}'
-    mode: a+x
+    mode: 'a+x'
     remote_src: true
   become: true
   when: not tilt_installed.stat.exists

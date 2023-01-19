@@ -3,3 +3,6 @@
 trufflehog:
   version: 3.24.0
   sha: 995233f841c158d3f7c954ed1541cd994c4faeb00833f2fc686bffb1c2f1d3e0
+hadolint:
+  version: 2.12.0
+  sha: 56de6d5e5ec427e17b74fa48d51271c7fc0d61244bf5c90e828aab8362d55010

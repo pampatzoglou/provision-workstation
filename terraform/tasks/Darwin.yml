@@ -55,7 +55,7 @@
     src: '{{ temp_dir.path }}/terrascan'
     dest: /usr/local/bin/terrascan
     owner: '{{ user }}'
-    mode: a+x
+    mode: 'a+x'
     remote_src: true
   become: true
   when: not terrascan_installed.stat.exists

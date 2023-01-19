@@ -25,7 +25,7 @@
     checksum: sha256:{{ yq.sha }}
     owner: root
     group: root
-    mode: a+x
+    mode: 'a+x'
   become: true
   when: not yq_installed.stat.exists
 
@@ -66,7 +66,7 @@
     create: true
     group: '{{ user }}'
     owner: '{{ user }}'
-    mode: a+x
+    mode: 'a+x'
     block: |
       export ZSH=$HOME/.oh-my-zsh
       export KUBE_EDITOR="code --wait"

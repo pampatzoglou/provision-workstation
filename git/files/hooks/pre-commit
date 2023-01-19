@@ -24,9 +24,9 @@ fi
 
 gittyleaks --no-banner --verbose
 
-trufflehog git $(git config --get remote.origin.url) --no-update --since-commit HEAD --branch=$(git branch --show-current) --fail --concurrency=12
-
-#yamllint -f auto $(find . -type f -regex '.*ya?ml*')
+yamllint -f auto $(find . -type f -regex '.*ya?ml*')
+trufflehog git $(git config --get remote.origin.url) --no-update --since-commit HEAD --fail --concurrency=12
+hadolint $(find . -type f -name "Dockerfile")
 
 # Redirect output to stderr.
-exec 1>&2
+# exec 1>&2

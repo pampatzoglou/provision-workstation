@@ -35,7 +35,7 @@
 #    src: '{{ temp_dir.path }}/argo-linux-amd64'
 #    dest: /usr/local/bin/argo
 #    owner: '{{ user }}'
-#    mode: a+x
+#    mode: 'a+x'
 #    remote_src: true
 #  become: true
 #  when: not gh_installed.stat.exists

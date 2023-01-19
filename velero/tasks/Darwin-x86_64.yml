@@ -31,7 +31,7 @@
     src: '{{ temp_dir.path }}/velero-v{{ velero.version }}-linux-amd64/velero'
     dest: /usr/local/bin/velero
     owner: '{{ user }}'
-    mode: a+x
+    mode: 'a+x'
     remote_src: true
   become: true
   when: not velero_installed.stat.exists
