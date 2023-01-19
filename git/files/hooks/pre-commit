@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+echo "linting..."
+hadolint $(find . -type f -name "Dockerfile")
+yamllint -f auto $(find . -type f -regex '.*ya?ml*')
+
+echo "checking for secrets..."
+trufflehog git $(git config --get remote.origin.url) --no-update --since-commit HEAD --fail --concurrency=12
+
 if git commit -v --dry-run | grep '!nocommit' >/dev/null 2>&1
 then
   echo "Trying to commit non-committable code."
@@ -22,11 +29,5 @@ else
   against=$(git hash-object -t tree /dev/null)
 fi
 
-gittyleaks --no-banner --verbose
-
-yamllint -f auto $(find . -type f -regex '.*ya?ml*')
-trufflehog git $(git config --get remote.origin.url) --no-update --since-commit HEAD --fail --concurrency=12
-hadolint $(find . -type f -name "Dockerfile")
-
 # Redirect output to stderr.
-# exec 1>&2
+exec 1>&2
