@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-echo "linting..."
-hadolint $(find . -type f -name "Dockerfile")
+echo "linting"
+hadolint ${$(find . -type f -name "Dockerfile"):-"-v"}
 yamllint -f auto $(find . -type f -regex '.*ya?ml*')
 
 echo "checking for secrets..."
