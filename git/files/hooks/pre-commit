@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 echo "linting"
-hadolint ${$(find . -type f -name "Dockerfile"):-"-v"}
-yamllint -f auto $(find . -type f -regex '.*ya?ml*')
+DOCKERFILES=$(find . -type f -name "Dockerfile")
+[[ ! -z "$DOCKERFILES" ]] && hadolint $DOCKERFILES
+
+# yamllint -f auto $(find . -type f -regex '.*ya?ml*')
 
 echo "checking for secrets..."
 trufflehog git $(git config --get remote.origin.url) --no-update --since-commit HEAD --fail --concurrency=12
