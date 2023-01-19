@@ -16,7 +16,7 @@
     url: 'https://github.com/stackrox/kube-linter/releases/download/{{ kube_linter.version }}/kube-linter-linux'
     dest: '{{ temp_dir.path }}'
     checksum: 'sha256:{{ kube_linter.sha }}'
-    mode: a+x
+    mode: 'a+x'
   when: not kube_linter_installed.stat.exists
 
 - name: Install kube-linter
@@ -25,7 +25,7 @@
     dest: /usr/local/bin/kube-linter
     owner: root
     group: root
-    mode: a+x
+    mode: 'a+x'
     remote_src: true
   become: true
   when: not kube_linter_installed.stat.exists

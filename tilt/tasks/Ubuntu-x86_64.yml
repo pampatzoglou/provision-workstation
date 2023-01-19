@@ -32,7 +32,7 @@
     dest: /usr/local/bin/ctlptl
     owner: root
     group: root
-    mode: a+x
+    mode: 'a+x'
     remote_src: true
   become: true
   when: not ctlptl_installed.stat.exists
@@ -76,7 +76,7 @@
     dest: /usr/local/bin/tilt
     owner: root
     group: root
-    mode: a+x
+    mode: 'a+x'
     remote_src: true
   become: true
   when: not tilt_installed.stat.exists

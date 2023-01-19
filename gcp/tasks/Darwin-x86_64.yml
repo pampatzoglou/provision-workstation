@@ -30,7 +30,7 @@
         src: '{{ temp_dir.path }}/google-cloud-sdk'
         dest: '/Users/{{ user }}/.local/share'
         owner: '{{ user }}'
-        mode: a+x
+        mode: 'a+x'
         remote_src: true
 
     - name: Remove the temporary dir

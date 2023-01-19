@@ -16,7 +16,7 @@
     url: 'https://github.com/digitalocean/doctl/releases/download/v{{ doctl.version }}/doctl-{{ doctl.version }}-darwin-amd64.tar.gz'
     dest: '{{ temp_dir.path }}'
     checksum: 'sha256:{{ doctl.sha.amd64.darwin }}'
-    mode: a+x
+    mode: 'a+x'
   when: not doctl_installed.stat.exists
 
 - name: Unarchive doctl
@@ -31,7 +31,7 @@
     src: '{{ temp_dir.path }}/doctl'
     dest: /usr/local/bin/doctl
     owner: '{{ user }}'
-    mode: a+x
+    mode: 'a+x'
     remote_src: true
   become: true
   when: not doctl_installed.stat.exists

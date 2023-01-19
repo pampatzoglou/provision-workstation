@@ -17,7 +17,7 @@
     url: 'https://github.com/aquasecurity/kube-bench/releases/download/v{{ kube_bench.version }}/kube-bench_{{ kube_bench.version }}_linux_amd64.deb'
     dest: '{{ temp_dir.path }}'
     checksum: 'sha256:{{ kube_bench.sha.amd64.linux }}'
-    mode: a+x
+    mode: 'a+x'
   when: not kube_bench_installed.stat.exists
 
 - name: Install kube-bench

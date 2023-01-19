@@ -16,7 +16,7 @@
     url: 'https://github.com/open-policy-agent/opa/releases/download/v{{ opa.version }}/opa_darwin_amd64'
     dest: '{{ temp_dir.path }}'
     checksum: 'sha256:{{ opa.sha.amd64.darwin }}'
-    mode: a+x
+    mode: 'a+x'
   when: not opa_installed.stat.exists
 
 - name: Install opa
@@ -24,7 +24,7 @@
     src: '{{ temp_dir.path }}/opa_darwin_amd64'
     dest: /usr/local/bin/opa
     owner: '{{ user }}'
-    mode: a+x
+    mode: 'a+x'
     remote_src: true
   become: true
   when: not opa_installed.stat.exists

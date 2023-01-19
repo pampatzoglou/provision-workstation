@@ -32,7 +32,7 @@
     path: /Users/{{ user }}/.zshrc
     create: true
     owner: '{{ user }}'
-    mode: a+x
+    mode: 'a+x'
     block: |
       export ZSH=$HOME/.oh-my-zsh
       export KUBE_EDITOR="code --wait"

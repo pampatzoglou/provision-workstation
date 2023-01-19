@@ -8,108 +8,154 @@
     state: present
   become: true
 
-- name: Copy global gitIgnore
-  ansible.builtin.copy:
-    src: '{{ role_path }}/files/gitIgnore'
-    dest: '/home/{{ user }}/.gitIgnore'
-    group: '{{ user }}'
-    owner: '{{ user }}'
-    mode: a+x
-
-- name: Create gitHooks directory (.gitHooks)
-  ansible.builtin.file:
-    path: '/home/{{ user }}/.gitHooks'
-    state: directory
-    group: '{{ user }}'
-    owner: '{{ user }}'
-    mode: '0755'
-
-- name: Copy global gitHooks
-  ansible.builtin.copy:
-    src: '{{ item }}'
-    dest: '/home/{{ user }}/.gitHooks'
-    group: '{{ user }}'
-    owner: '{{ user }}'
-    mode: a+x
-  with_fileglob:
-    - '{{ role_path }}/files/hooks/*'
-
-- name: Check if /home/{{ user }}/.gitconfig exists
-  ansible.builtin.stat:
-    path: /home/{{ user }}/.gitconfig
-  register: gitconfig_installed
-
-- name: Setting Up global Git
-  ansible.builtin.blockinfile:
-    path: /home/{{ user }}/.gitconfig
-    create: true
-    group: '{{ user }}'
-    owner: '{{ user }}'
-    mode: a+x
-    block: |
-      [user]
-          name = {{ user }}
-          email = you@example.com
-      [core]
-          hooksPath = /home/{{ user }}/.gitHooks
-          excludesfile = /home/{{ user }}/.gitIgnore
-      [safe]
-        directory = /github/workspace
-  when: not gitconfig_installed.stat.exists
-
-- name: Display config message
-  debug:
-    msg: "You will need to edit: /home/{{ user }}/.gitconfig and setup your default git email"
-    verbosity: 0
-  when: not gitconfig_installed.stat.exists
-
-- name: Check if trufflehog is installed
-  ansible.builtin.stat:
-    path: /usr/local/bin/trufflehog
-  register: trufflehog_installed
-
-- name: Create temporary build directory
-  ansible.builtin.tempfile:
-    state: directory
-    suffix: temp_trufflehog
-  register: temp_dir
-  when: not trufflehog_installed.stat.exists
-
-- name: Download trufflehog (sha256)
-  ansible.builtin.get_url:
-    url: 'https://github.com/trufflesecurity/trufflehog/releases/download/v{{ trufflehog.version }}/trufflehog_{{ trufflehog.version }}_linux_amd64.tar.gz'
-    dest: '{{ temp_dir.path }}'
-    checksum: 'sha256:{{ trufflehog.sha }}'
-    mode: '0744'
-  when: not trufflehog_installed.stat.exists
-
-- name: Unarchive trufflehog
-  ansible.builtin.unarchive:
-    src: '{{ temp_dir.path }}/trufflehog_{{ trufflehog.version }}_linux_amd64.tar.gz'
-    dest: '{{ temp_dir.path }}'
-    remote_src: true
-  when: not trufflehog_installed.stat.exists
-
-- name: Install trufflehog
-  ansible.builtin.copy:
-    src: '{{ temp_dir.path }}/trufflehog'
-    dest: /usr/local/bin/trufflehog
-    owner: root
-    group: root
-    mode: a+x
-    remote_src: true
-  become: true
-  when: not trufflehog_installed.stat.exists
-
-- name: Remove the temporary dir
-  ansible.builtin.file:
-    path: '{{ temp_dir.path }}'
-    state: absent
-  when: temp_dir.path is defined
-
 - name: Install git-secrets
   ansible.builtin.apt:
     name: git-secrets
     state: latest
     update_cache: true
   become: true
+
+- name: Check if trufflehog is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/trufflehog
+  register: trufflehog_installed
+
+- name: Install trufflehog
+  block:
+    - name: Create temporary build directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: temp_trufflehog
+      register: temp_dir
+
+    - name: Download trufflehog (sha256)
+      ansible.builtin.get_url:
+        url: 'https://github.com/trufflesecurity/trufflehog/releases/download/v{{ trufflehog.version }}/trufflehog_{{ trufflehog.version }}_linux_amd64.tar.gz'
+        dest: '{{ temp_dir.path }}'
+        checksum: 'sha256:{{ trufflehog.sha }}'
+        mode: '0744'
+
+    - name: Unarchive trufflehog
+      ansible.builtin.unarchive:
+        src: '{{ temp_dir.path }}/trufflehog_{{ trufflehog.version }}_linux_amd64.tar.gz'
+        dest: '{{ temp_dir.path }}'
+        remote_src: true
+
+    - name: Install trufflehog
+      ansible.builtin.copy:
+        src: '{{ temp_dir.path }}/trufflehog'
+        dest: /usr/local/bin/trufflehog
+        owner: root
+        group: root
+        mode: 'a+x'
+        remote_src: true
+
+    - name: Remove the temporary dir
+      ansible.builtin.file:
+        path: '{{ temp_dir.path }}'
+        state: absent
+      when: temp_dir.path is defined
+  become: true
+  when: not trufflehog_installed.stat.exists
+
+- name: Check if hadolint is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/hadolint
+  register: hadolint_installed
+
+- name: Install hadolint
+  block:
+    - name: Create temporary build directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: temp_hadolint
+      register: temp_dir
+
+    - name: Download hadolint (sha256)
+      ansible.builtin.get_url:
+        url: 'https://github.com/hadolint/hadolint/releases/download/v{{ hadolint.version }}/hadolint-Linux-x86_64'
+        dest: '{{ temp_dir.path }}'
+        checksum: 'sha256:{{ hadolint.sha }}'
+        mode: '0744'
+
+    - name: Install hadolint
+      ansible.builtin.copy:
+        src: '{{ temp_dir.path }}/hadolint-Linux-x86_64'
+        dest: /usr/local/bin/hadolint
+        owner: root
+        group: root
+        mode: 'a+x'
+        remote_src: true
+
+    - name: Remove the temporary dir
+      ansible.builtin.file:
+        path: '{{ temp_dir.path }}'
+        state: absent
+      when: temp_dir.path is defined
+  become: true
+  when: not hadolint_installed.stat.exists
+
+- name: Setup git config
+  block:
+    - name: Create git directory (.config/git)
+      ansible.builtin.file:
+        path: '/home/{{ user }}/.config/git'
+        state: directory
+        group: '{{ user }}'
+        owner: '{{ user }}'
+        mode: '0755'
+
+    - name: Copy global gitIgnore
+      ansible.builtin.copy:
+        src: '{{ role_path }}/files/gitIgnore'
+        dest: '/home/{{ user }}/.config/git/gitIgnore'
+        group: '{{ user }}'
+        owner: '{{ user }}'
+        mode: 'a+x'
+
+    - name: Create gitHooks directory (.config/git/hooks)
+      ansible.builtin.file:
+        path: '/home/{{ user }}/.config/git/hooks'
+        state: directory
+        group: '{{ user }}'
+        owner: '{{ user }}'
+        mode: '0755'
+
+    - name: Copy global gitHooks
+      ansible.builtin.copy:
+        src: '{{ item }}'
+        dest: '/home/{{ user }}/.config/git/hooks'
+        group: '{{ user }}'
+        owner: '{{ user }}'
+        mode: 'a+x'
+      with_fileglob:
+        - '{{ role_path }}/files/hooks/*'
+
+    - name: Check if /home/{{ user }}/.gitconfig exists
+      ansible.builtin.stat:
+        path: /home/{{ user }}/.gitconfig
+      register: gitconfig_installed
+
+    - name: Setting Up global Git
+      ansible.builtin.blockinfile:
+        path: /home/{{ user }}/.gitconfig
+        create: true
+        group: '{{ user }}'
+        owner: '{{ user }}'
+        mode: 'a+x'
+        block: |
+          [user]
+              name = {{ user }}
+              email = you@example.com
+          [core]
+              hooksPath = '/home/{{ user }}/.config/git/hooks'
+              excludesfile = '/home/{{ user }}/.config/git/gitIgnore'
+          [safe]
+            directory = /github/workspace
+      when: not gitconfig_installed.stat.exists
+
+    - name: Display config message
+      debug:
+        msg: "You will need to edit: /home/{{ user }}/.gitconfig and setup your default git email"
+        verbosity: 0
+      when: not gitconfig_installed.stat.exists

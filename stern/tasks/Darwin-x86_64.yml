@@ -38,7 +38,7 @@
     src: '{{ temp_dir.path }}/stern'
     dest: /usr/local/bin/stern
     owner: '{{ user }}'
-    mode: a+x
+    mode: 'a+x'
     remote_src: true
   become: true
   when: not stern_installed.stat.exists

@@ -16,7 +16,7 @@
     url: 'https://github.com/datreeio/datree/releases/download/{{ datree.version }}/datree-cli_{{ datree.version }}_Darwin_x86_64.zip'
     dest: '{{ temp_dir.path }}'
     checksum: 'sha256:{{ datree.sha.amd64.darwin }}'
-    mode: a+x
+    mode: 'a+x'
   when: not datree_installed.stat.exists
 
 - name: Unarchive datree
@@ -31,7 +31,7 @@
     src: '{{ temp_dir.path }}/datree'
     dest: /usr/local/bin/datree
     owner: '{{ user }}'
-    mode: a+x
+    mode: 'a+x'
     remote_src: true
   become: true
   when: not datree_installed.stat.exists
