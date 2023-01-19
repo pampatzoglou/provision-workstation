@@ -64,6 +64,7 @@
         block: |
           [user]
               name = {{ user }}
+              email = you@example.com
           [core]
               hooksPath = /Users/{{ user }}/.config/git/hooks
               excludesfile = /Users/{{ user }}/.config/git/gitIgnore
