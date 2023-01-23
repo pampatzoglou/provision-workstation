@@ -6,6 +6,12 @@
     state: present
     update_homebrew: true
 
+- name: Install tldr
+  community.general.homebrew:
+    name: tldr
+    state: present
+    update_homebrew: true
+
 - name: Installing Oh-My-Zsh for {{ user }}
   ansible.builtin.git:
     repo: https://github.com/ohmyzsh/ohmyzsh.git
