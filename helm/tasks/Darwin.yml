@@ -6,10 +6,6 @@
     state: present
     update_homebrew: true
 
-- name: Install helm-diff
-  ansible.builtin.command: helm plugin list | grep diff || helm plugin install https://github.com/databus23/helm-diff
-  changed_when: false
-
 - name: Install helmfile
   community.general.homebrew:
     name: helmfile
