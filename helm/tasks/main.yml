@@ -40,6 +40,8 @@
     - "chaos-mesh https://charts.chaos-mesh.org"
     - "aquasecurity https://aquasecurity.github.io/helm-charts"
     - "stakater https://stakater.github.io/stakater-charts"
+    - "hashicorp https://helm.releases.hashicorp.com"
+    - "external-secrets https://external-secrets.github.io/kubernetes-external-secrets"
   changed_when: false
 
 - name: Update helm repos
