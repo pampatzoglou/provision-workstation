@@ -13,3 +13,33 @@
   when: ansible_facts['os_family'] == "Darwin"
   tags:
     - unbounds
+
+- name: Install helm-diff
+  ansible.builtin.command: helm plugin list | grep diff || helm plugin install https://github.com/databus23/helm-diff
+  changed_when: false
+
+- name: Add helm repos
+  ansible.builtin.command: 'helm repo add {{ item }}'
+  loop:
+    - "vmware-tanzu https://vmware-tanzu.github.io/helm-charts"
+    - "jetstack https://charts.jetstack.io"
+    - "nginx-stable https://helm.nginx.com/stable"
+    - "nginx https://kubernetes.github.io/ingress-nginx"
+    - "azuredisk-csi-driver https://raw.githubusercontent.com/kubernetes-sigs/azuredisk-csi-driver/master/charts"
+    - "aws-ebs-csi-driver https://kubernetes-sigs.github.io/aws-ebs-csi-driver"
+    - "aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver"
+    - "prometheus-community https://prometheus-community.github.io/helm-charts"
+    - "grafana https://grafana.github.io/helm-charts"
+    - "vector https://helm.vector.dev"
+    - "victoria-metrics https://victoriametrics.github.io/helm-charts"
+    - "elastic https://helm.elastic.co"
+    - "bitnami https://charts.bitnami.com/bitnami"
+    - "teleport https://charts.releases.teleport.dev"
+    - "istio https://istio-release.storage.googleapis.com/charts"
+    - "kiali https://kiali.org/helm-charts"
+    - "chaos-mesh https://charts.chaos-mesh.org"
+  changed_when: false
+
+- name: Update helm repos
+  ansible.builtin.command: 'helm repo update'
+  changed_when: false

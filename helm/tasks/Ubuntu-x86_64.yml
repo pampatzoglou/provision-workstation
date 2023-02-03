@@ -38,10 +38,6 @@
   become: true
   when: not helm_installed.stat.exists
 
-- name: Install helm-diff
-  ansible.builtin.command: helm plugin list | grep diff || helm plugin install https://github.com/databus23/helm-diff
-  changed_when: false
-
 - name: Check if helmfile is installed
   ansible.builtin.stat:
     path: /usr/local/bin/helmfile
