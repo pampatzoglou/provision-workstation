@@ -14,11 +14,15 @@
     state: latest
     update_cache: true
   become: true
+  tags:
+    - git-secrets
 
 - name: Check if trufflehog is installed
   ansible.builtin.stat:
     path: /usr/local/bin/trufflehog
   register: trufflehog_installed
+  tags:
+    - trufflehog
 
 - name: Install trufflehog
   block:
@@ -57,11 +61,15 @@
       when: temp_dir.path is defined
   become: true
   when: not trufflehog_installed.stat.exists
+  tags:
+    - trufflehog
 
 - name: Check if hadolint is installed
   ansible.builtin.stat:
     path: /usr/local/bin/hadolint
   register: hadolint_installed
+  tags:
+    - hadolint
 
 - name: Install hadolint
   block:
@@ -94,6 +102,8 @@
       when: temp_dir.path is defined
   become: true
   when: not hadolint_installed.stat.exists
+  tags:
+    - hadolint
 
 - name: Setup git config
   block:
