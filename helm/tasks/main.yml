@@ -41,7 +41,7 @@
     - "aquasecurity https://aquasecurity.github.io/helm-charts"
     - "stakater https://stakater.github.io/stakater-charts"
     - "hashicorp https://helm.releases.hashicorp.com"
-    - "external-secrets https://external-secrets.github.io/kubernetes-external-secrets"
+    - "external-secrets https://charts.external-secrets.io"
     - "kubernetes-dashboard https://kubernetes.github.io/dashboard"
   changed_when: false
 
