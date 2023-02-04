@@ -32,7 +32,7 @@ ansible-playbook --ask-become-pass -e user=$USER playbook.yaml --tags kubernetes
 
 * [argo](https://github.com/argoproj/argo-workflows)
 * [aws](https://aws.amazon.com/cli/)
-* [azure]
+* azure
   * [azure-cli](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
   * [kubelogin](https://github.com/Azure/kubelogin)
   * [Azure VPN Client (Mac only)](https://apps.microsoft.com/store/detail/azure-vpn-client/9NP355QT2SQB?hl=en-us&gl=us)
@@ -46,21 +46,21 @@ ansible-playbook --ask-become-pass -e user=$USER playbook.yaml --tags kubernetes
 * [gcp](https://cloud.google.com/sdk/gcloud)
 * [git]
   * [gittyleaks](https://github.com/kootenpv/gittyleaks)
+  * [hadolint](https://github.com/hadolint/hadolint)
   * [pre-commit](https://pre-commit.com/)
   * [git-secrets](https://git-secret.io/installation)
   * [trufflehog](https://github.com/trufflesecurity/trufflehog)
-  * [git-config]
-  * [git-hooks]
-  * [git-ignore]
-  * [hadolint](https://github.com/hadolint/hadolint)
+  * git-config
+  * git-hooks
+  * git-ignore
 * [github](https://github.com/)
   * [gh cli](https://cli.github.com/)
   * [act](https://github.com/nektos/act)
-* [helm-charts]
+* helm-charts
   * [helm](https://helm.sh/)
   * [helmfile](https://github.com/helmfile/helmfile)
   * [helm-diff](https://github.com/databus23/helm-diff)
-  * [helm repos]
+  * helm repos
 * [k6s](https://k6.io/)
 * [keepassxc](https://keepassxc.org/)
 * [kind](https://kind.sigs.k8s.io/)
@@ -85,8 +85,8 @@ ansible-playbook --ask-become-pass -e user=$USER playbook.yaml --tags kubernetes
 * [velero](https://github.com/vmware-tanzu/velero)
 * [vscode](https://code.visualstudio.com)
 * [wireguard](https://www.wireguard.com)
-* [zsh]
-  * [jq]
+* [zsh](https://www.zsh.org)
+  * jq
   * [yq](https://github.com/mikefarah/yq)
   * [yamllint](https://yamllint.readthedocs.io/en/stable)
   * [tldr](https://tldr.sh)
