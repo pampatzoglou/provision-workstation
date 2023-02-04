@@ -6,7 +6,7 @@
 
 - name: Download squashctl (sha256)
   ansible.builtin.get_url:
-    url: 'https://github.com/solo-io/squash/releases/download/v0.5.18/squashctl-darwin'
+    url: 'https://github.com/solo-io/squash/releases/download/v{{ kubesquash.version }}/squashctl-darwin'
     dest: /usr/local/bin/kubesquash
     checksum: 'sha256:{{ kubesquash.sha.amd64.dawrin }}'
     mode: 'a+x'

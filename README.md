@@ -31,7 +31,7 @@ ansible-playbook --ask-become-pass -e user=$USER playbook.yaml --tags kubernetes
 # Installs
 
 * [argo](https://github.com/argoproj/argo-workflows)
-* [aws](https://aws.amazon.com/cli/)
+* [aws](https://aws.amazon.com/cli)
 * azure
   * [azure-cli](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
   * [kubelogin](https://github.com/Azure/kubelogin)
@@ -62,8 +62,8 @@ ansible-playbook --ask-become-pass -e user=$USER playbook.yaml --tags kubernetes
   * [helm-diff](https://github.com/databus23/helm-diff)
   * helm repos
 * [k6s](https://k6.io/)
-* [keepassxc](https://keepassxc.org/)
-* [kind](https://kind.sigs.k8s.io/)
+* [keepassxc](https://keepassxc.org)
+* [kind](https://kind.sigs.k8s.io)
 * [kube_bench](https://github.com/aquasecurity/kube-bench)
 * [kube_hunter](https://github.com/aquasecurity/kube-hunter)
 * [kube_linter](https://github.com/stackrox/kube-linter)
@@ -71,12 +71,14 @@ ansible-playbook --ask-become-pass -e user=$USER playbook.yaml --tags kubernetes
 * [kubesquash](https://github.com/solo-io/squash)
 * [logcli](https://grafana.com/docs/loki/latest/tools/logcli)
 * [open_lens](https://github.com/MuhammedKalkan/OpenLens)
+* [open policy agent](https://github.com/open-policy-agent/opa)
 * [pcloud](https://www.pcloud.com)
 * [stern](https://github.com/stern/stern)
 * [syncthing](https://syncthing.net)
 * [teleport](https://github.com/gravitational/teleport)
 * [telepresence](https://www.telepresence.io)
 * [terraform](https://www.terraform.io/)
+  * [checkov](https://www.checkov.io)
   * [terraform](https://github.com/hashicorp/terraform)
   * [tfsec](https://github.com/aquasecurity/tfsec)
   * [tflint](https://github.com/terraform-linters/tflint)

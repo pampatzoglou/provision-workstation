@@ -5,6 +5,8 @@
     name: checkov
     executable: pip3
   become: true
+  tags:
+    - checkov
 
 - name: Ubuntu
   ansible.builtin.include_tasks: Ubuntu-x86_64.yml
