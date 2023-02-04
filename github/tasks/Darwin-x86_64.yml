@@ -26,22 +26,5 @@
     mode: '0744'
   when: not gh_installed.stat.exists
 
-# - name: Unarchive
-#  ansible.builtin.command: 'gunzip {{ temp_dir.path }}/argo-linux-amd64.gz'
-#  when: not gh_installed.stat.exists
-
-# - name: Install argo cli
-#  ansible.builtin.copy:
-#    src: '{{ temp_dir.path }}/argo-linux-amd64'
-#    dest: /usr/local/bin/argo
-#    owner: '{{ user }}'
-#    mode: 'a+x'
-#    remote_src: true
-#  become: true
-#  when: not gh_installed.stat.exists
-
-# - name: Remove the temporary dir
-#  ansible.builtin.file:
-#    path: '{{ temp_dir.path }}'
-#    state: absent
-#  when: temp_dir.path is defined
+# todo: comple gh cli
+# todo: install act

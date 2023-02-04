@@ -159,7 +159,7 @@
     remote_src: true
   when: not terrascan_installed.stat.exists
 
-- name: Install tfsec
+- name: Install terrascan
   ansible.builtin.copy:
     src: '{{ temp_dir.path }}/terrascan'
     dest: /usr/local/bin/terrascan

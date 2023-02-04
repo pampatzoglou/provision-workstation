@@ -6,10 +6,12 @@
         (ansible_facts['distribution'] == "Ubuntu") and
         (ansible_facts['architecture'] == "x86_64")
   tags:
-    - unbound
+    - kubernetes
+    - tilt
 
 - name: Darwin
   ansible.builtin.include_tasks: Darwin.yml
   when: ansible_facts['os_family'] == "Darwin"
   tags:
-    - unbounds
+    - kubernetes
+    - tilt

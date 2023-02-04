@@ -5,10 +5,10 @@
   when: (ansible_facts['os_family'] == "Debian") and
         (ansible_facts['distribution'] == "Ubuntu")
   tags:
-    - unbound
+    - k6s
 
 - name: Darwin
   ansible.builtin.include_tasks: Darwin.yml
   when: ansible_facts['os_family'] == "Darwin"
   tags:
-    - unbounds
+    - k6s

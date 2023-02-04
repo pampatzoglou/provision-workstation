@@ -6,17 +6,21 @@
         (ansible_facts['distribution'] == "Ubuntu") and
         (ansible_facts['architecture'] == "x86_64")
   tags:
-    - unbound
+    - helm
+    - helmfile
 
 - name: Darwin
   ansible.builtin.include_tasks: Darwin.yml
   when: ansible_facts['os_family'] == "Darwin"
   tags:
-    - unbounds
+    - helm
+    - helmfile
 
 - name: Install helm-diff
   ansible.builtin.command: helm plugin list | grep diff || helm plugin install https://github.com/databus23/helm-diff
   changed_when: false
+  tags:
+    - helm
 
 - name: Add helm repos
   ansible.builtin.command: 'helm repo add {{ item }}'
@@ -48,3 +52,5 @@
 - name: Update helm repos
   ansible.builtin.command: 'helm repo update'
   changed_when: false
+  tags:
+    - helm

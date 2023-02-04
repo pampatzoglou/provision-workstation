@@ -7,16 +7,30 @@
       - pre-commit
     executable: pip3
   become: true
+  tags:
+    - git
 
 - name: Ubuntu
   ansible.builtin.include_tasks: Ubuntu.yml
   when: (ansible_facts['os_family'] == "Debian") and
         (ansible_facts['distribution'] == "Ubuntu")
   tags:
-    - unbound
+    - git
+    - git-secrets
+    - git-config
+    - git-hooks
+    - git-ignore
+    - trufflehog
+    - hadolint
 
 - name: Darwin
   ansible.builtin.include_tasks: Darwin.yml
   when: ansible_facts['os_family'] == "Darwin"
   tags:
-    - unbounds
+    - git
+    - git-secrets
+    - git-config
+    - git-hooks
+    - git-ignore
+    - trufflehog
+    - hadolint

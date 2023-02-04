@@ -5,6 +5,8 @@
     name: checkov
     executable: pip3
   become: true
+  tags:
+    - checkov
 
 - name: Ubuntu
   ansible.builtin.include_tasks: Ubuntu-x86_64.yml
@@ -12,10 +14,16 @@
         (ansible_facts['distribution'] == "Ubuntu") and
         (ansible_facts['architecture'] == "x86_64")
   tags:
-    - unbound
+    - terraform
+    - tfsec
+    - tflint
+    - terrascan
 
 - name: Darwin
   ansible.builtin.include_tasks: Darwin.yml
   when: ansible_facts['os_family'] == "Darwin"
   tags:
-    - unbounds
+    - terraform
+    - tfsec
+    - tflint
+    - terrascan

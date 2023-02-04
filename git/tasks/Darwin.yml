@@ -11,12 +11,24 @@
     name: git-secrets
     state: present
     update_homebrew: true
+  tags:
+    - git-secrets
 
 - name: Install trufflehog
   community.general.homebrew:
     name: trufflehog
     state: present
     update_homebrew: true
+  tags:
+    - trufflehog
+
+- name: Install hadolint
+  community.general.homebrew:
+    name: hadolint
+    state: present
+    update_homebrew: true
+  tags:
+    - hadolint
 
 - name: Setup git config
   block:

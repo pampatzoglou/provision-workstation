@@ -6,11 +6,13 @@
         (ansible_facts['distribution'] == "Ubuntu") and
         (ansible_facts['architecture'] == "x86_64")
   tags:
-    - unbound
+    - kubernetes
+    - opa
 
 - name: Darwin
   ansible.builtin.include_tasks: Darwin-x86_64.yml
   when: (ansible_facts['os_family'] == "Darwin") and
         (ansible_facts['architecture'] == "x86_64")
   tags:
-    - unbounds
+    - kubernetes
+    - opa

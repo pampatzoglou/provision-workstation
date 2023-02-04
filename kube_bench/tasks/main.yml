@@ -6,4 +6,5 @@
         (ansible_facts['distribution'] == "Ubuntu") and
         (ansible_facts['architecture'] == "x86_64")
   tags:
-    - unbound
+    - kubernetes
+    - kube-bench
