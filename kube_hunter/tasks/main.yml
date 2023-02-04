@@ -5,3 +5,6 @@
     name: kube-hunter
     executable: pip3
   become: true
+  tags:
+    - kubernetes
+    - kube_hunter
