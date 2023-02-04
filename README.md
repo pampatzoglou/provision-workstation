@@ -44,7 +44,7 @@ ansible-playbook --ask-become-pass -e user=$USER playbook.yaml --tags kubernetes
 * [doctl](https://github.com/digitalocean/doctl)
 * [firewall](https://help.ubuntu.com/community/UFW)
 * [gcp](https://cloud.google.com/sdk/gcloud)
-* [git]
+* git
   * [gittyleaks](https://github.com/kootenpv/gittyleaks)
   * [hadolint](https://github.com/hadolint/hadolint)
   * [pre-commit](https://pre-commit.com/)
