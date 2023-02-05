@@ -4,7 +4,6 @@
   hosts: localhost
   gather_facts: true
   roles:
-    - teleport
     - argo
     - aws
     - azure
@@ -33,7 +32,7 @@
     # todo:- pcloud
     - stern
     - syncthing
-    - teleport
+    - teleport 
     - telepresence
     - terraform
     - tilt

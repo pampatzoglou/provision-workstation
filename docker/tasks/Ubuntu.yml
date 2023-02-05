@@ -11,12 +11,6 @@
     purge: true
   become: true
 
-- name: Create temporary build directory
-  ansible.builtin.tempfile:
-    state: directory
-    suffix: temp_dir
-  register: temp_dir
-
 - name: Setup Docker-CE
   block:
     - name: Fetch Docker CE official GPG key
@@ -27,6 +21,7 @@
         group: root
         mode: 'a+r'
 
+    # todo: use the pgp key in the repo ref
     - name: Import Docker CE repo
       ansible.builtin.apt_repository:
         repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
@@ -59,9 +54,3 @@
     name: docker
   become: true
   ignore_errors: true
-
-- name: Remove the temporary dir
-  ansible.builtin.file:
-    path: '{{ temp_dir.path }}'
-    state: absent
-  when: temp_dir.path is defined

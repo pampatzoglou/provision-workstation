@@ -1,19 +1,16 @@
 ---
-- name: Print the gateway for each host when defined
-  ansible.builtin.debug:
-    msg: System {{ inventory_hostname }} has gateway {{ ansible_default_ipv4.gateway }}
-  when: ansible_default_ipv4.gateway is defined
-#- name: Check if teleport is installed
-#  ansible.builtin.stat:
-#    path: /usr/local/bin/foooo
-#  register: teleport_installed
+# todo: fix and verify
+- name: Check if teleport is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/foooo
+  register: teleport_installed
 
 - name: Create teleport build directory
   ansible.builtin.tempfile:
     state: directory
     suffix: temp_dir
   register: temp_dir
-#  when: not teleport_installed.stat.exists
+  when: not teleport_installed.stat.exists
 
 - name: Download teleport (sha256)
   ansible.builtin.get_url:
@@ -21,12 +18,7 @@
     dest: '{{ temp_dir.path }}'
     checksum: 'sha256:{{ teleport.sha.darwin }}'
     mode: 'a+x'
-#  when: not teleport_installed.stat.exists
+  when: not teleport_installed.stat.exists
 
-#- name: Unarchive cert-manager
-#  ansible.builtin.unarchive:
-#    src: '{{ temp_dir.path }}/kubectl-cert_manager-linux-amd64.tar.gz'
-#    dest: '{{ temp_dir.path }}'
-#    remote_src: true
-#  when: not cert_manager_installed.stat.exists
+
 
