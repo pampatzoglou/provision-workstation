@@ -5,7 +5,7 @@
     name: helm
     state: present
     update_homebrew: true
-  tags: 
+  tags:
     - helm
 
 - name: Install helmfile
@@ -13,5 +13,5 @@
     name: helmfile
     state: present
     update_homebrew: true
-  tags: 
+  tags:
     - helmfile

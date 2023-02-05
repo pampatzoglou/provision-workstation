@@ -32,7 +32,7 @@
     # todo:- pcloud
     - stern
     - syncthing
-    - teleport 
+    - teleport
     - telepresence
     - terraform
     - tilt

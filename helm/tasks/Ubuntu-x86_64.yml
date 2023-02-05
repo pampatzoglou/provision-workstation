@@ -45,7 +45,7 @@
         state: absent
       when: temp_dir.path is defined
   become: true
-  tags: 
+  tags:
     - helm
 
 - name: Install helmfile
@@ -86,5 +86,5 @@
         state: absent
       when: temp_dir.path is defined
   become: true
-  tags: 
+  tags:
     - helmfile
