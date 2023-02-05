@@ -6,7 +6,7 @@
         (ansible_facts['distribution'] == "Ubuntu") and
         (ansible_facts['architecture'] == "x86_64")
   tags:
-    - azure
+    - azure-cli
     - kubelogin
 
 - name: Darwin
@@ -14,6 +14,6 @@
   when: (ansible_facts['os_family'] == "Darwin") and
         (ansible_facts['architecture'] == "x86_64")
   tags:
-    - azure
+    - azure-cli
     - kubelogin
     - azureVPNclient

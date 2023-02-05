@@ -7,7 +7,7 @@
         (ansible_facts['architecture'] == "x86_64")
   tags:
     - github
-    - github-cli
+    - gh
     - act
 
 - name: Darwin
@@ -16,5 +16,5 @@
         (ansible_facts['architecture'] == "x86_64")
   tags:
     - github
-    - github-cli
+    - gh
     - act

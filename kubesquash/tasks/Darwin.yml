@@ -11,5 +11,3 @@
     checksum: 'sha256:{{ kubesquash.sha.amd64.dawrin }}'
     mode: 'a+x'
   when: not kubesquash_installed.stat.exists
-
-  # todo: fix

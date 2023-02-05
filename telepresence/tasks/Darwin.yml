@@ -5,3 +5,5 @@
     name: datawire/blackbird/telepresence
     state: present
     update_homebrew: true
+  tags:
+    - telepresence

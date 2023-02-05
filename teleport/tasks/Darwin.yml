@@ -1,2 +1,42 @@
 ---
-# todo
+# todo: fix and verify
+- name: Check if teleport is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/teleport
+  register: teleport_installed
+  tags:
+    - teleport
+
+- name: Create teleport build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_dir
+  register: temp_dir
+  when: not teleport_installed.stat.exists
+  tags:
+    - teleport
+
+- name: Download teleport (sha256)
+  ansible.builtin.get_url:
+    url: 'https://cdn.teleport.dev/teleport-{{ teleport.version }}.pkg'
+    dest: '{{ temp_dir.path }}'
+    checksum: 'sha256:{{ teleport.sha.darwin }}'
+    mode: 'a+x'
+  when: not teleport_installed.stat.exists
+  tags:
+    - teleport
+
+- name: Install teleport {{ teleport.version }}
+  ansible.builtin.command: 'installer -pkg {{ temp_dir.path }}/teleport-{{ teleport.version }}.pkg -target /'
+  become: true
+  when: not teleport_installed.stat.exists
+  tags:
+    - teleport
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined
+  tags:
+    - teleport

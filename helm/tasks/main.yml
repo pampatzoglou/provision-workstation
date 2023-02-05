@@ -48,6 +48,8 @@
     - "external-secrets https://charts.external-secrets.io"
     - "kubernetes-dashboard https://kubernetes.github.io/dashboard"
   changed_when: false
+  tags:
+    - helm
 
 - name: Update helm repos
   ansible.builtin.command: 'helm repo update'
