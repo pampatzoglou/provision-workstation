@@ -1,2 +1,6 @@
 ---
 # vars file for teleport
+teleport:
+  version: 11.3.2
+  sha:
+    darwin: 6eff028d104b53c8a53c3af752a52292ddb2024b469ce5ab05aee2f0954bde72
