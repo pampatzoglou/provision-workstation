@@ -54,7 +54,7 @@ ansible-playbook --ask-become-pass -e user=$USER playbook.yaml --tags kubernetes
   * git-hooks
   * git-ignore
 * [github](https://github.com/)
-  * [gh cli](https://cli.github.com/)
+  * [gh](https://cli.github.com/)
   * [act](https://github.com/nektos/act)
 * helm-charts
   * [helm](https://helm.sh/)
