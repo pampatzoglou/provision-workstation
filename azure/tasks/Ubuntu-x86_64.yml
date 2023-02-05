@@ -1,108 +1,114 @@
 ---
 # tasks file for azure
-- name: Get packages needed for azure
-  ansible.builtin.apt:
-    update_cache: true
-    force_apt_get: true
-    cache_valid_time: 3600
-    pkg:
-      - ca-certificates
-      - curl
-      - apt-transport-https
-      - lsb-release
-      - gnupg
-      - unzip
-      - gpg
+- name: Install azure cli
+  block:
+    - name: Get packages needed for azure
+      ansible.builtin.apt:
+        update_cache: true
+        force_apt_get: true
+        cache_valid_time: 3600
+        pkg:
+          - ca-certificates
+          - curl
+          - apt-transport-https
+          - lsb-release
+          - gnupg
+          - unzip
+          - gpg
+
+    - name: Register lsb_release
+      ansible.builtin.command: lsb_release -sc
+      register: lsb_release
+      changed_when: false
+
+    - name: Check if Azure public key installed
+      ansible.builtin.stat:
+        path: /etc/apt/trusted.gpg.d/microsoft.gpg
+      register: microsoft_installed
+
+    - name: Create temporary build directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: temp_dir
+      register: temp_dir
+      when: not microsoft_installed.stat.exists
+
+    - name: Download Azure public key
+      ansible.builtin.get_url:
+        url: https://packages.microsoft.com/keys/microsoft.asc
+        dest: '{{ temp_dir.path }}/microsoft.asc'
+      when: not microsoft_installed.stat.exists
+
+    - name: Save Azure official GPG key
+      ansible.builtin.shell: 'cat {{ temp_dir.path }}/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.gpg'
+      when: not microsoft_installed.stat.exists
+
+    - name: Remove the temporary dir
+      ansible.builtin.file:
+        path: '{{ temp_dir.path }}'
+        state: absent
+      when: temp_dir.path is defined
+
+    - name: Add the Azure CLI software repository
+      ansible.builtin.apt_repository:
+        repo: 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ {{ lsb_release.stdout | lower }} main'
+        state: present
+        filename: /etc/apt/sources.list.d/azure-cli
+
+    - name: Install azure packages
+      ansible.builtin.apt:
+        pkg:
+          - azure-cli
+        update_cache: true
   become: true
-
-- name: Register lsb_release
-  ansible.builtin.command: lsb_release -sc
-  register: lsb_release
-  changed_when: false
-
-- name: Check if Azure public key installed
-  ansible.builtin.stat:
-    path: /etc/apt/trusted.gpg.d/microsoft.gpg
-  register: microsoft_installed
-
-- name: Create temporary build directory
-  ansible.builtin.tempfile:
-    state: directory
-    suffix: temp_dir
-  register: temp_dir
-  when: not microsoft_installed.stat.exists
-
-- name: Download Azure public key
-  ansible.builtin.get_url:
-    url: https://packages.microsoft.com/keys/microsoft.asc
-    dest: '{{ temp_dir.path }}/microsoft.asc'
-  when: not microsoft_installed.stat.exists
-
-- name: Save Azure official GPG key
-  ansible.builtin.shell: 'cat {{ temp_dir.path }}/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.gpg'
-  become: true
-  when: not microsoft_installed.stat.exists
-
-- name: Remove the temporary dir
-  ansible.builtin.file:
-    path: '{{ temp_dir.path }}'
-    state: absent
-  when: temp_dir.path is defined
-
-- name: Add the Azure CLI software repository
-  ansible.builtin.apt_repository:
-    repo: 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ {{ lsb_release.stdout | lower }} main'
-    state: present
-    filename: /etc/apt/sources.list.d/azure-cli
-  become: true
-
-- name: Install azure packages
-  ansible.builtin.apt:
-    pkg:
-      - azure-cli
-    update_cache: true
-  become: true
-
-- name: Check if kubelogin is installed
-  ansible.builtin.stat:
-    path: /usr/local/bin/kubelogin
-  register: kubelogin_installed
-
-- name: Create temporary build directory
-  ansible.builtin.tempfile:
-    state: directory
-    suffix: temp_dir
-  register: temp_dir
-  when: not kubelogin_installed.stat.exists
-
-- name: Download kubelogin (sha256)
-  ansible.builtin.get_url:
-    url: 'https://github.com/Azure/kubelogin/releases/download/v{{ kubelogin.version }}/kubelogin-linux-amd64.zip'
-    dest: '{{ temp_dir.path }}'
-    checksum: 'sha256:{{ kubelogin.sha }}'
-    mode: '0744'
-  when: not kubelogin_installed.stat.exists
-
-- name: Unarchive kubelogin
-  ansible.builtin.unarchive:
-    src: '{{ temp_dir.path }}/kubelogin-linux-amd64.zip'
-    dest: '{{ temp_dir.path }}'
-    remote_src: true
-  when: not kubelogin_installed.stat.exists
+  tags:
+    - azure-cli
 
 - name: Install kubelogin
-  ansible.builtin.copy:
-    src: '{{ temp_dir.path }}/bin/linux_amd64/kubelogin'
-    dest: /usr/local/bin/kubelogin
-    owner: root
-    group: root
-    mode: 'a+x'
-    remote_src: true
-  become: true
-  when: not kubelogin_installed.stat.exists
+  block:
+    - name: Check if kubelogin is installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/kubelogin
+      register: kubelogin_installed
 
-- name: Remove the temporary dir
-  ansible.builtin.file:
-    path: '{{ temp_dir.path }}'
-    state: absent
-  when: temp_dir.path is defined
+    - name: Create temporary build directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: temp_dir
+      register: temp_dir
+      when: not kubelogin_installed.stat.exists
+
+    - name: Download kubelogin (sha256)
+      ansible.builtin.get_url:
+        url: 'https://github.com/Azure/kubelogin/releases/download/v{{ kubelogin.version }}/kubelogin-linux-amd64.zip'
+        dest: '{{ temp_dir.path }}'
+        checksum: 'sha256:{{ kubelogin.sha }}'
+        mode: '0744'
+      when: not kubelogin_installed.stat.exists
+
+    - name: Unarchive kubelogin
+      ansible.builtin.unarchive:
+        src: '{{ temp_dir.path }}/kubelogin-linux-amd64.zip'
+        dest: '{{ temp_dir.path }}'
+        remote_src: true
+      when: not kubelogin_installed.stat.exists
+
+    - name: Install kubelogin
+      ansible.builtin.copy:
+        src: '{{ temp_dir.path }}/bin/linux_amd64/kubelogin'
+        dest: /usr/local/bin/kubelogin
+        owner: root
+        group: root
+        mode: 'a+x'
+        remote_src: true
+      become: true
+      when: not kubelogin_installed.stat.exists
+
+    - name: Remove the temporary dir
+      ansible.builtin.file:
+        path: '{{ temp_dir.path }}'
+        state: absent
+      when: temp_dir.path is defined
+  become: true
+  tags:
+    - kubelogin

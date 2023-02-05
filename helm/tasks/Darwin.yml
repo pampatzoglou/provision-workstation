@@ -5,9 +5,13 @@
     name: helm
     state: present
     update_homebrew: true
+  tags: 
+    - helm
 
 - name: Install helmfile
   community.general.homebrew:
     name: helmfile
     state: present
     update_homebrew: true
+  tags: 
+    - helmfile

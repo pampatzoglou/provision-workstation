@@ -5,12 +5,14 @@
     name: azure-cli
     state: present
     update_homebrew: true
+  tags: azure-cli
 
 - name: Install kubelogin
   community.general.homebrew:
     name: kubelogin
     state: present
     update_homebrew: true
+  tags: kubelogin
 
 - name: Install Azure VPN Client
   block:
@@ -25,3 +27,4 @@
         id:
           - 1553936137
         state: latest
+  tags: azureVPNclient

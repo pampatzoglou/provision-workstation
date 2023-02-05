@@ -1,76 +1,90 @@
 ---
 # tasks file for helm
-- name: Check if helm is installed
-  ansible.builtin.stat:
-    path: /usr/local/bin/helm
-  register: helm_installed
-
-- name: Create temporary build directory
-  ansible.builtin.tempfile:
-    state: directory
-    suffix: temp_dir
-  register: temp_dir
-  when: not helm_installed.stat.exists
-
-- name: Download helm (sha256)
-  ansible.builtin.get_url:
-    url: 'https://get.helm.sh/helm-v{{ helm.version }}-linux-amd64.tar.gz'
-    dest: '{{ temp_dir.path }}'
-    checksum: 'sha256:{{ helm.sha }}'
-    mode: '0744'
-  when: not helm_installed.stat.exists
-
-- name: Unarchive helm
-  ansible.builtin.unarchive:
-    src: '{{ temp_dir.path }}/helm-v{{ helm.version }}-linux-amd64.tar.gz'
-    dest: '{{ temp_dir.path }}'
-    remote_src: true
-  when: not helm_installed.stat.exists
-
 - name: Install helm
-  ansible.builtin.copy:
-    src: '{{ temp_dir.path }}/linux-amd64/helm'
-    dest: /usr/local/bin/helm
-    owner: root
-    group: root
-    mode: 'a+x'
-    remote_src: true
+  block:
+    - name: Check if helm is installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/helm
+      register: helm_installed
+
+    - name: Create temporary build directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: temp_dir
+      register: temp_dir
+      when: not helm_installed.stat.exists
+
+    - name: Download helm (sha256)
+      ansible.builtin.get_url:
+        url: 'https://get.helm.sh/helm-v{{ helm.version }}-linux-amd64.tar.gz'
+        dest: '{{ temp_dir.path }}'
+        checksum: 'sha256:{{ helm.sha }}'
+        mode: '0744'
+      when: not helm_installed.stat.exists
+
+    - name: Unarchive helm
+      ansible.builtin.unarchive:
+        src: '{{ temp_dir.path }}/helm-v{{ helm.version }}-linux-amd64.tar.gz'
+        dest: '{{ temp_dir.path }}'
+        remote_src: true
+      when: not helm_installed.stat.exists
+
+    - name: Install helm
+      ansible.builtin.copy:
+        src: '{{ temp_dir.path }}/linux-amd64/helm'
+        dest: /usr/local/bin/helm
+        owner: root
+        group: root
+        mode: 'a+x'
+        remote_src: true
+      when: not helm_installed.stat.exists
+
+    - name: Remove the temporary dir
+      ansible.builtin.file:
+        path: '{{ temp_dir.path }}'
+        state: absent
+      when: temp_dir.path is defined
   become: true
-  when: not helm_installed.stat.exists
-
-- name: Check if helmfile is installed
-  ansible.builtin.stat:
-    path: /usr/local/bin/helmfile
-  register: helmfile_installed
-
-- name: Download helmfile (sha256)
-  ansible.builtin.get_url:
-    url: 'https://github.com/helmfile/helmfile/releases/download/v{{ helmfile.version }}/helmfile_{{ helmfile.version }}_linux_amd64.tar.gz'
-    dest: '{{ temp_dir.path }}'
-    checksum: 'sha256:{{ helmfile.sha }}'
-    mode: '0744'
-  when: not helmfile_installed.stat.exists
-
-- name: Unarchive helmfile
-  ansible.builtin.unarchive:
-    src: '{{ temp_dir.path }}/helmfile_{{ helmfile.version }}_linux_amd64.tar.gz'
-    dest: '{{ temp_dir.path }}'
-    remote_src: true
-  when: not helmfile_installed.stat.exists
+  tags: 
+    - helm
 
 - name: Install helmfile
-  ansible.builtin.copy:
-    src: '{{ temp_dir.path }}/helmfile'
-    dest: /usr/local/bin/helmfile
-    owner: root
-    group: root
-    mode: 'a+x'
-    remote_src: true
-  become: true
-  when: not helmfile_installed.stat.exists
+  block:
+    - name: Check if helmfile is installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/helmfile
+      register: helmfile_installed
 
-- name: Remove the temporary dir
-  ansible.builtin.file:
-    path: '{{ temp_dir.path }}'
-    state: absent
-  when: temp_dir.path is defined
+    - name: Download helmfile (sha256)
+      ansible.builtin.get_url:
+        url: 'https://github.com/helmfile/helmfile/releases/download/v{{ helmfile.version }}/helmfile_{{ helmfile.version }}_linux_amd64.tar.gz'
+        dest: '{{ temp_dir.path }}'
+        checksum: 'sha256:{{ helmfile.sha }}'
+        mode: '0744'
+      when: not helmfile_installed.stat.exists
+
+    - name: Unarchive helmfile
+      ansible.builtin.unarchive:
+        src: '{{ temp_dir.path }}/helmfile_{{ helmfile.version }}_linux_amd64.tar.gz'
+        dest: '{{ temp_dir.path }}'
+        remote_src: true
+      when: not helmfile_installed.stat.exists
+
+    - name: Install helmfile
+      ansible.builtin.copy:
+        src: '{{ temp_dir.path }}/helmfile'
+        dest: /usr/local/bin/helmfile
+        owner: root
+        group: root
+        mode: 'a+x'
+        remote_src: true
+      when: not helmfile_installed.stat.exists
+
+    - name: Remove the temporary dir
+      ansible.builtin.file:
+        path: '{{ temp_dir.path }}'
+        state: absent
+      when: temp_dir.path is defined
+  become: true
+  tags: 
+    - helmfile
