@@ -2,22 +2,22 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
- - repo: https://github.com/pre-commit/pre-commit-hooks
-   rev: v3.2.0
-   hooks:
-     - id: trailing-whitespace
-     - id: end-of-file-fixer
-     - id: check-yaml
-       files: \.(yaml|yml|eyaml)$
-     - id: check-added-large-files
- - repo: https://github.com/PyCQA/flake8
-   rev: 6.0.0
-   hooks:
-     - id: flake8
-       args: [--max-line-length=131]
- - repo: https://github.com/hadolint/hadolint
-   rev: v2.12.0
-   hooks:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+        files: \.(yaml|yml|eyaml)$
+      - id: check-added-large-files
+  - repo: https://github.com/PyCQA/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        args: [--max-line-length=131]
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.12.0
+    hooks:
       - id: hadolint-docker
  #- repo: https://github.com/Yelp/detect-secrets
  #  rev: v1.4.0
