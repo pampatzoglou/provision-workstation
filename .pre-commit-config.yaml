@@ -8,6 +8,7 @@ repos:
     - id: trailing-whitespace
     - id: end-of-file-fixer
     - id: check-yaml
+      files: \.(yaml|yml|eyaml)$
     - id: check-added-large-files
  - repo: https://github.com/PyCQA/flake8
    rev: 4.0.1
