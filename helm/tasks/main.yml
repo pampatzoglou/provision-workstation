@@ -47,6 +47,8 @@
     - "hashicorp https://helm.releases.hashicorp.com"
     - "external-secrets https://charts.external-secrets.io"
     - "kubernetes-dashboard https://kubernetes.github.io/dashboard"
+    - "backstage https://backstage.github.io/charts"
+    - "sloth https://slok.github.io/sloth"
   changed_when: false
   tags:
     - helm
