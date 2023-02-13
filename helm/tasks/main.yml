@@ -49,6 +49,8 @@
     - "kubernetes-dashboard https://kubernetes.github.io/dashboard"
     - "backstage https://backstage.github.io/charts"
     - "sloth https://slok.github.io/sloth"
+    - "crossplane https://charts.crossplane.io/stable"
+    - "crossplane-master https://charts.crossplane.io/master"
   changed_when: false
   tags:
     - helm
