@@ -43,6 +43,7 @@
     - "kiali https://kiali.org/helm-charts"
     - "chaos-mesh https://charts.chaos-mesh.org"
     - "aquasecurity https://aquasecurity.github.io/helm-charts"
+    - "aqua-helm https://helm.aquasec.com"
     - "stakater https://stakater.github.io/stakater-charts"
     - "hashicorp https://helm.releases.hashicorp.com"
     - "external-secrets https://charts.external-secrets.io"
