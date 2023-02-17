@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    user: root
+  tasks:
+    - name: "Include kubernetes-resource-advisor"
+      include_role:
+        name: "kubernetes-resource-advisor"
