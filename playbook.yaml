@@ -25,6 +25,7 @@
     - kube_hunter
     - kube_linter
     - kubectl
+    - kubernetes-resource-advisor
     - kubesquash
     - logcli
     - open_lens
