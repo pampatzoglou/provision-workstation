@@ -1,0 +1,35 @@
+---
+- name: Check if Kubeshark is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/kubeshark
+  register: kubeshark_installed
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_dir
+  register: temp_dir
+  when: not kubeshark_installed.stat.exists
+
+- name: Download Kubeshark with check (sha256)
+  ansible.builtin.get_url:
+    url: 'https://github.com/kubeshark/kubeshark/releases/download/{{ kubeshark.version }}/kubeshark_darwin_amd64'
+    dest: '{{ temp_dir.path }}'
+    checksum: 'sha256:{{ kubeshark.sha.amd64.linux }}'
+  when: not kubeshark_installed.stat.exists
+
+- name: Install Kubeshark
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path }}/kubeshark_darwin_amd64'
+    dest: /usr/local/bin/kubeshark
+    owner: '{{ user }}'
+    mode: 'a+x'
+    remote_src: true
+  become: true
+  when: not kubeshark_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined

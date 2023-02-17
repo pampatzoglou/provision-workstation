@@ -1,0 +1,8 @@
+---
+# vars file for kubeshark
+kubeshark:
+  version: 38.5
+  sha:
+    amd64:
+      linux: a57785f64ac8353679bb9494d55f1673476d301f2688660df91761468cf0f50e
+      darwin: 923cbad3c4cf2ca26a214e12026d2ac0c294f0431437b3395fadcf4e61badbea

@@ -70,6 +70,7 @@ ansible-playbook --ask-become-pass -e user=$USER playbook.yaml --tags kubernetes
 * [kube_linter](https://github.com/stackrox/kube-linter)
 * [kubectl](https://kubernetes.io/docs/tasks/tools)
 * [kubernetes-resource-advisor](https://github.com/elisasre/kubernetes-resource-advisor)
+* [kubeshark](https://github.com/kubeshark/kubeshark)
 * [kubesquash](https://github.com/solo-io/squash)
 * [logcli](https://grafana.com/docs/loki/latest/tools/logcli)
 * [open_lens](https://github.com/MuhammedKalkan/OpenLens)

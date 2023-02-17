@@ -22,8 +22,7 @@
   ansible.builtin.copy:
     src: '{{ temp_dir.path }}/resource-advisor-linux-amd64'
     dest: /usr/local/bin/kubectl-advisory
-    owner: root
-    group: root
+    owner: '{{ user }}'
     mode: 'a+x'
     remote_src: true
   become: true
