@@ -28,6 +28,8 @@ or if you wish to use one aspect of the roles you can use the appropriate tags, 
 ansible-playbook --ask-become-pass -e user=$USER playbook.yaml --tags kubernetes
 ```
 
+todo: tags are not properly set everywhere so may not work as selectors
+
 # Installs
 
 * [argo](https://github.com/argoproj/argo-workflows)
@@ -36,7 +38,8 @@ ansible-playbook --ask-become-pass -e user=$USER playbook.yaml --tags kubernetes
   * [azure-cli](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
   * [kubelogin](https://github.com/Azure/kubelogin)
   * [Azure VPN Client (Mac only)](https://apps.microsoft.com/store/detail/azure-vpn-client/9NP355QT2SQB?hl=en-us&gl=us)
-* [brave](https://brave.com/)
+  * [Azure Storage Explorer](https://azure.microsoft.com/en-us/products/storage/storage-explorer)
+* [brave](https://brave.com)
 * [cert_manager](https://github.com/cert-manager/cert-manager)
 * [copper](https://github.com/cloud66-oss/copper)
 * [datree](https://www.datree.io)
@@ -47,27 +50,29 @@ ansible-playbook --ask-become-pass -e user=$USER playbook.yaml --tags kubernetes
 * git
   * [gittyleaks](https://github.com/kootenpv/gittyleaks)
   * [hadolint](https://github.com/hadolint/hadolint)
-  * [pre-commit](https://pre-commit.com/)
+  * [pre-commit](https://pre-commit.com)
   * [git-secrets](https://git-secret.io/installation)
   * [trufflehog](https://github.com/trufflesecurity/trufflehog)
   * git-config
   * git-hooks
   * git-ignore
-* [github](https://github.com/)
-  * [gh](https://cli.github.com/)
+* [github](https://github.com)
+  * [gh](https://cli.github.com)
   * [act](https://github.com/nektos/act)
 * helm-charts
-  * [helm](https://helm.sh/)
+  * [helm](https://helm.sh)
   * [helmfile](https://github.com/helmfile/helmfile)
   * [helm-diff](https://github.com/databus23/helm-diff)
   * helm repos
-* [k6s](https://k6.io/)
+* [k6s](https://k6.io)
 * [keepassxc](https://keepassxc.org)
 * [kind](https://kind.sigs.k8s.io)
 * [kube_bench](https://github.com/aquasecurity/kube-bench)
 * [kube_hunter](https://github.com/aquasecurity/kube-hunter)
 * [kube_linter](https://github.com/stackrox/kube-linter)
-* [kubectl](https://kubernetes.io/docs/tasks/tools/)
+* [kubectl](https://kubernetes.io/docs/tasks/tools)
+* [kubernetes-resource-advisor](https://github.com/elisasre/kubernetes-resource-advisor)
+* [kubeshark](https://github.com/kubeshark/kubeshark)
 * [kubesquash](https://github.com/solo-io/squash)
 * [logcli](https://grafana.com/docs/loki/latest/tools/logcli)
 * [open_lens](https://github.com/MuhammedKalkan/OpenLens)
@@ -77,7 +82,7 @@ ansible-playbook --ask-become-pass -e user=$USER playbook.yaml --tags kubernetes
 * [syncthing](https://syncthing.net)
 * [teleport](https://github.com/gravitational/teleport)
 * [telepresence](https://www.telepresence.io)
-* [terraform](https://www.terraform.io/)
+* [terraform](https://www.terraform.io)
   * [checkov](https://www.checkov.io)
   * [terraform](https://github.com/hashicorp/terraform)
   * [tfsec](https://github.com/aquasecurity/tfsec)

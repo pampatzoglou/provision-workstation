@@ -1,0 +1,36 @@
+---
+- name: Check if Kubernetes Resource Advisor is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/kubectl-advisory
+  register: kubectl_advisory_installed
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_dir
+  register: temp_dir
+  when: not kubectl_advisory_installed.stat.exists
+
+- name: Download Kubernetes Resource Advisor with check (sha256)
+  ansible.builtin.get_url:
+    url: 'https://github.com/elisasre/kubernetes-resource-advisor/releases/download/{{ kubectl_advisory.version }}/resource-advisor-linux-amd64'
+    dest: '{{ temp_dir.path }}'
+    checksum: 'sha256:{{ kubectl_advisory.sha.amd64.linux }}'
+  when: not kubectl_advisory_installed.stat.exists
+
+- name: Install Kubernetes Resource Advisor
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path }}/resource-advisor-linux-amd64'
+    dest: /usr/local/bin/kubectl-advisory
+    owner: root
+    group: root
+    mode: 'a+x'
+    remote_src: true
+  become: true
+  when: not kubectl_advisory_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined

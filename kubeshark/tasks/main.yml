@@ -1,0 +1,19 @@
+---
+# tasks file for kubeshark
+- name: Ubuntu
+  ansible.builtin.include_tasks: Ubuntu-x86_64.yml
+  when: (ansible_facts['os_family'] == "Debian") and
+        (ansible_facts['distribution'] == "Ubuntu") and
+        (ansible_facts['architecture'] == "x86_64")
+  tags:
+    - kubernetes
+    - wireshark
+    - kubeshark
+
+- name: Darwin
+  ansible.builtin.include_tasks: Darwin-x86_64.yml
+  when: ansible_facts['os_family'] == "Darwin"
+  tags:
+    - kubernetes
+    - wireshark
+    - kubeshark

@@ -1,0 +1,8 @@
+---
+# vars file for kubernetes-resource-advisor
+kubectl_advisory:
+  version: 1.0.6
+  sha:
+    amd64:
+      linux: ce3aaeb626b5e04da2acff5dd89f5f9c58f2a8f1405b0568493ababc89572a68
+      darwin: 45d527e1e03261c51cecf9ae440ffb4dc6b70e025d42a9c81ed75667c9a8a3e3
