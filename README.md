@@ -28,6 +28,8 @@ or if you wish to use one aspect of the roles you can use the appropriate tags, 
 ansible-playbook --ask-become-pass -e user=$USER playbook.yaml --tags kubernetes
 ```
 
+todo: tags are not properly set everywhere so may not work as selectors
+
 # Installs
 
 * [argo](https://github.com/argoproj/argo-workflows)
