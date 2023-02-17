@@ -50,23 +50,23 @@
         mode: '0744'
       when: not ase_installed.stat.exists
 
-    - name: Unarchive Azure Storage Explorer
-      ansible.builtin.unarchive:
-        src: '{{ temp_dir.path }}/kubelogin-linux-amd64.zip'
-        dest: '{{ temp_dir.path }}'
-        remote_src: true
-      when: not ase_installed.stat.exists
+    # todo: fix
+    # - name: Unarchive Azure Storage Explorer
+    #  ansible.builtin.unarchive:
+    #    src: '{{ temp_dir.path }}/kubelogin-linux-amd64.zip'
+    #    dest: '{{ temp_dir.path }}'
+    #    remote_src: true
+    #  when: not ase_installed.stat.exists
 
-    - name: Install Azure Storage Explorer
-      ansible.builtin.copy:
-        src: '{{ temp_dir.path }}/bin/linux_amd64/kubelogin'
-        dest: /usr/local/bin/kubelogin
-        owner: root
-        group: root
-        mode: 'a+x'
-        remote_src: true
-      become: true
-      when: not ase_installed.stat.exists
+    # - name: Install Azure Storage Explorer
+    #  ansible.builtin.copy:
+    #    src: '{{ temp_dir.path }}/bin/linux_amd64/kubelogin'
+    #    dest: /usr/local/bin/kubelogin
+    #    owner: '{{ user }}'
+    #    mode: 'a+x'
+    #    remote_src: true
+    #  become: true
+    #  when: not ase_installed.stat.exists
 
     - name: Remove the temporary dir
       ansible.builtin.file:
