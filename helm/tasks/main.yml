@@ -52,6 +52,7 @@
     - "sloth https://slok.github.io/sloth"
     - "crossplane-stable https://charts.crossplane.io/stable"
     - "crossplane-master https://charts.crossplane.io/master"
+    - "kubescape https://kubescape.github.io/helm-charts"
   changed_when: false
   tags:
     - helm
