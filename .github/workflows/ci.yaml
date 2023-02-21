@@ -57,7 +57,7 @@ jobs:
           - kube_hunter
           - kube_linter
           - kubectl
-          - kubernetes-resource-advisor
+          - kubernetes_resource_advisor
           - kubeshark
           - kubesquash
           - logcli

@@ -2,6 +2,6 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: "Include kubernetes-resource-advisor"
+    - name: "Include kubernetes resource advisor"
       include_role:
         name: "kubernetes_resource_advisor"
