@@ -35,7 +35,7 @@
 
 - name: Setup nanorc for {{ user }}
   ansible.builtin.blockinfile:
-    path: /home/{{ user }}/.nanorc
+    path: /Users/{{ user }}/.nanorc
     create: true
     owner: '{{ user }}'
     mode: 'a+x'
