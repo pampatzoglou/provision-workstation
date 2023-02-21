@@ -2,6 +2,6 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: "Include kubernetes-resource-advisor"
+    - name: "Include kubeshark"
       include_role:
         name: "kubeshark"
