@@ -61,6 +61,21 @@
     clone: true
     update: true
 
+- name: Setup nanorc for {{ user }}
+  ansible.builtin.blockinfile:
+    path: /home/{{ user }}/.nanorc
+    create: true
+    group: '{{ user }}'
+    owner: '{{ user }}'
+    mode: 'a+x'
+    block: |
+      set linenumbers
+      set mouse
+      set autoindent
+      set tabsize 4
+      set tabstospaces
+      set softwrap
+
 - name: Setup .zshrc for {{ user }}
   ansible.builtin.blockinfile:
     path: /home/{{ user }}/.zshrc
