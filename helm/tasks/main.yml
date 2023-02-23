@@ -53,6 +53,7 @@
     - "crossplane-stable https://charts.crossplane.io/stable"
     - "crossplane-master https://charts.crossplane.io/master"
     - "kubescape https://kubescape.github.io/helm-charts"
+    - "kyverno https://kyverno.github.io/kyverno"
   changed_when: false
   tags:
     - helm
