@@ -5,14 +5,13 @@
     state: present
     update_homebrew: true
   tags:
-    - kubernetes
     - kubectl
 
 - name: Install, configure kubectl krew
   block:
     - name: Check if krew is installed
       ansible.builtin.stat:
-        path: '/Users/{{ user }}/.local/share/krew'
+        path: /usr/local/bin/krew
       register: krew_installed
 
     - name: Create temporary build directory
@@ -40,7 +39,7 @@
     - name: Install krew
       ansible.builtin.copy:
         src: '{{ temp_dir.path }}/krew-darwin_amd64'
-        dest: '/Users/{{ user }}/.local/share/krew'
+        dest: /usr/local/bin/krew
         owner: '{{ user }}'
         mode: 'a+x'
         remote_src: true
@@ -53,6 +52,51 @@
       when: temp_dir.path is defined
   become: true
   tags:
-    - kubernetes
-    - kubectl
     - krew
+
+- name: Install, configure kubesec
+  block:
+    - name: Check if kubesec is installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/kubesec
+      register: kubesec_installed
+
+    - name: Create temporary build directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: temp_dir
+      register: temp_dir
+      when: not kubesec_installed.stat.exists
+
+    - name: Download kubesec (sha256)
+      ansible.builtin.get_url:
+        url: 'https://github.com/controlplaneio/kubesec/releases/download/v{{ kubesec.version }}/kubesec_darwin_amd64.tar.gz'
+        dest: '{{ temp_dir.path }}'
+        checksum: 'sha256:{{ kubesec.sha.amd64.darwin }}'
+        mode: '0744'
+      when: not kubesec_installed.stat.exists
+
+    - name: Unarchive kubesec
+      ansible.builtin.unarchive:
+        src: '{{ temp_dir.path }}/kubesec_darwin_amd64.tar.gz'
+        dest: '{{ temp_dir.path }}'
+        remote_src: true
+      when: not kubesec_installed.stat.exists
+
+    - name: Install kubesec
+      ansible.builtin.copy:
+        src: '{{ temp_dir.path }}/kubesec'
+        dest: /usr/local/bin/kubesec
+        owner: '{{ user }}'
+        mode: 'a+x'
+        remote_src: true
+      when: not kubesec_installed.stat.exists
+
+    - name: Remove the temporary dir
+      ansible.builtin.file:
+        path: '{{ temp_dir.path }}'
+        state: absent
+      when: temp_dir.path is defined
+  become: true
+  tags:
+    - kubesec

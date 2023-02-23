@@ -10,3 +10,10 @@ krew:
     amd64:
       linux: 5df32eaa0e888a2566439c4ccb2ef3a3e6e89522f2f2126030171e2585585e4f
       darwin: 6f6a774f03ad4190a709d7d4dcbb4af956ca0eb308cb0d0a44abc90777b0b21a
+
+kubesec:
+  version: 2.12.0
+  sha:
+    amd64:
+      linux: d6fe7cc0fbbf3ec5ac72fa94c3d1db97081b025a1772e906b6a0e58be1cbf386
+      darwin: 46fac7decb1e4242080a1acfdd12b7879952d9083d5ab8a980c977e9de0fb926

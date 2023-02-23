@@ -8,6 +8,8 @@
   tags:
     - kubernetes
     - kubectl
+    - krew
+    - kubesec
 
 - name: Darwin
   ansible.builtin.include_tasks: Darwin.yml
@@ -15,6 +17,8 @@
   tags:
     - kubernetes
     - kubectl
+    - krew
+    - kubesec
 
 - name: Install kubectl plugins with krew
   ansible.builtin.command: 'krew install {{ item }}'
