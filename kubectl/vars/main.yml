@@ -2,4 +2,11 @@
 # vars file for kubectl
 kubectl:
   version: 1.26.0
-  sha: b6769d8ac6a0ed0f13b307d289dc092ad86180b08f5b5044af152808c04950ae.
+  sha: b6769d8ac6a0ed0f13b307d289dc092ad86180b08f5b5044af152808c04950ae
+
+krew:
+  version: 0.4.3
+  sha:
+    amd64:
+      linux: 5df32eaa0e888a2566439c4ccb2ef3a3e6e89522f2f2126030171e2585585e4f
+      darwin: 6f6a774f03ad4190a709d7d4dcbb4af956ca0eb308cb0d0a44abc90777b0b21a

@@ -15,3 +15,27 @@
   tags:
     - kubernetes
     - kubectl
+
+- name: Install kubectl plugins with krew
+  ansible.builtin.command: 'krew install {{ item }}'
+  loop:
+    - blame
+    - cert-manager
+    - datree
+    - debug-shell
+    - images
+    - istiolog
+    - janitor
+    - ktop
+    - kubescape
+    - kubesec-scan
+    - mtail
+    - popeye
+    - score
+    - starboard
+    - tap
+    - who-can
+    - whoami
+  changed_when: false
+  tags:
+    - krew
