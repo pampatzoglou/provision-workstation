@@ -107,7 +107,7 @@
       if [ -f $HOME/.kubectl_aliases ]; then
           source $HOME/.kubectl_aliases
       fi
-
+      export PATH="${PATH}:${HOME}/.krew/bin"
       autoload -U colors; colors
       source /home/{{ user }}/.zsh-kubectl-prompt/kubectl.zsh
       RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
