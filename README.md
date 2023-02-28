@@ -44,6 +44,7 @@ todo: tags are not properly set everywhere so may not work as selectors
 * [copper](https://github.com/cloud66-oss/copper)
 * [datree](https://www.datree.io)
 * [docker CE](https://download.docker.com)
+  * [docker slim](https://github.com/slimtoolkit/slim)
 * [doctl](https://github.com/digitalocean/doctl)
 * [firewall](https://help.ubuntu.com/community/UFW)
 * [gcp](https://cloud.google.com/sdk/gcloud)

@@ -1,0 +1,9 @@
+---
+# tasks file for docker-slim
+- name: Install docker-slim
+  community.general.homebrew:
+    name: docker-slim
+    state: present
+    update_homebrew: true
+  tags:
+    - slim

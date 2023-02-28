@@ -27,30 +27,98 @@
         repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
         state: present
         filename: /etc/apt/sources.list.d/docker-ce
-  become: true
 
-- name: Install Docker CE
-  ansible.builtin.apt:
-    update_cache: true
-    force_apt_get: true
-    cache_valid_time: 3600
-    pkg:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-      - docker-compose
-      - docker-compose-plugin
-  become: true
+    - name: Install Docker CE
+      ansible.builtin.apt:
+        update_cache: true
+        force_apt_get: true
+        cache_valid_time: 3600
+        pkg:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-compose
+          - docker-compose-plugin
+      become: true
 
-- name: Created docker group
-  ansible.builtin.group:
-    name: docker
-    state: present
-  become: true
+    - name: Created docker group
+      ansible.builtin.group:
+        name: docker
+        state: present
+      become: true
 
-- name: Restart docker service
-  ansible.builtin.service:
-    state: restarted
-    name: docker
+    - name: Restart docker service
+      ansible.builtin.service:
+        state: restarted
+        name: docker
+      become: true
+      ignore_errors: true
   become: true
-  ignore_errors: true
+  tags:
+    - docker
+
+- name: Setup Docker slim
+  block:
+    - name: Check if Docker slim
+      ansible.builtin.stat:
+        path: /usr/local/bin/slim
+      register: slim_installed
+
+    - name: Create temporary build directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: temp_dir
+      register: temp_dir
+      when: not slim_installed.stat.exists
+
+    - name: Download slim with check (sha256)
+      ansible.builtin.get_url:
+        url: https://downloads.dockerslim.com/releases/1.40.0/dist_linux.tar.gz
+        dest: '{{ temp_dir.path }}'
+        checksum: sha256:6351236186464c60e5ccbab42856d2101725ab4136f63fde79f7169977567f79
+        mode: '0744'
+      when: not slim_installed.stat.exists
+
+    - name: Download slim
+      ansible.builtin.unarchive:
+        src: '{{ temp_dir.path }}/dist_linux.tar.gz'
+        dest: '{{ temp_dir.path }}'
+        remote_src: true
+      when: not slim_installed.stat.exists
+
+    - name: Install slim
+      ansible.builtin.copy:
+        src: '{{ temp_dir.path }}/dist_linux/slim'
+        dest: /usr/local/bin/slim
+        owner: root
+        group: root
+        mode: 'a+x'
+        remote_src: true
+      become: true
+      when: not slim_installed.stat.exists
+
+    - name: Creating a symlink
+      ansible.builtin.file:
+        src: /usr/local/bin/slim
+        dest: /usr/local/bin/docker-slim
+        state: link
+
+    - name: Install slim-sensor
+      ansible.builtin.copy:
+        src: '{{ temp_dir.path }}/dist_linux/slim-sensor'
+        dest: /usr/local/bin/slim-sensor
+        owner: root
+        group: root
+        mode: 'a+x'
+        remote_src: true
+      become: true
+      when: not slim_installed.stat.exists
+
+    - name: Remove the temporary dir
+      ansible.builtin.file:
+        path: '{{ temp_dir.path }}'
+        state: absent
+      when: temp_dir.path is defined
+  become: true
+  tags:
+    - slim
