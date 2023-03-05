@@ -55,6 +55,13 @@
         path: /usr/local/bin/helmfile
       register: helmfile_installed
 
+    - name: Create temporary build directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: temp_dir
+      register: temp_dir
+      when: not helmfile_installed.stat.exists
+
     - name: Download helmfile (sha256)
       ansible.builtin.get_url:
         url: 'https://github.com/helmfile/helmfile/releases/download/v{{ helmfile.version }}/helmfile_{{ helmfile.version }}_linux_amd64.tar.gz'
