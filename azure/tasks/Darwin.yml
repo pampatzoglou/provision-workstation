@@ -9,7 +9,7 @@
 
 - name: Install kubelogin
   community.general.homebrew:
-    name: kubelogin
+    name: Azure/kubelogin/kubelogin
     state: present
     update_homebrew: true
   tags: kubelogin
