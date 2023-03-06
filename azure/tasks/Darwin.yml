@@ -7,6 +7,13 @@
     update_homebrew: true
   tags: azure-cli
 
+- name: Tap a Homebrew terraform repository, state present
+  community.general.homebrew_tap:
+    name: Azure/kubelogin
+    state: present
+  tags:
+    - kubelogin
+
 - name: Install kubelogin
   community.general.homebrew:
     name: Azure/kubelogin/kubelogin
