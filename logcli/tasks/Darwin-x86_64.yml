@@ -20,6 +20,12 @@
     mode: '0744'
   when: not loki_installed.stat.exists
 
+- name: Install tar
+  community.general.homebrew:
+    name: gnu-tar
+    state: present
+    update_homebrew: true
+
 - name: Unarchive loki cli
   ansible.builtin.unarchive:
     src: '{{ temp_dir.path }}/logcli-darwin-amd64.zip'
