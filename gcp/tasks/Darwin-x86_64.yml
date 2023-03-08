@@ -4,6 +4,12 @@
     path: /Users/{{ user }}/.local/share//google-cloud-sdk
   register: gcp_installed
 
+- name: Install tar
+  community.general.homebrew:
+    name: gnu-tar
+    state: present
+    update_homebrew: true
+
 - name: Install, configure, gcp
   block:
     - name: Create temporary build directory

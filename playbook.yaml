@@ -4,6 +4,7 @@
   hosts: localhost
   gather_facts: true
   roles:
+    - zsh
     - argo
     - aws
     - azure

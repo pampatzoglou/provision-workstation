@@ -19,6 +19,12 @@
     mode: 'a+x'
   when: not datree_installed.stat.exists
 
+- name: Install tar
+  community.general.homebrew:
+    name: gnu-tar
+    state: present
+    update_homebrew: true
+
 - name: Unarchive datree
   ansible.builtin.unarchive:
     src: '{{ temp_dir.path }}/datree-cli_{{ datree.version }}_Darwin_x86_64.zip'

@@ -33,6 +33,16 @@
     clone: true
     update: true
 
+- name: Download powerline for {{ user }}
+  ansible.builtin.git:
+    repo: https://github.com/powerline/fonts.git
+    dest: /Users/{{ user }}/.powerline
+    clone: true
+    update: true
+
+- name: Install powerline for {{ user }}
+  ansible.builtin.command: /Users/{{ user }}/.powerline/install.sh
+
 - name: Setup nanorc for {{ user }}
   ansible.builtin.blockinfile:
     path: /Users/{{ user }}/.nanorc

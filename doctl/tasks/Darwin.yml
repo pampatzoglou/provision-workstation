@@ -19,6 +19,12 @@
     mode: 'a+x'
   when: not doctl_installed.stat.exists
 
+- name: Install tar
+  community.general.homebrew:
+    name: gnu-tar
+    state: present
+    update_homebrew: true
+
 - name: Unarchive doctl
   ansible.builtin.unarchive:
     src: '{{ temp_dir.path }}/doctl-{{ doctl.version }}-darwin-amd64.tar.gz'

@@ -15,7 +15,7 @@
   ansible.builtin.get_url:
     url: 'https://github.com/kubeshark/kubeshark/releases/download/{{ kubeshark.version }}/kubeshark_darwin_amd64'
     dest: '{{ temp_dir.path }}'
-    checksum: 'sha256:{{ kubeshark.sha.amd64.linux }}'
+    checksum: 'sha256:{{ kubeshark.sha.amd64.darwin }}'
   when: not kubeshark_installed.stat.exists
 
 - name: Install Kubeshark

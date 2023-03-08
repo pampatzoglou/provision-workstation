@@ -19,3 +19,7 @@
   when: ansible_facts['os_family'] == "Darwin"
   tags:
     - unbounds
+
+# todo:
+# "terminal.integrated.fontFamily": "Source Code Pro for Powerline",
+# "terminal.integrated.shell.osx": "/bin/zsh"

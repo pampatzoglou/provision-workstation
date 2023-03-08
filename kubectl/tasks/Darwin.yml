@@ -7,6 +7,12 @@
   tags:
     - kubectl
 
+- name: Install tar
+  community.general.homebrew:
+    name: gnu-tar
+    state: present
+    update_homebrew: true
+
 - name: Install, configure kubectl krew
   block:
     - name: Check if krew is installed
