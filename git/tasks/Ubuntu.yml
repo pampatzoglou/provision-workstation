@@ -162,6 +162,8 @@
               excludesfile = '/home/{{ user }}/.config/git/gitIgnore'
           [safe]
             directory = /github/workspace
+          [commit]
+	          gpgsign = true
       when: not gitconfig_installed.stat.exists
 
     - name: Display config message
