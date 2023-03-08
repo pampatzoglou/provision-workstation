@@ -82,6 +82,8 @@
               excludesfile = /Users/{{ user }}/.config/git/gitIgnore
           [safe]
             directory = /github/workspace
+          [commit]
+	          gpgsign = true
 
     - name: Display config message
       debug:
