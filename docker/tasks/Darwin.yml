@@ -1,5 +1,22 @@
 ---
 # tasks file for docker-slim
+- name: Install docker
+  community.general.homebrew:
+    name: docker
+    state: present
+    update_homebrew: true
+  tags:
+    - docker
+    
+- name: Install docker-compose
+  community.general.homebrew:
+    name: docker-compose
+    state: present
+    update_homebrew: true
+  tags:
+    - docker
+
+# tasks file for docker-slim
 - name: Install docker-slim
   community.general.homebrew:
     name: docker-slim
