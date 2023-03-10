@@ -163,7 +163,7 @@
           [safe]
             directory = /github/workspace
           [commit]
-	          gpgsign = true
+	    gpgsign = true
       when: not gitconfig_installed.stat.exists
 
     - name: Display config message
