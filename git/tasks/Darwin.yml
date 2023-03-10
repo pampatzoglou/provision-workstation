@@ -75,11 +75,11 @@
         mode: 'a+x'
         block: |
           [user]
-              name = {{ user }}
-              email = you@example.com
+            name = {{ user }}
+            email = you@example.com
           [core]
-              hooksPath = /Users/{{ user }}/.config/git/hooks
-              excludesfile = /Users/{{ user }}/.config/git/gitIgnore
+            hooksPath = /Users/{{ user }}/.config/git/hooks
+            excludesfile = /Users/{{ user }}/.config/git/gitIgnore
           [safe]
             directory = /github/workspace
           [commit]
