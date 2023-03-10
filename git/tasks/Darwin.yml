@@ -83,7 +83,7 @@
           [safe]
             directory = /github/workspace
           [commit]
-	    gpgsign = true
+            gpgsign = true
 
     - name: Display config message
       debug:
