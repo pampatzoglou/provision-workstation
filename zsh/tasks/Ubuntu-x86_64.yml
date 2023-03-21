@@ -10,9 +10,36 @@
       - jq
       - yamllint
       - tldr
+      - wget
+      - gnupg2
+      - gnupg-agent
+      - dirmngr
+      - cryptsetup
+      - scdaemon
+      - pcscd
+      - secure-delete
+      - hopenpgp-tools
+      - yubikey-personalization
+      - libssl-dev
+      - swig
+      - libpcsclite-dev
+      - python3-pip
+      - python3-pyscard
     update_cache: true
     state: present
   become: true
+
+- name: Install ykman
+  ansible.builtin.pip:
+    name:
+      - PyOpenSSL
+      - yubikey-manager
+    executable: pip3.3
+
+- name: Restart service pcscd, in all cases
+  ansible.builtin.service:
+    name: pcscd
+    state: restarted
 
 - name: Check if yq is installed
   ansible.builtin.stat:
@@ -111,5 +138,15 @@
       autoload -U colors; colors
       source /home/{{ user }}/.zsh-kubectl-prompt/kubectl.zsh
       RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
+      
+      export GPG_TTY="$(tty)"
+      export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+      gpg-connect-agent updatestartuptty /bye > /dev/null
+      export GPG_TTY="$(tty)"
+      export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+      gpgconf --launch gpg-agent
+      gpg --import ~/.gnupg/pubkey.as
+
+      
       curl wttr.in
       curl rate.sx/dot/eur@10d
