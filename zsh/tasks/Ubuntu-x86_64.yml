@@ -118,7 +118,7 @@
 
       ZSH_THEME="agnoster"
 
-      plugins=(git docker docker-compose github kubectl terraform history ubuntu go vscode)
+      plugins=(git docker docker-compose github kubectl terraform history ubuntu ansible aws dotenv golang helm taskwarrior vault vscode)
 
       source $ZSH/oh-my-zsh.sh
       source <(kubectl completion zsh)
