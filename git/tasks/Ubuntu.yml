@@ -161,9 +161,9 @@
               hooksPath = '/home/{{ user }}/.config/git/hooks'
               excludesfile = '/home/{{ user }}/.config/git/gitIgnore'
           [safe]
-            directory = /github/workspace
+              directory = /github/workspace
           [commit]
-	    gpgsign = true
+              gpgsign = true
       when: not gitconfig_installed.stat.exists
 
     - name: Display config message
