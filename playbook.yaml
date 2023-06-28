@@ -14,7 +14,7 @@
     - docker
     - doctl
     - firewall
-#    - gcp
+    # todo: - gcp
     - git
     - github
     - helm
@@ -38,8 +38,9 @@
     - telepresence
     - terraform
     - tilt
-#    - usb_display_link
+    - usb_display_link
     - velero
     - vscode
     - wireguard
     - zsh
+    - yubukey

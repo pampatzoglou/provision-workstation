@@ -1,3 +1,4 @@
+---
 - name: Update repositories cache and install packages
   ansible.builtin.apt:
     pkg:
