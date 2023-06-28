@@ -29,18 +29,6 @@
     state: present
   become: true
 
-- name: Install ykman
-  ansible.builtin.pip:
-    name:
-      - PyOpenSSL
-      - yubikey-manager
-    executable: pip3.3
-
-- name: Restart service pcscd, in all cases
-  ansible.builtin.service:
-    name: pcscd
-    state: restarted
-
 - name: Check if yq is installed
   ansible.builtin.stat:
     path: /usr/local/bin/yq

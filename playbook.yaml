@@ -4,7 +4,6 @@
   hosts: localhost
   gather_facts: true
   roles:
-    - zsh
     - argo
     - aws
     - azure
@@ -15,7 +14,7 @@
     - docker
     - doctl
     - firewall
-    - gcp
+#    - gcp
     - git
     - github
     - helm
@@ -39,7 +38,7 @@
     - telepresence
     - terraform
     - tilt
-    - usb_display_link
+#    - usb_display_link
     - velero
     - vscode
     - wireguard

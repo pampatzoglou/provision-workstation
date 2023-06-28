@@ -40,7 +40,7 @@
   become: true
   when: not aws_installed.stat.exists
 
-- name: Install aws cli    
+- name: Install aws cli
   ansible.builtin.shell: '{{ temp_dir.path }}/aws/install --update'
   become: true
   when: not aws_installed.stat.exists

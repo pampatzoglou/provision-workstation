@@ -1,0 +1,40 @@
+- name: Update repositories cache and install packages
+  ansible.builtin.apt:
+    pkg:
+      - software-properties-common
+      - wget
+      - gnupg2
+      - gnupg-agent
+      - dirmngr
+      - cryptsetup
+      - scdaemon
+      - pcscd
+      - secure-delete
+      - hopenpgp-tools
+      - yubikey-personalization
+      - yubioath-desktop
+      - yubikey-luks
+      - libssl-dev
+      - swig
+      - libpcsclite-dev
+      - python3-pip
+      - python3-pyscard
+    update_cache: true
+    state: present
+  become: true
+
+- name: Install ykman
+  ansible.builtin.pip:
+    name:
+      - PyOpenSSL
+      - yubikey-manager
+    executable: pip3
+
+- name: Restart service pcscd, in all cases
+  ansible.builtin.service:
+    name: pcscd
+    state: restarted
+  become: true
+
+- name: Test openpgp info
+  ansible.builtin.command: '/home/{{ user }}/.local/bin/ykman openpgp info'
