@@ -126,7 +126,7 @@
       autoload -U colors; colors
       source /home/{{ user }}/.zsh-kubectl-prompt/kubectl.zsh
       RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
-      
+
       export GPG_TTY="$(tty)"
       export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
       gpg-connect-agent updatestartuptty /bye > /dev/null
@@ -134,10 +134,10 @@
       export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
       gpgconf --launch gpg-agent
       gpg --import ~/.gnupg/pubkey.as
-      
+
       alias ll='ls -alF'
       alias la='ls -A'
       alias l='ls -CF'
-      
+
       curl wttr.in
       curl rate.sx/dot/eur@10d

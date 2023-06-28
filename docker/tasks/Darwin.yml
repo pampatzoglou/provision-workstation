@@ -7,7 +7,7 @@
     update_homebrew: true
   tags:
     - docker
-    
+
 - name: Install docker-compose
   community.general.homebrew:
     name: docker-compose
