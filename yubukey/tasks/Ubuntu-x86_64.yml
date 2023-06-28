@@ -39,3 +39,18 @@
 
 - name: Test openpgp info
   ansible.builtin.command: '/home/{{ user }}/.local/bin/ykman openpgp info'
+
+- name: Setup gpg-agent.conf for {{ user }}
+  ansible.builtin.blockinfile:
+    path: /home/{{ user }}/.gnupg/gpg-agent.conf
+    create: true
+    group: '{{ user }}'
+    owner: '{{ user }}'
+    mode: 'a+x'
+    block: |
+      # https://github.com/drduh/config/blob/master/gpg-agent.conf
+      # https://www.gnupg.org/documentation/manuals/gnupg/Agent-Options.html
+      enable-ssh-support
+      default-cache-ttl 60
+      max-cache-ttl 120
+      pinentry-program /usr/bin/pinentry-curses
