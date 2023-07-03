@@ -58,6 +58,13 @@
         state: present
       become: true
 
+    - name: Add your user to the docker group
+      ansible.builtin.user:
+        name: '{{ user }}'
+        groups: docker
+        append: yes
+      become: true
+
     - name: Restart docker service
       ansible.builtin.service:
         state: restarted

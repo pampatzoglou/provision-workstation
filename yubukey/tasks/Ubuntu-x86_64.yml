@@ -37,9 +37,6 @@
     state: restarted
   become: true
 
-- name: Test openpgp info
-  ansible.builtin.command: '/home/{{ user }}/.local/bin/ykman openpgp info'
-
 - name: Setup gpg-agent.conf for {{ user }}
   ansible.builtin.blockinfile:
     path: /home/{{ user }}/.gnupg/gpg-agent.conf
