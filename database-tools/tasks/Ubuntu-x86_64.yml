@@ -1,0 +1,11 @@
+- name: Install datagrip
+  community.general.snap:
+    name:
+      - datagrip
+    classic: true
+  become: true
+
+- name: Install a go-migrate.deb package from the internet
+  ansible.builtin.apt:
+    deb: https://github.com/golang-migrate/migrate/releases/download/v4.16.2/migrate.linux-amd64.deb
+  become: true

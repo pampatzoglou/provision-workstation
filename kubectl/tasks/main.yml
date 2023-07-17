@@ -20,6 +20,14 @@
     - krew
     - kubesec
 
+- name: Add krew indexes
+  ansible.builtin.command: 'kubectl krew index add {{ item }}'
+  loop:
+    - kubevpn https://github.com/KubeNetworks/kubevpn.git
+  changed_when: false
+  tags:
+    - krew
+
 - name: Install kubectl plugins with krew
   ansible.builtin.command: 'krew install {{ item }}'
   loop:
@@ -41,6 +49,7 @@
     - who-can
     - whoami
     - kyverno
+    - kubevpn/kubevpn
   changed_when: false
   tags:
     - krew

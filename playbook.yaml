@@ -10,11 +10,12 @@
     - brave
     - cmctl
     - copper
+    - database-tools
     - datree
     - docker
     - doctl
     - firewall
-    # todo: - gcp
+    # todo:- gcp
     - git
     - github
     - helm
@@ -32,13 +33,14 @@
     - open_lens
     - open_policy_agent
     # todo:- pcloud
+    - rclone
     - stern
     - syncthing
     - teleport
     - telepresence
     - terraform
     - tilt
-    - usb_display_link
+    #- usb_display_link
     - velero
     - vscode
     - wireguard
