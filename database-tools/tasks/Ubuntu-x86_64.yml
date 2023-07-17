@@ -12,7 +12,7 @@
 
 - name: Install postgres15
   block:
-  - name: Import Google Cloud public key
+  - name: Import postgres public key
     ansible.builtin.get_url:
       url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
       dest: /etc/apt/trusted.gpg.d/pgdg.asc
