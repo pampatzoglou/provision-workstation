@@ -21,9 +21,15 @@
     - kubesec
 
 - name: Add krew indexes
-  ansible.builtin.command: 'kubectl krew index add {{ item }}'
+  ansible.builtin.command: 'krew index add {{ item }}'
   loop:
-    - kubevpn https://github.com/KubeNetworks/kubevpn.git
+    - "kubevpn https://github.com/KubeNetworks/kubevpn.git"
+  changed_when: false
+  tags:
+    - krew
+
+- name: Update krew indexes
+  ansible.builtin.command: 'krew update'
   changed_when: false
   tags:
     - krew
@@ -31,22 +37,32 @@
 - name: Install kubectl plugins with krew
   ansible.builtin.command: 'krew install {{ item }}'
   loop:
+    - advise-policy
+    - access-matrix
     - blame
     - cert-manager
+    - cilium
     - datree
     - debug-shell
     - images
     - istiolog
     - janitor
     - ktop
+    - kubectl-capture
+    - kubectl-login
     - kubescape
     - kubesec-scan
     - mtail
     - popeye
     - score
     - starboard
+    - stern
     - tap
+    - trace
     - who-can
+    - np-viewer
+    - rolesum
+    - rbac-tool
     - whoami
     - kyverno
     - kubevpn/kubevpn
