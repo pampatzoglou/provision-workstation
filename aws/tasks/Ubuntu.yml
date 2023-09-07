@@ -1,60 +1,115 @@
 ---
-- name: Remove default aws
-  apt:
-    state: absent
-    pkg:
-      - awscli
-  become: true
-
-- name: Check if aws cli is installed
-  ansible.builtin.stat:
-    path: /usr/local/bin/aws
-  register: aws_installed
-
-- name: Create temporary build directory
-  ansible.builtin.tempfile:
-    state: directory
-    suffix: temp_dir
-  register: temp_dir
-  when: not aws_installed.stat.exists
-
-- name: Ensure clean installation
-  ansible.builtin.file:
-    path: /usr/local/aws-cli
-    state: absent
-  become: true
-  when: not aws_installed.stat.exists
-
-- name: Download aws cli
-  ansible.builtin.get_url:
-    url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
-    dest: '{{ temp_dir.path }}'
-    mode: '0777'
-  when: not aws_installed.stat.exists
-
-- name: Unarchive aws cli
-  ansible.builtin.unarchive:
-    src: '{{ temp_dir.path }}/awscli-exe-linux-x86_64.zip'
-    dest: '{{ temp_dir.path }}'
-    remote_src: true
-  become: true
-  when: not aws_installed.stat.exists
-
 - name: Install aws cli
-  ansible.builtin.shell: '{{ temp_dir.path }}/aws/install --update'
-  become: true
-  when: not aws_installed.stat.exists
+  block:
+  - name: Remove default aws
+    apt:
+      state: absent
+      pkg:
+        - awscli
 
-- name: Change file ownership, group and permissions
-  ansible.builtin.file:
-    path: /usr/local/bin/aws
-    mode: 'a+x'
-  become: true
-  when: not aws_installed.stat.exists
+  - name: Check if aws cli is installed
+    ansible.builtin.stat:
+      path: /usr/local/bin/aws
+    register: aws_installed
 
-- name: Remove the temporary dir
-  ansible.builtin.file:
-    path: '{{ temp_dir.path }}'
-    state: absent
+  - name: Create temporary build directory
+    ansible.builtin.tempfile:
+      state: directory
+      suffix: temp_dir
+    register: temp_dir
+    when: not aws_installed.stat.exists
+
+  - name: Ensure clean installation
+    ansible.builtin.file:
+      path: /usr/local/aws-cli
+      state: absent
+    when: not aws_installed.stat.exists
+
+  - name: Download aws cli
+    ansible.builtin.get_url:
+      url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+      dest: '{{ temp_dir.path }}'
+      mode: '0777'
+    when: not aws_installed.stat.exists
+
+  - name: Unarchive aws cli
+    ansible.builtin.unarchive:
+      src: '{{ temp_dir.path }}/awscli-exe-linux-x86_64.zip'
+      dest: '{{ temp_dir.path }}'
+      remote_src: true
+    when: not aws_installed.stat.exists
+
+  - name: Install aws cli
+    ansible.builtin.shell: '{{ temp_dir.path }}/aws/install --update'
+    when: not aws_installed.stat.exists
+
+  - name: Change file ownership, group and permissions
+    ansible.builtin.file:
+      path: /usr/local/bin/aws
+      mode: 'a+x'
+    when: not aws_installed.stat.exists
+
+  - name: Remove the temporary dir
+    ansible.builtin.file:
+      path: '{{ temp_dir.path }}'
+      state: absent
+    when: temp_dir.path is defined
   become: true
-  when: temp_dir.path is defined
+  tags:
+    - aws-cli
+    - aws
+
+- name: Install aws eksctl
+  block:
+  - name: Check if eksctl is installed
+    ansible.builtin.stat:
+      path: /usr/local/bin/eksctl
+    register: eksctl_installed
+
+  - name: Create temporary build directory
+    ansible.builtin.tempfile:
+      state: directory
+      suffix: temp_dir
+    register: temp_dir
+    when: not eksctl_installed.stat.exists
+
+  - name: Ensure clean installation
+    ansible.builtin.file:
+      path: /usr/local/eksctl
+      state: absent
+    when: not eksctl_installed.stat.exists
+
+  - name: Download eksctl
+    ansible.builtin.get_url:
+      url: https://github.com/eksctl-io/eksctl/releases/download/v0.155.0/eksctl_Linux_amd64.tar.gz
+      dest: '{{ temp_dir.path }}'
+      mode: '0777'
+    when: not eksctl_installed.stat.exists
+
+  - name: Unarchive eksctl
+    ansible.builtin.unarchive:
+      src: '{{ temp_dir.path }}/eksctl_Linux_amd64.tar.gz'
+      dest: '{{ temp_dir.path }}'
+      remote_src: true
+    when: not eksctl_installed.stat.exists
+
+  - name: Install eksctl
+    ansible.builtin.copy:
+      src: '{{ temp_dir.path }}/eksctl'
+      dest: /usr/local/bin/eksctl
+      owner: root
+      group: root
+      mode: 'a+x'
+      remote_src: true
+    when: not eksctl_installed.stat.exists
+
+  - name: Remove the temporary dir
+    ansible.builtin.file:
+      path: '{{ temp_dir.path }}'
+      state: absent
+    when: temp_dir.path is defined
+  become: true
+  tags:
+    - eksctl
+    - aws
+
