@@ -32,6 +32,7 @@
     - "azuredisk-csi-driver https://raw.githubusercontent.com/kubernetes-sigs/azuredisk-csi-driver/master/charts"
     - "aws-ebs-csi-driver https://kubernetes-sigs.github.io/aws-ebs-csi-driver"
     - "aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver"
+    - "eks https://aws.github.io/eks-charts"
     - "prometheus-community https://prometheus-community.github.io/helm-charts"
     - "grafana https://grafana.github.io/helm-charts"
     - "vector https://helm.vector.dev"
