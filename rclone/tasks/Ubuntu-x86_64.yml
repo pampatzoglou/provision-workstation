@@ -1,3 +1,4 @@
+---
 - name: Install a rclone.deb package from the internet
   ansible.builtin.apt:
     deb: https://downloads.rclone.org/v1.63.0/rclone-v1.63.0-linux-amd64.deb

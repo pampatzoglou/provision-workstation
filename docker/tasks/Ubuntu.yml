@@ -62,7 +62,7 @@
       ansible.builtin.user:
         name: '{{ user }}'
         groups: docker
-        append: yes
+        append: true
       become: true
 
     - name: Restart docker service

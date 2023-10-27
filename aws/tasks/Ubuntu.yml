@@ -61,55 +61,54 @@
 
 - name: Install aws eksctl
   block:
-  - name: Check if eksctl is installed
-    ansible.builtin.stat:
-      path: /usr/local/bin/eksctl
-    register: eksctl_installed
+    - name: Check if eksctl is installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/eksctl
+      register: eksctl_installed
 
-  - name: Create temporary build directory
-    ansible.builtin.tempfile:
-      state: directory
-      suffix: temp_dir
-    register: temp_dir
-    when: not eksctl_installed.stat.exists
+    - name: Create temporary build directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: temp_dir
+      register: temp_dir
+      when: not eksctl_installed.stat.exists
 
-  - name: Ensure clean installation
-    ansible.builtin.file:
-      path: /usr/local/eksctl
-      state: absent
-    when: not eksctl_installed.stat.exists
+    - name: Ensure clean installation
+      ansible.builtin.file:
+        path: /usr/local/eksctl
+        state: absent
+      when: not eksctl_installed.stat.exists
 
-  - name: Download eksctl
-    ansible.builtin.get_url:
-      url: https://github.com/eksctl-io/eksctl/releases/download/v0.155.0/eksctl_Linux_amd64.tar.gz
-      dest: '{{ temp_dir.path }}'
-      mode: '0777'
-    when: not eksctl_installed.stat.exists
+    - name: Download eksctl
+      ansible.builtin.get_url:
+        url: https://github.com/eksctl-io/eksctl/releases/download/v0.155.0/eksctl_Linux_amd64.tar.gz
+        dest: '{{ temp_dir.path }}'
+        mode: '0777'
+      when: not eksctl_installed.stat.exists
 
-  - name: Unarchive eksctl
-    ansible.builtin.unarchive:
-      src: '{{ temp_dir.path }}/eksctl_Linux_amd64.tar.gz'
-      dest: '{{ temp_dir.path }}'
-      remote_src: true
-    when: not eksctl_installed.stat.exists
+    - name: Unarchive eksctl
+      ansible.builtin.unarchive:
+        src: '{{ temp_dir.path }}/eksctl_Linux_amd64.tar.gz'
+        dest: '{{ temp_dir.path }}'
+        remote_src: true
+      when: not eksctl_installed.stat.exists
 
-  - name: Install eksctl
-    ansible.builtin.copy:
-      src: '{{ temp_dir.path }}/eksctl'
-      dest: /usr/local/bin/eksctl
-      owner: root
-      group: root
-      mode: 'a+x'
-      remote_src: true
-    when: not eksctl_installed.stat.exists
+    - name: Install eksctl
+      ansible.builtin.copy:
+        src: '{{ temp_dir.path }}/eksctl'
+        dest: /usr/local/bin/eksctl
+        owner: root
+        group: root
+        mode: 'a+x'
+        remote_src: true
+      when: not eksctl_installed.stat.exists
 
-  - name: Remove the temporary dir
-    ansible.builtin.file:
-      path: '{{ temp_dir.path }}'
-      state: absent
-    when: temp_dir.path is defined
+    - name: Remove the temporary dir
+      ansible.builtin.file:
+        path: '{{ temp_dir.path }}'
+        state: absent
+      when: temp_dir.path is defined
   become: true
   tags:
     - eksctl
     - aws
-
