@@ -1,0 +1,31 @@
+---
+# tasks file for skaffold
+- name: Check if skaffold is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/skaffold
+  register: skaffold_installed
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: temp_dir
+  register: temp_dir
+  when: not skaffold_installed.stat.exists
+
+- name: Download skaffold with
+  ansible.builtin.get_url:
+    url: 'https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64'
+    dest: '{{ temp_dir.path }}'
+    mode: '0777'
+  when: not skaffold_installed.stat.exists
+
+- name: Install skaffold
+  ansible.builtin.command: 'install {{ temp_dir.path }}/skaffold-linux-amd64 /usr/local/bin'
+  become: true
+  when: not skaffold_installed.stat.exists
+
+- name: Remove the temporary dir
+  ansible.builtin.file:
+    path: '{{ temp_dir.path }}'
+    state: absent
+  when: temp_dir.path is defined

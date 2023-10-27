@@ -1,5 +1,5 @@
----
 # ansible-playbook --ask-become-pass -e user=$USER playbook.yaml
+---
 - name: Setup workstation
   hosts: localhost
   gather_facts: true
@@ -32,15 +32,14 @@
     - logcli
     - open_lens
     - open_policy_agent
-    # todo:- pcloud
     - rclone
+    - skaffold
     - stern
     - syncthing
     - teleport
     - telepresence
     - terraform
     - tilt
-    #- usb_display_link
     - velero
     - vscode
     - wireguard

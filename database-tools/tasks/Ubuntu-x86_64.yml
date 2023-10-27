@@ -1,3 +1,4 @@
+---
 - name: Install datagrip
   community.general.snap:
     name:
@@ -12,29 +13,29 @@
 
 - name: Install postgres15
   block:
-  - name: Import postgres public key
-    ansible.builtin.get_url:
-      url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
-      dest: /etc/apt/trusted.gpg.d/pgdg.asc
-      owner: root
-      group: root
-      mode: '0644'
-    become: true
+    - name: Import postgres public key
+      ansible.builtin.get_url:
+        url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+        dest: /etc/apt/trusted.gpg.d/pgdg.asc
+        owner: root
+        group: root
+        mode: '0644'
+      become: true
 
-  - name: Import postgres repo
-    ansible.builtin.apt_repository:
-      repo: deb http://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release }}-pgdg main
-      state: present
-      filename: /etc/apt/sources.list.d/pgdg.list
-    become: true
+    - name: Import postgres repo
+      ansible.builtin.apt_repository:
+        repo: deb http://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release }}-pgdg main
+        state: present
+        filename: /etc/apt/sources.list.d/pgdg.list
+      become: true
 
-  - name: Update repositories cache and install "postgresql-*" packages
-    ansible.builtin.apt:
-      pkg:
-        - postgresql-client
-        - postgresql-client-common
-        - libpq-dev
-      update_cache: true
-      state: present
+    - name: Update repositories cache and install "postgresql-*" packages
+      ansible.builtin.apt:
+        pkg:
+          - postgresql-client
+          - postgresql-client-common
+          - libpq-dev
+        update_cache: true
+        state: present
 
   become: true
