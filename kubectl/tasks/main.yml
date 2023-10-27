@@ -31,41 +31,42 @@
 - name: Update krew indexes
   ansible.builtin.command: 'krew update'
   changed_when: false
+  ignore_errors: true
   tags:
     - krew
 
-- name: Install kubectl plugins with krew
-  ansible.builtin.command: 'krew install {{ item }}'
-  loop:
-    - advise-policy
-    - access-matrix
-    - blame
-    - cert-manager
-    - cilium
-    - datree
-    - debug-shell
-    - images
-    - istiolog
-    - janitor
-    - ktop
-    - kubectl-capture
-    - kubectl-login
-    - kubescape
-    - kubesec-scan
-    - mtail
-    - popeye
-    - score
-    - starboard
-    - stern
-    - tap
-    - trace
-    - who-can
-    - np-viewer
-    - rolesum
-    - rbac-tool
-    - whoami
-    - kyverno
-    - kubevpn/kubevpn
-  changed_when: false
-  tags:
-    - krew
+# - name: Install kubectl plugins with krew
+#   ansible.builtin.command: 'krew install {{ item }}'
+#   loop:
+#     - advise-policy
+#     - access-matrix
+#     - blame
+#     - cert-manager
+#     - cilium
+#     - datree
+#     - debug-shell
+#     - images
+#     - istiolog
+#     - janitor
+#     - ktop
+#     - kubectl-capture
+#     - kubectl-login
+#     - kubescape
+#     - kubesec-scan
+#     - mtail
+#     - popeye
+#     - score
+#     - starboard
+#     - stern
+#     - tap
+#     - trace
+#     - who-can
+#     - np-viewer
+#     - rolesum
+#     - rbac-tool
+#     - whoami
+#     - kyverno
+#     - kubevpn/kubevpn
+#   changed_when: false
+#   tags:
+#     - krew

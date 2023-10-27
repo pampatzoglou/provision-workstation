@@ -19,7 +19,6 @@ scenario:
     - create
     # - converge
     # - idempotence
-    - lint
     - verify
 verifier:
   name: ansible

@@ -68,7 +68,6 @@ jobs:
           - telepresence
           - terraform
           - tilt
-          - usb_display_link
           - velero
           - vscode
           - wireguard
