@@ -1,6 +1,8 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    user: root
   tasks:
     - name: "Include docker ce"
       include_role:
