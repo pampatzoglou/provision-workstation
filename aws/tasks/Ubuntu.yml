@@ -1,59 +1,59 @@
 ---
 - name: Install aws cli
   block:
-  - name: Remove default aws
-    apt:
-      state: absent
-      pkg:
-        - awscli
+    - name: Remove default aws
+      apt:
+        state: absent
+        pkg:
+          - awscli
 
-  - name: Check if aws cli is installed
-    ansible.builtin.stat:
-      path: /usr/local/bin/aws
-    register: aws_installed
+    - name: Check if aws cli is installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/aws
+      register: aws_installed
 
-  - name: Create temporary build directory
-    ansible.builtin.tempfile:
-      state: directory
-      suffix: temp_dir
-    register: temp_dir
-    when: not aws_installed.stat.exists
+    - name: Create temporary build directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: temp_dir
+      register: temp_dir
+      when: not aws_installed.stat.exists
 
-  - name: Ensure clean installation
-    ansible.builtin.file:
-      path: /usr/local/aws-cli
-      state: absent
-    when: not aws_installed.stat.exists
+    - name: Ensure clean installation
+      ansible.builtin.file:
+        path: /usr/local/aws-cli
+        state: absent
+      when: not aws_installed.stat.exists
 
-  - name: Download aws cli
-    ansible.builtin.get_url:
-      url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
-      dest: '{{ temp_dir.path }}'
-      mode: '0777'
-    when: not aws_installed.stat.exists
+    - name: Download aws cli
+      ansible.builtin.get_url:
+        url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+        dest: '{{ temp_dir.path }}'
+        mode: '0777'
+      when: not aws_installed.stat.exists
 
-  - name: Unarchive aws cli
-    ansible.builtin.unarchive:
-      src: '{{ temp_dir.path }}/awscli-exe-linux-x86_64.zip'
-      dest: '{{ temp_dir.path }}'
-      remote_src: true
-    when: not aws_installed.stat.exists
+    - name: Unarchive aws cli
+      ansible.builtin.unarchive:
+        src: '{{ temp_dir.path }}/awscli-exe-linux-x86_64.zip'
+        dest: '{{ temp_dir.path }}'
+        remote_src: true
+      when: not aws_installed.stat.exists
 
-  - name: Install aws cli
-    ansible.builtin.shell: '{{ temp_dir.path }}/aws/install --update'
-    when: not aws_installed.stat.exists
+    - name: Install aws cli
+      ansible.builtin.shell: '{{ temp_dir.path }}/aws/install --update'
+      when: not aws_installed.stat.exists
 
-  - name: Change file ownership, group and permissions
-    ansible.builtin.file:
-      path: /usr/local/bin/aws
-      mode: 'a+x'
-    when: not aws_installed.stat.exists
+    - name: Change file ownership, group and permissions
+      ansible.builtin.file:
+        path: /usr/local/bin/aws
+        mode: 'a+x'
+      when: not aws_installed.stat.exists
 
-  - name: Remove the temporary dir
-    ansible.builtin.file:
-      path: '{{ temp_dir.path }}'
-      state: absent
-    when: temp_dir.path is defined
+    - name: Remove the temporary dir
+      ansible.builtin.file:
+        path: '{{ temp_dir.path }}'
+        state: absent
+      when: temp_dir.path is defined
   become: true
   tags:
     - aws-cli
