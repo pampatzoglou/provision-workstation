@@ -33,6 +33,7 @@
     - open_lens
     - open_policy_agent
     - rclone
+    - skaffold
     - stern
     - syncthing
     - teleport
