@@ -8,3 +8,23 @@
       - libfuse2
       - pcloud
   become: true
+  
+- name: Install pcloud for {{ user }}
+  ansible.builtin.blockinfile:
+    path: '/home/{{ user }}/.local/share/applications/pcloud.desktop'
+    create: true
+    group: '{{ user }}'
+    owner: '{{ user }}'
+    mode: '0755'
+    block: |
+      [Desktop Entry]
+      Type=Application
+      Exec=/usr/local/bin/pcloud
+      Hidden=false
+      NoDisplay=false
+      X-GNOME-Autostart-enabled=true
+      Name[en_US]=pcloud
+      Name=pcloud
+      Comment[en_US]=
+      Comment=
+  become: true
