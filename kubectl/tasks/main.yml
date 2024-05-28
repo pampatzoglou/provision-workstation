@@ -24,6 +24,7 @@
   ansible.builtin.command: 'krew index add {{ item }}'
   loop:
     - "kubevpn https://github.com/KubeNetworks/kubevpn.git"
+    - "default https://github.com/kubernetes-sigs/krew-index.git"
   changed_when: false
   ignore_errors: true
   tags:
