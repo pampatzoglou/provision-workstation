@@ -157,6 +157,7 @@
           [user]
               name = {{ user }}
               email = you@example.com
+              signingkey = /home/{{ user }}/.ssh/id_ed25519.pub
           [core]
               hooksPath = '/home/{{ user }}/.config/git/hooks'
               excludesfile = '/home/{{ user }}/.config/git/gitIgnore'
@@ -164,6 +165,8 @@
               directory = /github/workspace
           [commit]
               gpgsign = true
+          [gpg]
+          	format = ssh
       when: not gitconfig_installed.stat.exists
 
     - name: Display config message
