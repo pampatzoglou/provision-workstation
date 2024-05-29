@@ -166,7 +166,7 @@
           [commit]
               gpgsign = true
           [gpg]
-          	  format = ssh
+              format = ssh
       when: not gitconfig_installed.stat.exists
 
     - name: Display config message
