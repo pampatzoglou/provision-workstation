@@ -11,7 +11,7 @@
   
 - name: Install pcloud for {{ user }}
   ansible.builtin.blockinfile:
-    path: '/home/{{ user }}/.local/share/applications/pcloud.desktop'
+    path: '/home/{{ user }}/.config/autostart/pcloud.desktop'
     create: true
     group: '{{ user }}'
     owner: '{{ user }}'
@@ -20,11 +20,9 @@
       [Desktop Entry]
       Type=Application
       Exec=/usr/local/bin/pcloud
-      Hidden=false
-      NoDisplay=false
-      X-GNOME-Autostart-enabled=true
-      Name[en_US]=pcloud
       Name=pcloud
-      Comment[en_US]=
-      Comment=
+      Comment=pcloudstartup script
+      StartupNotify=false
+      Terminal=false
+
   become: true
