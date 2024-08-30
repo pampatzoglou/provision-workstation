@@ -1,10 +1,10 @@
 ---
 # tasks file for zsh
-- name: Install robusta-cli
-  ansible.builtin.pip:
-    name: robusta-cli
-    executable: pip3
-  become: true
+# - name: Install robusta-cli
+#   ansible.builtin.pip:
+#     name: robusta-cli
+#     executable: pip3
+#   become: true
 
 - name: Ubuntu
   ansible.builtin.include_tasks: Ubuntu-x86_64.yml

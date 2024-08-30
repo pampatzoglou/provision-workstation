@@ -1,4 +1,10 @@
 ---
+- name: Add the yubico software repository
+  ansible.builtin.apt_repository:
+    repo: ppa:yubico/stable
+    state: present
+  become: true
+
 - name: Update repositories cache and install packages
   ansible.builtin.apt:
     pkg:
@@ -15,6 +21,7 @@
       - yubikey-personalization
       - yubioath-desktop
       - yubikey-luks
+      - yubikey-manager
       - libssl-dev
       - swig
       - libpcsclite-dev
@@ -24,12 +31,11 @@
     state: present
   become: true
 
-- name: Install ykman
-  ansible.builtin.pip:
-    name:
-      - PyOpenSSL
-      - yubikey-manager
-    executable: pip3
+# - name: Install ykman
+#   ansible.builtin.pip:
+#     name:
+#       - PyOpenSSL
+#     executable: pip
 
 - name: Restart service pcscd, in all cases
   ansible.builtin.service:
@@ -52,3 +58,36 @@
       max-cache-ttl 120
       # pinentry-program /usr/bin/pinentry-curses
       pinentry-program /usr/bin/pinentry-gnome3
+
+- name: Configure GPG as SSH agent
+  block:
+    - name: Create required directories
+      file:
+        path: '{{ item }}'
+        state: directory
+        mode: '0700'
+      loop:
+        - /home/{{ user }}/.config/autostart
+        - /home/{{ user }}/.config/environment.d
+
+    - name: Disable Gnome-Keyring ssh component
+      copy:
+        src: /etc/xdg/autostart/gnome-keyring-ssh.desktop
+        dest: /home/{{ user }}/.config/autostart/gnome-keyring-ssh.desktop
+        mode: '0644'
+
+    - name: Hide Gnome-Keyring ssh component
+      lineinfile:
+        path: /home/{{ user }}/.config/autostart/gnome-keyring-ssh.desktop
+        line: "Hidden=true"
+
+    - name: Point ssh agent socket environment variable to GnuPG
+      copy:
+        dest: /home/{{ user }}/.config/environment.d/99-gpg-agent_ssh.conf
+        content: |
+          SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh
+        mode: '0644'
+
+    - name: Display final message
+      debug:
+        msg: "Restart your computer and then GnuPG will be your ssh-agent"
