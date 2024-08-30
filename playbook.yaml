@@ -4,44 +4,44 @@
   hosts: localhost
   gather_facts: true
   roles:
-#     - argo
-#     - aws
-#  #   - azure
-#  #   - brave
-#     - cmctl
-#     - copper
-#     - database-tools
-#  #   - datree
-#     - docker
-# #    - doctl
-    # - firewall
+    - argo
+    - aws
+    - azure
+    - brave
+    - cmctl
+    - copper
+    - database-tools
+    - datree
+    - docker
+#    - doctl
+    - firewall
     # todo:- gcp
-#    - git
-   #  - github
-   #  - helm
-   #  - k6s
-   #  - keepassxc
-   #  - kind
- #   - kube_bench
- #   - kube_hunter
- #   - kube_linter
-   #  - kubectl
-   #  - kubernetes_resource_advisor
-   #  - kubeshark
-   #  - kubesquash
-   #  - logcli
-   #  - open_lens
-  #  - open_policy_agent
-  #  - rclone
- #   - skaffold
- #   - stern
- #   - syncthing
-#    - teleport
- #   - telepresence
- #   - terraform
- #   - tilt
- #   - velero
-   #  - vscode
- #   - wireguard
+    - git
+    - github
+    - helm
+    - k6s
+    - keepassxc
+    - kind
+    - kube_bench
+    - kube_hunter
+    - kube_linter
+    - kubectl
+    - kubernetes_resource_advisor
+    - kubeshark
+    - kubesquash
+    - logcli
+    - open_lens
+    - open_policy_agent
+    - rclone
+    - skaffold
+    - stern
+    - syncthing
+    - teleport
+    - telepresence
+    - terraform
+    - tilt
+    - velero
+    - vscode
+    - wireguard
     - zsh
     - yubukey
